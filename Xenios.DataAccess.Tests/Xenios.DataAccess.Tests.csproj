@@ -51,6 +51,17 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FileWriteAccessTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Xenios.DataAccess\Xenios.DataAccess.csproj">
+      <Project>{4dde9d11-1eca-4517-b21a-b1714c85cae0}</Project>
+      <Name>Xenios.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xenios.DomainModels\Xenios.DomainModels.csproj">
+      <Project>{2c057155-539f-4f76-93d3-f04dbf4a5306}</Project>
+      <Name>Xenios.DomainModels</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{EEDB815D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xenios.DataAccess.Tests", "Xenios.DataAccess.Tests\Xenios.DataAccess.Tests.csproj", "{86120A61-7118-48EE-AB4D-B8CC97B4A934}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xenios.DomainModels", "Xenios.DomainModels\Xenios.DomainModels.csproj", "{2C057155-539F-4F76-93D3-F04DBF4A5306}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{86120A61-7118-48EE-AB4D-B8CC97B4A934}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86120A61-7118-48EE-AB4D-B8CC97B4A934}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86120A61-7118-48EE-AB4D-B8CC97B4A934}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C057155-539F-4F76-93D3-F04DBF4A5306}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C057155-539F-4F76-93D3-F04DBF4A5306}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C057155-539F-4F76-93D3-F04DBF4A5306}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C057155-539F-4F76-93D3-F04DBF4A5306}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
