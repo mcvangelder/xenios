@@ -25,7 +25,7 @@ namespace Xenios.DataAccess.Tests
                     City = "City",
                     State = "State",
                     PostalCode = "12345",
-                    CountryOfBirth = "United States",
+                    Country = "United States",
                 },
                 PaymentInformation = new Domain.Models.PaymentInformation
                 {
@@ -75,7 +75,7 @@ namespace Xenios.DataAccess.Tests
             Assert.AreEqual(insuranceInformation.Customer.LastName, savedInformation.Customer.LastName);
             Assert.AreEqual(insuranceInformation.Customer.PostalCode, savedInformation.Customer.PostalCode);
             Assert.AreEqual(insuranceInformation.Customer.State, savedInformation.Customer.State);
-            Assert.AreEqual(insuranceInformation.Customer.CountryOfBirth, savedInformation.Customer.CountryOfBirth);
+            Assert.AreEqual(insuranceInformation.Customer.Country, savedInformation.Customer.Country);
 
             Assert.AreEqual(insuranceInformation.PaymentInformation.Id, savedInformation.PaymentInformation.Id);
             Assert.AreEqual(insuranceInformation.PaymentInformation.CreditCardNumber, savedInformation.PaymentInformation.CreditCardNumber);

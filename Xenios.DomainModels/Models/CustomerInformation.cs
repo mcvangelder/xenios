@@ -22,6 +22,6 @@ namespace Xenios.Domain.Models
 
         public Guid Id { get; set; }
 
-        public string CountryOfBirth { get; set; }
+        public string Country { get; set; }
     }
 }
