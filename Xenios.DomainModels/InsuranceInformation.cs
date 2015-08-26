@@ -39,5 +39,7 @@ namespace Xenios.DomainModels
         public int TermUnit { get; set; }
 
         public CustomerInformation Customer { get; set; }
+
+        public PaymentInformation PaymentInformation { get; set; }
     }
 }

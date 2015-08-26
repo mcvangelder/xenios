@@ -36,11 +36,14 @@ namespace Xenios.DataAccess.Tests
                     PostalCode = "12345",
                     CountryOfBirth = "United States",
                 },
+                PaymentInformation = new DomainModels.PaymentInformation
+                {
+                    Id = Guid.NewGuid(),
+                    CreditCardType = 0,
+                    CreditCardNumber = "1234-5678-9012-3456"
+                },
                 InsuranceType = 0,
                 CoverageBeginDateTime = DateTime.Now,
-                CreditCardType = 0,
-                CreditCardNumber = "1234-5678-9012-3456",
-
                 Price = (decimal)274.00,
                 TermLength = 6,
                 TermUnit = 0
