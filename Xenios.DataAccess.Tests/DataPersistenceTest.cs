@@ -26,6 +26,7 @@ namespace Xenios.DataAccess.Tests
             {
                 Id = Guid.NewGuid(),
                 Customer = new DomainModels.CustomerInformation {
+                                Id = Guid.NewGuid(),
                                 FirstName = "John",
                                 LastName = "Smith",
                                 AddressLine1 = "123 Some Street",

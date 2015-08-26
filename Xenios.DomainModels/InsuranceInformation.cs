@@ -37,5 +37,7 @@ namespace Xenios.DomainModels
         public int TermLength { get; set; }
 
         public int TermUnit { get; set; }
+
+        public CustomerInformation Customer { get; set; }
     }
 }
