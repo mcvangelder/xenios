@@ -7,8 +7,8 @@
     <ProjectGuid>{2C057155-539F-4F76-93D3-F04DBF4A5306}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Xenios.DomainModels</RootNamespace>
-    <AssemblyName>Xenios.DomainModels</AssemblyName>
+    <RootNamespace>Xenios.Domain</RootNamespace>
+    <AssemblyName>Xenios.Domain</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,9 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PaymentInformation.cs" />
-    <Compile Include="CustomerInformation.cs" />
-    <Compile Include="InsuranceInformation.cs" />
+    <Compile Include="Enums\CreditCardTypes.cs" />
+    <Compile Include="Models\PaymentInformation.cs" />
+    <Compile Include="Models\CustomerInformation.cs" />
+    <Compile Include="Models\InsuranceInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

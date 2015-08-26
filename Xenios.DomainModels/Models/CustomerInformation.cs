@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Xenios.DomainModels
+namespace Xenios.Domain.Models
 {
     public class CustomerInformation
     {

@@ -58,9 +58,9 @@
       <Project>{4dde9d11-1eca-4517-b21a-b1714c85cae0}</Project>
       <Name>Xenios.DataAccess</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Xenios.DomainModels\Xenios.DomainModels.csproj">
+    <ProjectReference Include="..\Xenios.DomainModels\Xenios.Domain.csproj">
       <Project>{2c057155-539f-4f76-93d3-f04dbf4a5306}</Project>
-      <Name>Xenios.DomainModels</Name>
+      <Name>Xenios.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

@@ -22,10 +22,10 @@ namespace Xenios.DataAccess.Tests
         public void Should_persist_insurance_info()
         {
             var infoService = new DataAccess.InsuranceInformationService(fileName);
-            var insuranceInformation = new DomainModels.InsuranceInformation
+            var insuranceInformation = new Domain.Models.InsuranceInformation
             {
                 Id = Guid.NewGuid(),
-                Customer = new DomainModels.CustomerInformation
+                Customer = new Domain.Models.CustomerInformation
                 {
                     Id = Guid.NewGuid(),
                     FirstName = "John",
@@ -36,10 +36,10 @@ namespace Xenios.DataAccess.Tests
                     PostalCode = "12345",
                     CountryOfBirth = "United States",
                 },
-                PaymentInformation = new DomainModels.PaymentInformation
+                PaymentInformation = new Domain.Models.PaymentInformation
                 {
                     Id = Guid.NewGuid(),
-                    CreditCardType = 0,
+                    CreditCardType = Domain.Enums.CreditCardTypes.Amex,
                     CreditCardNumber = "1234-5678-9012-3456"
                 },
                 InsuranceType = 0,
@@ -52,7 +52,25 @@ namespace Xenios.DataAccess.Tests
             infoService.Save(insuranceInformation);
             var savedInformation = infoService.GetAll().FirstOrDefault(i => i.Id == insuranceInformation.Id);
 
-            Assert.IsNotNull(savedInformation);
+            Assert.AreEqual(insuranceInformation.Id, savedInformation.Id);
+            Assert.AreEqual(insuranceInformation.InsuranceType, savedInformation.InsuranceType);
+            Assert.AreEqual(insuranceInformation.Price, savedInformation.Price);
+            Assert.AreEqual(insuranceInformation.TermLength, savedInformation.TermLength);
+            Assert.AreEqual(insuranceInformation.TermUnit, insuranceInformation.TermUnit);
+            Assert.AreEqual(insuranceInformation.CoverageBeginDateTime, savedInformation.CoverageBeginDateTime);
+
+            Assert.AreEqual(insuranceInformation.Customer.Id, savedInformation.Customer.Id);
+            Assert.AreEqual(insuranceInformation.Customer.AddressLine1, savedInformation.Customer.AddressLine1);
+            Assert.AreEqual(insuranceInformation.Customer.City, savedInformation.Customer.City);
+            Assert.AreEqual(insuranceInformation.Customer.FirstName, savedInformation.Customer.FirstName);
+            Assert.AreEqual(insuranceInformation.Customer.LastName, savedInformation.Customer.LastName);
+            Assert.AreEqual(insuranceInformation.Customer.PostalCode, savedInformation.Customer.PostalCode);
+            Assert.AreEqual(insuranceInformation.Customer.State, savedInformation.Customer.State);
+            Assert.AreEqual(insuranceInformation.Customer.CountryOfBirth, savedInformation.Customer.CountryOfBirth);
+
+            Assert.AreEqual(insuranceInformation.PaymentInformation.Id, savedInformation.PaymentInformation.Id);
+            Assert.AreEqual(insuranceInformation.PaymentInformation.CreditCardNumber, savedInformation.PaymentInformation.CreditCardNumber);
+            Assert.AreEqual(insuranceInformation.PaymentInformation.CreditCardType, savedInformation.PaymentInformation.CreditCardType);
         }
     }
 }
