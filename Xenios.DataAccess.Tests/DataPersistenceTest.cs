@@ -33,11 +33,11 @@ namespace Xenios.DataAccess.Tests
                     CreditCardType = Domain.Enums.CreditCardTypes.Amex,
                     CreditCardNumber = "1234-5678-9012-3456"
                 },
-                InsuranceType = 0,
+                InsuranceType = Domain.Enums.InsuranceTypes.Comprehensive,
                 CoverageBeginDateTime = DateTime.Now,
                 Price = (decimal)274.00,
                 TermLength = 6,
-                TermUnit = 0
+                TermUnit = Domain.Enums.TermUnits.Months
             };
             return insuranceInformation;
         }
@@ -82,7 +82,7 @@ namespace Xenios.DataAccess.Tests
 
         [TestMethod]
         [ExpectedException(typeof(IOException))]
-        public void Should_throw_exception_writing_to_file_opened_for_write_by_another_process()
+        public void Should_throw_exception_writing_to_file_already_opened_for_write()
         {
             using (var fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
             {

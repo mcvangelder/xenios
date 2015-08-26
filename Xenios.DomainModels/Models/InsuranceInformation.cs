@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xenios.Domain.Enums;
 
 namespace Xenios.Domain.Models
 {
@@ -10,14 +11,15 @@ namespace Xenios.Domain.Models
     {
         public Guid Id { get; set; }
 
-        public int InsuranceType { get; set; }
+        public InsuranceTypes InsuranceType { get; set; }
+
         public DateTime CoverageBeginDateTime { get; set; }
 
         public decimal Price { get; set; }
 
         public int TermLength { get; set; }
 
-        public int TermUnit { get; set; }
+        public TermUnits TermUnit { get; set; }
 
         public CustomerInformation Customer { get; set; }
 
