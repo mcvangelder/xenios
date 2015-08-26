@@ -8,7 +8,7 @@ namespace Xenios.DataAccess.Tests
     [TestClass]
     public class RepositoryUpdatedTest
     {
-        private string _fileName = @"temp_repository.txt";
+        private string _fileName = @"c:\temp\temp_repository.txt";
         private InsuranceInformationRepository repository;
 
         [TestInitialize]
@@ -29,11 +29,11 @@ namespace Xenios.DataAccess.Tests
             DataAccess.RepositoryUpdatedNotificationService notificationService = 
                 new RepositoryUpdatedNotificationService(repository);
 
-            var repositoryUpdatedCalled = new ManualResetEvent(false);
+            var isNotified = new AutoResetEvent(false);
 
             notificationService.NotifyRepositoryUpdated += (repo) =>
                 {
-                    repositoryUpdatedCalled.Set();
+                    isNotified.Set();
                 };
 
             var insuranceInformation = new Domain.Models.InsuranceInformation
@@ -66,9 +66,9 @@ namespace Xenios.DataAccess.Tests
             };
 
             repository.Save(insuranceInformation);
-            var isNotified = repositoryUpdatedCalled.WaitOne(TimeSpan.FromSeconds(1));
-            Assert.IsTrue(isNotified, "NotifyRepositoryUpdated was not called");
+            var isNotifiedSet = isNotified.WaitOne(TimeSpan.FromSeconds(1));
 
+            Assert.IsTrue(isNotifiedSet, "NotifyRepositoryUpdated was not called");
         }
     }
 }

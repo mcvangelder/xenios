@@ -12,6 +12,7 @@ namespace Xenios.DataAccess
     public class InsuranceInformationRepository
     {
         private string _fileName;
+        public String FileName { get { return _fileName; } }
 
         public InsuranceInformationRepository(string fileName)
         {
