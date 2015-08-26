@@ -53,7 +53,7 @@ namespace Xenios.DataAccess.Tests
         [TestMethod]
         public void Should_persist_insurance_info()
         {
-            var infoService = new DataAccess.InsuranceInformationService(fileName);
+            var infoService = new DataAccess.InsuranceInformationPersistenceService(fileName);
             var insuranceInformation = CreateInsuranceInformation();
 
             infoService.Save(insuranceInformation);
@@ -86,7 +86,7 @@ namespace Xenios.DataAccess.Tests
         {
             using (var fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
             {
-                var informationService = new InsuranceInformationService(fileName);
+                var informationService = new InsuranceInformationPersistenceService(fileName);
                 var insuranceInformation = CreateInsuranceInformation();
                 informationService.Save(insuranceInformation);
             }
