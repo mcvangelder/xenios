@@ -25,12 +25,14 @@ namespace Xenios.DataAccess.Tests
             var insuranceInformation = new DomainModels.InsuranceInformation
             {
                 Id = Guid.NewGuid(),
-                CustomerFirstName = "John",
-                CustomerLastName = "Smith",
-                AddressLine1 = "123 Some Street",
-                City = "City",
-                State = "State",
-                PostalCode = "12345",
+                Customer = new DomainModels.CustomerInformation {
+                                FirstName = "John",
+                                LastName = "Smith",
+                                AddressLine1 = "123 Some Street",
+                                City = "City",
+                                State = "State",
+                                PostalCode = "12345",
+                        },
                 InsuranceType = 0,
                 CoverageBeginDateTime = DateTime.Now,
                 CreditCardType = 0,
