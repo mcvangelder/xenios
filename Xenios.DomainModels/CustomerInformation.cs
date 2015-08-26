@@ -21,5 +21,7 @@ namespace Xenios.DomainModels
         public string PostalCode { get; set; }
 
         public Guid Id { get; set; }
+
+        public string CountryOfBirth { get; set; }
     }
 }

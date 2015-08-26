@@ -8,7 +8,7 @@ namespace Xenios.DataAccess.Tests
     [TestClass]
     public class DataPersistenceTest
     {
-        private const String fileName =  @"c:\temp\insurance_information_storage.txt";
+        private const String fileName = @"c:\temp\insurance_information_storage.txt";
 
         [TestInitialize]
         [TestCleanup]
@@ -25,20 +25,22 @@ namespace Xenios.DataAccess.Tests
             var insuranceInformation = new DomainModels.InsuranceInformation
             {
                 Id = Guid.NewGuid(),
-                Customer = new DomainModels.CustomerInformation {
-                                Id = Guid.NewGuid(),
-                                FirstName = "John",
-                                LastName = "Smith",
-                                AddressLine1 = "123 Some Street",
-                                City = "City",
-                                State = "State",
-                                PostalCode = "12345",
-                        },
+                Customer = new DomainModels.CustomerInformation
+                {
+                    Id = Guid.NewGuid(),
+                    FirstName = "John",
+                    LastName = "Smith",
+                    AddressLine1 = "123 Some Street",
+                    City = "City",
+                    State = "State",
+                    PostalCode = "12345",
+                    CountryOfBirth = "United States",
+                },
                 InsuranceType = 0,
                 CoverageBeginDateTime = DateTime.Now,
                 CreditCardType = 0,
                 CreditCardNumber = "1234-5678-9012-3456",
-                CountryOfBirth = "United States",
+
                 Price = (decimal)274.00,
                 TermLength = 6,
                 TermUnit = 0
