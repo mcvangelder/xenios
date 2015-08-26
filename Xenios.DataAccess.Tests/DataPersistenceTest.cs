@@ -1,16 +1,26 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
 
 namespace Xenios.DataAccess.Tests
 {
     [TestClass]
-    public class FileWriteAccessTest
+    public class DataPersistenceTest
     {
+        private const String fileName =  @"c:\temp\insurance_information_storage.txt";
+
+        [TestInitialize]
+        [TestCleanup]
+        public void DeletePersistenceFile()
+        {
+            var persistenceFile = new FileInfo(fileName);
+            persistenceFile.Delete();
+        }
+
         [TestMethod]
         public void Should_persist_insurance_info()
         {
-            var fileName = "insurance_information_storage.txt";
             var infoService = new DataAccess.InsuranceInformationService(fileName);
             var insuranceInformation = new DomainModels.InsuranceInformation
             {
