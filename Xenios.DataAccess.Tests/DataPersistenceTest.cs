@@ -31,7 +31,9 @@ namespace Xenios.DataAccess.Tests
                 {
                     Id = Guid.NewGuid(),
                     CreditCardType = Domain.Enums.CreditCardTypes.Amex,
-                    CreditCardNumber = "1234-5678-9012-3456"
+                    CreditCardNumber = "1234-5678-9012-3456",
+                    ExpirationDate = DateTime.Now,
+                    CreditCardVerificationNumber = "001"
                 },
                 InsuranceType = Domain.Enums.InsuranceTypes.Comprehensive,
                 CoverageBeginDateTime = DateTime.Now,
@@ -53,7 +55,7 @@ namespace Xenios.DataAccess.Tests
         [TestMethod]
         public void Should_persist_insurance_info()
         {
-            var infoService = new DataAccess.InsuranceInformationPersistenceService(fileName);
+            var infoService = new DataAccess.InsuranceInformationRepository(fileName);
             var insuranceInformation = CreateInsuranceInformation();
 
             infoService.Save(insuranceInformation);
@@ -78,6 +80,8 @@ namespace Xenios.DataAccess.Tests
             Assert.AreEqual(insuranceInformation.PaymentInformation.Id, savedInformation.PaymentInformation.Id);
             Assert.AreEqual(insuranceInformation.PaymentInformation.CreditCardNumber, savedInformation.PaymentInformation.CreditCardNumber);
             Assert.AreEqual(insuranceInformation.PaymentInformation.CreditCardType, savedInformation.PaymentInformation.CreditCardType);
+            Assert.AreEqual(insuranceInformation.PaymentInformation.CreditCardVerificationNumber, savedInformation.PaymentInformation.CreditCardVerificationNumber);
+            Assert.AreEqual(insuranceInformation.PaymentInformation.ExpirationDate, savedInformation.PaymentInformation.ExpirationDate);
         }
 
         [TestMethod]
@@ -86,7 +90,7 @@ namespace Xenios.DataAccess.Tests
         {
             using (var fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
             {
-                var informationService = new InsuranceInformationPersistenceService(fileName);
+                var informationService = new InsuranceInformationRepository(fileName);
                 var insuranceInformation = CreateInsuranceInformation();
                 informationService.Save(insuranceInformation);
             }

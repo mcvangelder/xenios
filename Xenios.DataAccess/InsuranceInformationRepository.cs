@@ -9,11 +9,11 @@ using Newtonsoft.Json;
 
 namespace Xenios.DataAccess
 {
-    public class InsuranceInformationPersistenceService
+    public class InsuranceInformationRepository
     {
         private string _fileName;
 
-        public InsuranceInformationPersistenceService(string fileName)
+        public InsuranceInformationRepository(string fileName)
         {
             _fileName = fileName;
         }

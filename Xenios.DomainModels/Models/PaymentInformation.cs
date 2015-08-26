@@ -14,5 +14,9 @@ namespace Xenios.Domain.Models
         public CreditCardTypes CreditCardType { get; set; }
 
         public string CreditCardNumber { get; set; }
+
+        public DateTime ExpirationDate { get; set; }
+
+        public string CreditCardVerificationNumber { get; set; }
     }
 }
