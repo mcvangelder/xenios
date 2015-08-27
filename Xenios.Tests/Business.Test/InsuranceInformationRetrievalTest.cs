@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using Xenios.Domain.Models;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Xenios.Business.Test
 {
@@ -29,17 +30,30 @@ namespace Xenios.Business.Test
         [TestMethod]
         public void Should_get_all_insurance_informations()
         {
-            Business.InsuranceInformationRetrievalService service = 
-                            new Business.InsuranceInformationRetrievalService(fileName);
+            InsuranceInformationRetrievalService service = 
+                            new InsuranceInformationRetrievalService(fileName);
 
             var allInfos = service.GetAllInsurancePolicies();
             Assert.IsTrue(allInfos.Count == informationsCount);
         }
 
         [TestMethod]
-        public void Should_notify_new_insurance_policies_available()
+        public void Should_notify_insurance_policies_updated()
         {
-            throw new NotImplementedException();
+            var isNotifiedEvent = new AutoResetEvent(false);
+            var newInfosCount = 0;
+
+            InsuranceInformationRetrievalService service = new InsuranceInformationRetrievalService(fileName);
+            service.NotifyInsuranceInformationUpdated += (infos) => {
+                newInfosCount = infos.Count;
+                isNotifiedEvent.Set(); 
+            };
+            var newInformation = Xenios.Test.Helpers.InsuranceInformationHelper.CreateInsuranceInformation();
+            var repo = new DataAccess.InsuranceInformationRepository(fileName);
+            repo.Save(newInformation);
+
+            isNotifiedEvent.WaitOne(TimeSpan.FromSeconds(1));
+            Assert.AreEqual(informationsCount + 1, newInfosCount);
         }
     }
 }

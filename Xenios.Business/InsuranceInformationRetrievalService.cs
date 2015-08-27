@@ -7,6 +7,8 @@ using Xenios.Domain.Models;
 
 namespace Xenios.Business
 {
+    public delegate void InsuranceInformationUpdated(List<InsuranceInformation> reloadedInformations);
+
     public class InsuranceInformationRetrievalService
     {
         private DataAccess.InsuranceInformationRepository _informationRepository;
@@ -20,5 +22,7 @@ namespace Xenios.Business
         {
             return _informationRepository.GetAll();
         }
+
+        public event InsuranceInformationUpdated NotifyInsuranceInformationUpdated;
     }
 }
