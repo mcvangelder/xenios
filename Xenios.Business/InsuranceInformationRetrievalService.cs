@@ -54,5 +54,10 @@ namespace Xenios.Business
                 _repositoryUpdatedNotificationService.Dispose();
             }
         }
+
+        public void Save(InsuranceInformation insuranceInformation)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
