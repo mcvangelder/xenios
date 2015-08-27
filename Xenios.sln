@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xenios.DataAccess", "Xenios
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{EEDB815D-604C-48F4-9178-CDB0139375FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xenios.DataAccess.Tests", "Xenios.DataAccess.Tests\Xenios.DataAccess.Tests.csproj", "{86120A61-7118-48EE-AB4D-B8CC97B4A934}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xenios.Tests", "Xenios.DataAccess.Tests\Xenios.Tests.csproj", "{86120A61-7118-48EE-AB4D-B8CC97B4A934}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xenios.Domain", "Xenios.DomainModels\Xenios.Domain.csproj", "{2C057155-539F-4F76-93D3-F04DBF4A5306}"
 EndProject

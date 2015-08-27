@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Xenios.DataAccess.Helpers
+namespace Xenios.Test.Helpers
 {
     public class InsuranceInformationHelper
     {

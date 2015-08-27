@@ -36,7 +36,7 @@ namespace Xenios.DataAccess.Tests
                         isNotified.Set();
                     };
 
-                var insuranceInformation = Helpers.InsuranceInformationHelper.CreateInsuranceInformation();
+                var insuranceInformation = Xenios.Test.Helpers.InsuranceInformationHelper.CreateInsuranceInformation();
 
                 repository.Save(insuranceInformation);
                 var isNotifiedSet = isNotified.WaitOne(TimeSpan.FromSeconds(1));

@@ -22,7 +22,7 @@ namespace Xenios.DataAccess.Tests
         public void Should_persist_insurance_info()
         {
             var infoRepo = new DataAccess.InsuranceInformationRepository(fileName);
-            var insuranceInformation = Helpers.InsuranceInformationHelper.CreateInsuranceInformation();
+            var insuranceInformation = Xenios.Test.Helpers.InsuranceInformationHelper.CreateInsuranceInformation();
 
             infoRepo.Save(insuranceInformation);
             var savedInformation = infoRepo.GetAll().FirstOrDefault(i => i.Id == insuranceInformation.Id);
@@ -57,7 +57,7 @@ namespace Xenios.DataAccess.Tests
             using (var fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
             {
                 var informationService = new InsuranceInformationRepository(fileName);
-                var insuranceInformation = Helpers.InsuranceInformationHelper.CreateInsuranceInformation();
+                var insuranceInformation = Xenios.Test.Helpers.InsuranceInformationHelper.CreateInsuranceInformation();
                 informationService.Save(insuranceInformation);
             }
         }
