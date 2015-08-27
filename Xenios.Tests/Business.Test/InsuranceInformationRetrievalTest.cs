@@ -43,17 +43,24 @@ namespace Xenios.Business.Test
             var isNotifiedEvent = new AutoResetEvent(false);
             var newInfosCount = 0;
 
-            InsuranceInformationRetrievalService service = new InsuranceInformationRetrievalService(fileName);
+            var service = new InsuranceInformationRetrievalService(fileName);
             service.NotifyInsuranceInformationUpdated += (infos) => {
                 newInfosCount = infos.Count;
                 isNotifiedEvent.Set(); 
             };
+
             var newInformation = Xenios.Test.Helpers.InsuranceInformationHelper.CreateInsuranceInformation();
             var repo = new DataAccess.InsuranceInformationRepository(fileName);
             repo.Save(newInformation);
 
             isNotifiedEvent.WaitOne(TimeSpan.FromSeconds(1));
             Assert.AreEqual(newInfosCount, informationsCount + 1);
+        }
+
+        [TestMethod]
+        public void Should_save_insurance_policy()
+        {
+
         }
     }
 }
