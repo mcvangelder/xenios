@@ -17,6 +17,11 @@ namespace Xenios.Business
         public InsuranceInformationRetrievalService(String sourceFile)
         {
             _informationRepository = new DataAccess.InsuranceInformationRepository(sourceFile);
+            CreateInsuranceInformationNotificationService();
+        }
+
+        private void CreateInsuranceInformationNotificationService()
+        {
             _repositoryUpdatedNotificationService = new DataAccess.RepositoryUpdatedNotificationService(_informationRepository);
             _repositoryUpdatedNotificationService.NotifyRepositoryUpdated += _repositoryUpdatedNotificationService_NotifyRepositoryUpdated;
         }
