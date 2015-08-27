@@ -12,10 +12,21 @@ namespace Xenios.Business
     public class InsuranceInformationRetrievalService
     {
         private DataAccess.InsuranceInformationRepository _informationRepository;
+        private DataAccess.RepositoryUpdatedNotificationService _repositoryUpdatedNotificationService;
 
         public InsuranceInformationRetrievalService(String sourceFile)
         {
             _informationRepository = new DataAccess.InsuranceInformationRepository(sourceFile);
+            _repositoryUpdatedNotificationService = new DataAccess.RepositoryUpdatedNotificationService(_informationRepository);
+            _repositoryUpdatedNotificationService.NotifyRepositoryUpdated += _repositoryUpdatedNotificationService_NotifyRepositoryUpdated;
+        }
+
+        void _repositoryUpdatedNotificationService_NotifyRepositoryUpdated(DataAccess.InsuranceInformationRepository repository)
+        {
+            if(NotifyInsuranceInformationUpdated != null)
+            {
+                NotifyInsuranceInformationUpdated(repository.GetAll());
+            }
         }
 
         public List<InsuranceInformation> GetAllInsurancePolicies()

@@ -53,7 +53,7 @@ namespace Xenios.Business.Test
             repo.Save(newInformation);
 
             isNotifiedEvent.WaitOne(TimeSpan.FromSeconds(1));
-            Assert.AreEqual(informationsCount + 1, newInfosCount);
+            Assert.AreEqual(newInfosCount, informationsCount + 1);
         }
     }
 }
