@@ -35,5 +35,11 @@ namespace Xenios.Business.Test
             var allInfos = service.GetAllInsurancePolicies();
             Assert.IsTrue(allInfos.Count == informationsCount);
         }
+
+        [TestMethod]
+        public void Should_notify_new_insurance_policies_available()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
