@@ -7,11 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xenios.DataAccess", "Xenios
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{EEDB815D-604C-48F4-9178-CDB0139375FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xenios.Tests", "Xenios.DataAccess.Tests\Xenios.Tests.csproj", "{86120A61-7118-48EE-AB4D-B8CC97B4A934}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xenios.Domain", "Xenios.DomainModels\Xenios.Domain.csproj", "{2C057155-539F-4F76-93D3-F04DBF4A5306}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xenios.Business", "Xenios.Business\Xenios.Business.csproj", "{D173DA56-C0C4-419F-A0B9-2920F0E10832}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xenios.Tests", "Xenios.Tests\Xenios.Tests.csproj", "{86120A61-7118-48EE-AB4D-B8CC97B4A934}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,6 @@ Global
 		{4DDE9D11-1ECA-4517-B21A-B1714C85CAE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DDE9D11-1ECA-4517-B21A-B1714C85CAE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DDE9D11-1ECA-4517-B21A-B1714C85CAE0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{86120A61-7118-48EE-AB4D-B8CC97B4A934}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{86120A61-7118-48EE-AB4D-B8CC97B4A934}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{86120A61-7118-48EE-AB4D-B8CC97B4A934}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{86120A61-7118-48EE-AB4D-B8CC97B4A934}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2C057155-539F-4F76-93D3-F04DBF4A5306}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2C057155-539F-4F76-93D3-F04DBF4A5306}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C057155-539F-4F76-93D3-F04DBF4A5306}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -35,6 +31,10 @@ Global
 		{D173DA56-C0C4-419F-A0B9-2920F0E10832}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D173DA56-C0C4-419F-A0B9-2920F0E10832}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D173DA56-C0C4-419F-A0B9-2920F0E10832}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86120A61-7118-48EE-AB4D-B8CC97B4A934}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86120A61-7118-48EE-AB4D-B8CC97B4A934}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86120A61-7118-48EE-AB4D-B8CC97B4A934}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86120A61-7118-48EE-AB4D-B8CC97B4A934}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
