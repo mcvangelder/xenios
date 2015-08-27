@@ -9,7 +9,7 @@ namespace Xenios.Business
 {
     public delegate void InsuranceInformationUpdated(List<InsuranceInformation> reloadedInformations);
 
-    public class InsuranceInformationRetrievalService
+    public class InsuranceInformationRetrievalService : IDisposable
     {
         private DataAccess.InsuranceInformationRepository _informationRepository;
         private DataAccess.RepositoryUpdatedNotificationService _repositoryUpdatedNotificationService;
@@ -40,5 +40,19 @@ namespace Xenios.Business
         }
 
         public event InsuranceInformationUpdated NotifyInsuranceInformationUpdated;
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        
+        public void Dispose(bool disposing)
+        {
+            if(disposing)
+            {
+                _repositoryUpdatedNotificationService.Dispose();
+            }
+        }
     }
 }
