@@ -8,19 +8,30 @@ namespace Xenios.Test.Helpers
 {
     public class InsuranceInformationHelper
     {
+        public static List<Xenios.Domain.Models.InsuranceInformation> CreateInsuranceInformations(int count)
+        {
+            var result = new List<Xenios.Domain.Models.InsuranceInformation>(count);
+            for (var i = 0; i < count; i++)
+                result.Add(CreateInsuranceInformation());
+
+            return result;
+        }
+
         public static Domain.Models.InsuranceInformation CreateInsuranceInformation()
         {
+            var guidString = Guid.NewGuid().ToString();
+
             var insuranceInformation = new Domain.Models.InsuranceInformation
             {
                 Id = Guid.NewGuid(),
                 Customer = new Domain.Models.CustomerInformation
                 {
                     Id = Guid.NewGuid(),
-                    FirstName = "John",
-                    LastName = "Smith",
+                    FirstName = guidString.Substring(0,8),
+                    LastName = guidString.Substring(20),
                     AddressLine1 = "123 Some Street",
-                    City = "City",
-                    State = "State",
+                    City = guidString.Substring(9,4),
+                    State = guidString.Substring(14,4),
                     PostalCode = "12345",
                     Country = "United States",
                 },
