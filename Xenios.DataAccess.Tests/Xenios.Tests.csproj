@@ -6,7 +6,7 @@
     <ProjectGuid>{86120A61-7118-48EE-AB4D-B8CC97B4A934}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Xenios.Tests</RootNamespace>
+    <RootNamespace>Xenios</RootNamespace>
     <AssemblyName>Xenios.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -50,12 +50,17 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Business.Test\InsuranceInformationRetrievalTest.cs" />
     <Compile Include="Helpers\InsuranceInformationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataAccess\DataPersistenceTest.cs" />
     <Compile Include="DataAccess\RepositoryUpdatedTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Xenios.Business\Xenios.Business.csproj">
+      <Project>{d173da56-c0c4-419f-a0b9-2920f0e10832}</Project>
+      <Name>Xenios.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Xenios.DataAccess\Xenios.DataAccess.csproj">
       <Project>{4dde9d11-1eca-4517-b21a-b1714c85cae0}</Project>
       <Name>Xenios.DataAccess</Name>
