@@ -57,7 +57,7 @@ namespace Xenios.Business
 
         public void Save(InsuranceInformation insuranceInformation)
         {
-            throw new NotImplementedException();
+            _informationRepository.Save(insuranceInformation);
         }
     }
 }

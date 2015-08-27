@@ -70,6 +70,7 @@ namespace Xenios.Business.Test
             using (var insuranceInformationRetrievalService = new InsuranceInformationRetrievalService(fileName))
             {
                 insuranceInformationRetrievalService.Save(insuranceInformation);
+
                 var savedInformation = insuranceInformationRetrievalService.GetAllInsurancePolicies().Single();
                 Assert.AreEqual(insuranceInformation.Id, savedInformation.Id);
                 Assert.AreEqual(insuranceInformation.InsuranceType, savedInformation.InsuranceType);
