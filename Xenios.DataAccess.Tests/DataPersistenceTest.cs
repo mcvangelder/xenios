@@ -11,55 +11,21 @@ namespace Xenios.DataAccess.Tests
     {
         private const String fileName = @"\\monticello\home\development\insurance_information_storage.txt";
 
-        private static Domain.Models.InsuranceInformation CreateInsuranceInformation()
-        {
-            var insuranceInformation = new Domain.Models.InsuranceInformation
-            {
-                Id = Guid.NewGuid(),
-                Customer = new Domain.Models.CustomerInformation
-                {
-                    Id = Guid.NewGuid(),
-                    FirstName = "John",
-                    LastName = "Smith",
-                    AddressLine1 = "123 Some Street",
-                    City = "City",
-                    State = "State",
-                    PostalCode = "12345",
-                    Country = "United States",
-                },
-                PaymentInformation = new Domain.Models.PaymentInformation
-                {
-                    Id = Guid.NewGuid(),
-                    CreditCardType = Domain.Enums.CreditCardTypes.Amex,
-                    CreditCardNumber = "1234-5678-9012-3456",
-                    ExpirationDate = DateTime.Now,
-                    CreditCardVerificationNumber = "001"
-                },
-                InsuranceType = Domain.Enums.InsuranceTypes.Comprehensive,
-                CoverageBeginDateTime = DateTime.Now,
-                Price = (decimal)274.00,
-                TermLength = 6,
-                TermUnit = Domain.Enums.TermUnits.Months
-            };
-            return insuranceInformation;
-        }
-
         [TestInitialize]
         [TestCleanup]
-        public void DeletePersistenceFile()
+        public void DeleteRepositoryFile()
         {
-            var persistenceFile = new FileInfo(fileName);
-            persistenceFile.Delete();
+            File.Delete(fileName);
         }
 
         [TestMethod]
         public void Should_persist_insurance_info()
         {
-            var infoService = new DataAccess.InsuranceInformationRepository(fileName);
-            var insuranceInformation = CreateInsuranceInformation();
+            var infoRepo = new DataAccess.InsuranceInformationRepository(fileName);
+            var insuranceInformation = Helpers.InsuranceInformationHelper.CreateInsuranceInformation();
 
-            infoService.Save(insuranceInformation);
-            var savedInformation = infoService.GetAll().FirstOrDefault(i => i.Id == insuranceInformation.Id);
+            infoRepo.Save(insuranceInformation);
+            var savedInformation = infoRepo.GetAll().FirstOrDefault(i => i.Id == insuranceInformation.Id);
 
             Assert.AreEqual(insuranceInformation.Id, savedInformation.Id);
             Assert.AreEqual(insuranceInformation.InsuranceType, savedInformation.InsuranceType);
@@ -91,7 +57,7 @@ namespace Xenios.DataAccess.Tests
             using (var fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
             {
                 var informationService = new InsuranceInformationRepository(fileName);
-                var insuranceInformation = CreateInsuranceInformation();
+                var insuranceInformation = Helpers.InsuranceInformationHelper.CreateInsuranceInformation();
                 informationService.Save(insuranceInformation);
             }
         }

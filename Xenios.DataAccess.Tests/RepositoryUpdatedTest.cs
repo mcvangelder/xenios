@@ -14,11 +14,12 @@ namespace Xenios.DataAccess.Tests
         [TestInitialize]
         public void CreateRepository()
         {
+            DeleteRepositoryFile();
             repository = new InsuranceInformationRepository(_fileName);
         }
 
         [TestCleanup]
-        public void DeleteRepository()
+        public void DeleteRepositoryFile()
         {
             File.Delete(_fileName);
         }
@@ -36,34 +37,7 @@ namespace Xenios.DataAccess.Tests
                     isNotified.Set();
                 };
 
-            var insuranceInformation = new Domain.Models.InsuranceInformation
-            {
-                Id = Guid.NewGuid(),
-                Customer = new Domain.Models.CustomerInformation
-                {
-                    Id = Guid.NewGuid(),
-                    FirstName = "John",
-                    LastName = "Smith",
-                    AddressLine1 = "123 Some Street",
-                    City = "City",
-                    State = "State",
-                    PostalCode = "12345",
-                    Country = "United States",
-                },
-                PaymentInformation = new Domain.Models.PaymentInformation
-                {
-                    Id = Guid.NewGuid(),
-                    CreditCardType = Domain.Enums.CreditCardTypes.Amex,
-                    CreditCardNumber = "1234-5678-9012-3456",
-                    ExpirationDate = DateTime.Now,
-                    CreditCardVerificationNumber = "001"
-                },
-                InsuranceType = Domain.Enums.InsuranceTypes.Comprehensive,
-                CoverageBeginDateTime = DateTime.Now,
-                Price = (decimal)274.00,
-                TermLength = 6,
-                TermUnit = Domain.Enums.TermUnits.Months
-            };
+            var insuranceInformation = Helpers.InsuranceInformationHelper.CreateInsuranceInformation();
 
             repository.Save(insuranceInformation);
             var isNotifiedSet = isNotified.WaitOne(TimeSpan.FromSeconds(1));
