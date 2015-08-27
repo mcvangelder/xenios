@@ -25,7 +25,7 @@ namespace Xenios.Business.Test
         public void Should_get_all_insurance_informations()
         {
             Business.InsuranceInformationRetrievalService service = 
-                new Business.InsuranceInformationRetrievalService { Source = fileName };
+                            new Business.InsuranceInformationRetrievalService(fileName);
 
             var allInfos = service.GetAllInsurancePolicies();
             Assert.IsTrue(allInfos.Count == 2);
