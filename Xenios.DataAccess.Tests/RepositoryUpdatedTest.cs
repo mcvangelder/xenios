@@ -27,22 +27,22 @@ namespace Xenios.DataAccess.Tests
         [TestMethod]
         public void Should_detect_repository_updates()
         {
-            DataAccess.RepositoryUpdatedNotificationService notificationService = 
-                new RepositoryUpdatedNotificationService(repository);
+            using (var notificationService =  new RepositoryUpdatedNotificationService(repository))
+            {
+                var isNotified = new AutoResetEvent(false);
 
-            var isNotified = new AutoResetEvent(false);
+                notificationService.NotifyRepositoryUpdated += (repo) =>
+                    {
+                        isNotified.Set();
+                    };
 
-            notificationService.NotifyRepositoryUpdated += (repo) =>
-                {
-                    isNotified.Set();
-                };
+                var insuranceInformation = Helpers.InsuranceInformationHelper.CreateInsuranceInformation();
 
-            var insuranceInformation = Helpers.InsuranceInformationHelper.CreateInsuranceInformation();
+                repository.Save(insuranceInformation);
+                var isNotifiedSet = isNotified.WaitOne(TimeSpan.FromSeconds(1));
 
-            repository.Save(insuranceInformation);
-            var isNotifiedSet = isNotified.WaitOne(TimeSpan.FromSeconds(1));
-
-            Assert.IsTrue(isNotifiedSet, "NotifyRepositoryUpdated was not called");
+                Assert.IsTrue(isNotifiedSet, "NotifyRepositoryUpdated was not called");
+            }
         }
     }
 }
