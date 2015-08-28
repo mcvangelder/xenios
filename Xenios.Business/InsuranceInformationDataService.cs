@@ -9,12 +9,12 @@ namespace Xenios.Business
 {
     public delegate void InsuranceInformationUpdated(List<InsuranceInformation> reloadedInformations);
 
-    public class InsuranceInformationRetrievalService : IDisposable
+    public class InsuranceInformationDataService : IDisposable
     {
         private DataAccess.InsuranceInformationRepository _informationRepository;
         private DataAccess.RepositoryUpdatedNotificationService _repositoryUpdatedNotificationService;
 
-        public InsuranceInformationRetrievalService(String sourceFile)
+        public InsuranceInformationDataService(String sourceFile)
         {
             _informationRepository = new DataAccess.InsuranceInformationRepository(sourceFile);
             CreateInsuranceInformationNotificationService();

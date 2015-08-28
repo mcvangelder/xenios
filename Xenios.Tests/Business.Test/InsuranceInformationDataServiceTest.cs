@@ -9,7 +9,7 @@ using System.Linq;
 namespace Xenios.Business.Test
 {
     [TestClass]
-    public class InsuranceInformationRetrievalTest
+    public class InsuranceInformationDataServiceTest
     {
         private const int informationsCount = 5;
         private const string fileName = @"c:\temp\insurance_information_retrievalTest.txt";
@@ -36,8 +36,8 @@ namespace Xenios.Business.Test
         public void Should_get_all_insurance_informations()
         {
             CreateRepositoryWithDefaultInformation();
-            InsuranceInformationRetrievalService service = 
-                            new InsuranceInformationRetrievalService(fileName);
+            InsuranceInformationDataService service = 
+                            new InsuranceInformationDataService(fileName);
 
             var allInfos = service.GetAllInsurancePolicies();
             Assert.IsTrue(allInfos.Count == informationsCount);
@@ -49,7 +49,7 @@ namespace Xenios.Business.Test
             var isNotifiedEvent = new AutoResetEvent(false);
             var newInfosCount = 0;
 
-            using (var service = new InsuranceInformationRetrievalService(fileName))
+            using (var service = new InsuranceInformationDataService(fileName))
             {
                 service.NotifyInsuranceInformationUpdated += (infos) =>
                 {
@@ -72,7 +72,7 @@ namespace Xenios.Business.Test
             DeleteRepository();
 
             var insuranceInformation = Xenios.Test.Helpers.InsuranceInformationHelper.CreateInsuranceInformation();
-            using (var insuranceInformationRetrievalService = new InsuranceInformationRetrievalService(fileName))
+            using (var insuranceInformationRetrievalService = new InsuranceInformationDataService(fileName))
             {
                 insuranceInformationRetrievalService.Save(insuranceInformation);
 
