@@ -15,11 +15,8 @@ namespace Xenios.Business.Test
         private const string fileName = @"c:\temp\insurance_information_retrievalTest.txt";
         
 
-        [TestInitialize]
-        public void CreateRepositoryWithInformation()
+        private void CreateRepositoryWithDefaultInformation()
         {
-            File.Delete(fileName);
-
             var repo = new DataAccess.InsuranceInformationRepository(fileName);
             var informations = Xenios.Test.Helpers.InsuranceInformationHelper.CreateInsuranceInformations(informationsCount);
             foreach(var info in informations)
@@ -28,9 +25,17 @@ namespace Xenios.Business.Test
             }
         }
 
+        [TestInitialize]
+
+        public void DeleteRepository()
+        {
+            File.Delete(fileName);
+        }
+
         [TestMethod]
         public void Should_get_all_insurance_informations()
         {
+            CreateRepositoryWithDefaultInformation();
             InsuranceInformationRetrievalService service = 
                             new InsuranceInformationRetrievalService(fileName);
 
@@ -57,14 +62,14 @@ namespace Xenios.Business.Test
                 repo.Save(newInformation);
 
                 isNotifiedEvent.WaitOne(TimeSpan.FromSeconds(1));
-                Assert.AreEqual(newInfosCount, informationsCount + 1);
+                Assert.AreEqual(newInfosCount, 1);
             }
         }
 
         [TestMethod]
         public void Should_save_and_read_insurance_information()
         {
-            File.Delete(fileName);
+            DeleteRepository();
 
             var insuranceInformation = Xenios.Test.Helpers.InsuranceInformationHelper.CreateInsuranceInformation();
             using (var insuranceInformationRetrievalService = new InsuranceInformationRetrievalService(fileName))
