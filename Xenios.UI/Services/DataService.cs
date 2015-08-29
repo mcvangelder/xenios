@@ -43,6 +43,9 @@ namespace Xenios.UI.Services
 
         private void CreateInsurancePolicyDataService(string value)
         {
+            if (InsurancePolicyDataService is IDisposable)
+                ((IDisposable)InsurancePolicyDataService).Dispose();
+                
             InsurancePolicyDataService = (T)Activator.CreateInstance(typeof(T), value);
         }
 

@@ -7,17 +7,18 @@ using Xenios.Business;
 
 namespace Xenios.Mocks
 {
-    public delegate void OnLoadEvent();
+    public delegate void OnCalledEvent();
 
-    public class MockInsurancePolicyDataService : AbsractInsurancePolicyDataService
+    public class MockInsurancePolicyDataService : AbsractInsurancePolicyDataService, IDisposable
     {
         public MockInsurancePolicyDataService(String fileName)
             :base(fileName)
         { }
 
         public event OnSaveEvent OnSave;
-        public event OnLoadEvent OnGetAllInsurancePolicies;
-        public event OnLoadEvent OnFindInsurancePoliciesByCustomerName;
+        public event OnCalledEvent OnGetAllInsurancePolicies;
+        public event OnCalledEvent OnFindInsurancePoliciesByCustomerName;
+        public event OnCalledEvent OnDispose;
 
         public override void Save(List<Domain.Models.InsurancePolicy> policies)
         {
@@ -39,6 +40,14 @@ namespace Xenios.Mocks
                 OnFindInsurancePoliciesByCustomerName();
 
             return new List<Domain.Models.InsurancePolicy>();
+        }
+
+        public void Dispose()
+        {
+            if(OnDispose != null)
+            {
+                OnDispose();
+            }
         }
     }
 }

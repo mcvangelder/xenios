@@ -58,5 +58,15 @@ namespace Xenios.UI.Test
 
             Assert.AreNotSame(previousBusinessService, currentBusinessService);
         }
+
+        [TestMethod]
+        public void Should_dispose_previous_business_data_service_when_source_file_changes()
+        {
+            var isNotified = false;
+            _mockBusinessService.OnDispose += () => { isNotified = true; };
+
+            _dataService.SourceFile = "another/mock/path";
+            Assert.IsTrue(isNotified);
+        }
     }
 }
