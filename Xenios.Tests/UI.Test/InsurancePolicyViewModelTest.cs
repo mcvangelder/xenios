@@ -90,7 +90,7 @@ namespace Xenios.UI.Test
         [TestMethod]
         public void Should_indicate_data_is_not_up_to_date()
         {
-            _dataService.RaiseNewPoliciesAvailable();
+            _dataService.RaisePoliciesChanged();
 
             Assert.IsFalse(_viewModel.IsDataUpToDate.GetValueOrDefault(true));
         }

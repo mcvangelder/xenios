@@ -29,7 +29,7 @@ namespace Xenios.Mocks
             return new List<Domain.Models.InsurancePolicy>() { _insuranceInfos.First() };
         }
 
-        internal void RaiseNewPoliciesAvailable()
+        internal void RaisePoliciesChanged()
         {
             if (PoliciesChanged != null)
                 PoliciesChanged(GetAllInsurancePolicies());
