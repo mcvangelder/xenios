@@ -6,48 +6,45 @@ namespace Xenios.UI.Test
     [TestClass]
     public class UIDataServiceTest
     {
+        private Mocks.MockInsurancePolicyDataService _mockBusinessService;
+        private UI.Services.DataService _dataService;
+
+        [TestInitialize]
+        public void CreateUIDataService()
+        {
+            _mockBusinessService = new Mocks.MockInsurancePolicyDataService();
+            _dataService = new UI.Services.DataService();
+            _dataService.InsurancePolicyDataService = _mockBusinessService;
+        }
+
         [TestMethod]
         public void Should_call_save_on_business_data_service()
         {
-            var mockBusinessService = new Mocks.MockInsurancePolicyDataService();
-            var dataService = new UI.Services.DataService();
-            dataService.InsurancePolicyDataService = mockBusinessService;
-            
             bool isNotified = false;
-            mockBusinessService.OnSave += (policies) => { isNotified = true; };
+            _mockBusinessService.OnSave += (policies) => { isNotified = true; };
 
-            dataService.Save(Xenios.Test.Helpers.InsurancePolicyHelper.CreateInsurancePolicies(1));
+            _dataService.Save(Xenios.Test.Helpers.InsurancePolicyHelper.CreateInsurancePolicies(1));
             Assert.IsTrue(isNotified);
         }
 
         [TestMethod]
         public void Should_call_get_all_insurance_policies_on_buisness_data_service()
         {
-            var mockBusinessService = new Mocks.MockInsurancePolicyDataService();
-            var dataService = new UI.Services.DataService();
-            dataService.InsurancePolicyDataService = mockBusinessService;
-
             bool isNotified = false;
-            mockBusinessService.OnGetAllInsurancePolicies += () => { isNotified = true; };
+            _mockBusinessService.OnGetAllInsurancePolicies += () => { isNotified = true; };
 
-            dataService.GetAllInsurancePolicies();
+            _dataService.GetAllInsurancePolicies();
             Assert.IsTrue(isNotified);
         }
 
         [TestMethod]
         public void Should_call_find_insurance_policies_by_customer_name_on_business_data_service()
         {
-            var mockBusinessService = new Mocks.MockInsurancePolicyDataService();
-            var dataService = new UI.Services.DataService();
-            dataService.InsurancePolicyDataService = mockBusinessService;
-
             bool isNotified = false;
-            mockBusinessService.OnFindInsurancePoliciesByCustomerName += () => { isNotified = true; };
+            _mockBusinessService.OnFindInsurancePoliciesByCustomerName += () => { isNotified = true; };
 
-            dataService.FindInsurancePoliciesByCustomerName("ignored");
+            _dataService.FindInsurancePoliciesByCustomerName("ignored");
             Assert.IsTrue(isNotified);
         }
-
-        
     }
 }
