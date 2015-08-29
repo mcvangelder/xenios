@@ -27,7 +27,7 @@ namespace Xenios.UI.ViewModel
         {
             _dataService = dataService;
             _dataService.PoliciesChanged += _dataService_PoliciesChanged;
-            RefreshPolicyListCommand = new RelayCommand(LoadInsuranceInformations);
+            RefreshPolicyListCommand = new RelayCommand(LoadInsurancePolicies);
         }
 
         void _dataService_PoliciesChanged(List<Domain.Models.InsurancePolicy> newPolicyList)
@@ -64,7 +64,7 @@ namespace Xenios.UI.ViewModel
 
                 _dataService.SourceFile = _pathToFile = value;
 
-                LoadInsuranceInformations();
+                LoadInsurancePolicies();
                 RaisePropertyChanged(PathToFilePropertyName);
             }
         }
@@ -191,7 +191,7 @@ namespace Xenios.UI.ViewModel
             }
         }
 
-        private void LoadInsuranceInformations()
+        private void LoadInsurancePolicies()
         {
             InsurancePolicies.Clear();
 
