@@ -42,7 +42,7 @@ namespace Xenios.DataAccess
 
         public event RepositoryUpdated NotifyRepositoryUpdated;
 
-        public void Dispose(bool dispose)
+        private void Dispose(bool dispose)
         {
             if(dispose)
             {
