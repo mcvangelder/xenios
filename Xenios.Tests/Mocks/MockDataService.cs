@@ -11,7 +11,9 @@ namespace Xenios.Mocks
     {
         private List<Domain.Models.InsurancePolicy> _insuranceInfos;
         public String SourceFile { get; set; }
-        
+
+        public event PoliciesChangedEvent PoliciesChanged;
+
         public MockDataService()
         {
             _insuranceInfos = Xenios.Test.Helpers.InsurancePolicyHelper.CreateInsurancePolicies(5);
@@ -25,6 +27,12 @@ namespace Xenios.Mocks
         public List<Domain.Models.InsurancePolicy> FindInsurancePoliciesByCustomerName(string searchValue)
         {
             return new List<Domain.Models.InsurancePolicy>() { _insuranceInfos.First() };
+        }
+
+        internal void RaiseNewPoliciesAvailable()
+        {
+            if (PoliciesChanged != null)
+                PoliciesChanged(GetAllInsurancePolicies());
         }
     }
 }

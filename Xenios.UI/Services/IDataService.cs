@@ -7,8 +7,11 @@ using Xenios.Domain.Models;
 
 namespace Xenios.UI.Services
 {
+    public delegate void PoliciesChangedEvent(List<InsurancePolicy> newPolicyList);
     public interface IDataService
     {
+        event PoliciesChangedEvent PoliciesChanged;
+
         String SourceFile { get; set; }
 
         List<InsurancePolicy> GetAllInsurancePolicies();

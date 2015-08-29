@@ -25,6 +25,12 @@ namespace Xenios.UI.ViewModel
         public InsurancePolicyViewModel(IDataService dataService)
         {
             _dataService = dataService;
+            _dataService.PoliciesChanged += _dataService_PoliciesChanged;
+        }
+
+        void _dataService_PoliciesChanged(List<Domain.Models.InsurancePolicy> newPolicyList)
+        {
+            IsDataUpToDate = false;
         }
 
         /// <summary>
@@ -152,17 +158,17 @@ namespace Xenios.UI.ViewModel
         }
 
         /// <summary>
-        /// The <see cref="IsDataUpToData" /> property's name.
+        /// The <see cref="IsDataUpToDate" /> property's name.
         /// </summary>
-        public const string IsDataUpToDataPropertyName = "IsDataUpToData";
+        public const string IsDataUpToDatePropertyName = "IsDataUpToDate";
 
         private bool? _isDataUpToDate = null;
 
         /// <summary>
-        /// Sets and gets the IsDataUpToData property.
+        /// Sets and gets the IsDataUpToDate property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public bool? IsDataUpToData
+        public bool? IsDataUpToDate
         {
             get
             {
@@ -177,7 +183,7 @@ namespace Xenios.UI.ViewModel
                 }
 
                 _isDataUpToDate = value;
-                RaisePropertyChanged(IsDataUpToDataPropertyName);
+                RaisePropertyChanged(IsDataUpToDatePropertyName);
             }
         }
 
@@ -192,7 +198,7 @@ namespace Xenios.UI.ViewModel
             }
 
             LastReadDateTime = DateTime.Now;
-            IsDataUpToData = true;
+            IsDataUpToDate = true;
         }
 
         private void FindInsurancePoliciesByCustomerName(string value)

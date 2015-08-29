@@ -86,7 +86,18 @@ namespace Xenios.UI.Test
             var viewModel = new ViewModel.InsurancePolicyViewModel(dataService);
             viewModel.PathToFile = "mockfilepath";
 
-            Assert.IsTrue(viewModel.IsDataUpToData.GetValueOrDefault(false));
+            Assert.IsTrue(viewModel.IsDataUpToDate.GetValueOrDefault(false));
+        }
+
+        [TestMethod]
+        public void Should_indicate_data_is_not_up_to_date()
+        {
+            var dataService = new Xenios.Mocks.MockDataService();
+            var viewModel = new ViewModel.InsurancePolicyViewModel(dataService);
+
+            dataService.RaiseNewPoliciesAvailable();
+
+            Assert.IsFalse(viewModel.IsDataUpToDate.GetValueOrDefault(true));
         }
     }
 }
