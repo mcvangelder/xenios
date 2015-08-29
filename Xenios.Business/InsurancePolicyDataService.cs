@@ -42,7 +42,9 @@ namespace Xenios.Business
         public List<InsurancePolicy> FindInsurancePoliciesByCustomerName(String customerName)
         {
             return _informationRepository.GetAll().Where(
-                            policy => policy.Customer.FirstName.ToLower().Contains(customerName.ToLower())
+                            policy => 
+                                policy.Customer.FirstName.ToLower().Contains(customerName.ToLower()) ||
+                                policy.Customer.LastName.ToLower().Contains(customerName.ToLower())
                     ).ToList();
         }
 
