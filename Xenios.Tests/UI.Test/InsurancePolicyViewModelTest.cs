@@ -104,5 +104,22 @@ namespace Xenios.UI.Test
 
             Assert.AreNotEqual(previousLastReadDateTime, currentLastReadDateTime);
         }
+
+        [TestMethod]
+        public void Should_refersh_data_and_apply_current_search_text()
+        {
+            _viewModel.PathToFile = mockFilePath;
+            var previousLastReadDateTime = _viewModel.LastReadDateTime;
+            
+            _viewModel.SearchText = "ignored";
+            var previousSearchResults = _viewModel.InsurancePolicies.ToList();
+
+            _viewModel.RefreshPolicyListCommand.Execute(null);
+            var currentSearchResults = _viewModel.InsurancePolicies.ToList();
+
+            // The mock data service always returns one record, test this assumption holds true
+            Assert.AreEqual(1, previousSearchResults.Count);
+            Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(previousSearchResults, currentSearchResults);
+        }
     }
 }

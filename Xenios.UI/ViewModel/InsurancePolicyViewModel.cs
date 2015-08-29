@@ -27,7 +27,7 @@ namespace Xenios.UI.ViewModel
         {
             _dataService = dataService;
             _dataService.PoliciesChanged += _dataService_PoliciesChanged;
-            RefreshPolicyListCommand = new RelayCommand(LoadInsurancePolicies);
+            RefreshPolicyListCommand = new RelayCommand(() => FindInsurancePoliciesByCustomerName(SearchText));
         }
 
         void _dataService_PoliciesChanged(List<Domain.Models.InsurancePolicy> newPolicyList)
