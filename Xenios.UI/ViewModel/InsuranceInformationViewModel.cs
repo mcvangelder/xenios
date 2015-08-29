@@ -52,15 +52,20 @@ namespace Xenios.UI.ViewModel
                 }
 
                 _dataService.SourceFile = _pathToFile = value;
-                
-                InsuranceInformations.Clear();
-                var infos = _dataService.GetAllInsuranceInformations();
-                if (infos == null)
-                    return;
 
-                infos.ForEach(item => InsuranceInformations.Add(item));
+                LoadInsuranceInformations();
                 RaisePropertyChanged(PathToFilePropertyName);
             }
+        }
+
+        private void LoadInsuranceInformations()
+        {
+            InsuranceInformations.Clear();
+            var infos = _dataService.GetAllInsuranceInformations();
+            if (infos == null)
+                return;
+
+            infos.ForEach(item => InsuranceInformations.Add(item));
         }
 
         /// <summary>
@@ -92,5 +97,7 @@ namespace Xenios.UI.ViewModel
                 RaisePropertyChanged(InsuranceInformationsPropertyName);
             }
         }
+
+        public string SearchText { get; set; }
     }
 }
