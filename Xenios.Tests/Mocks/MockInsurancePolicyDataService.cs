@@ -13,6 +13,7 @@ namespace Xenios.Mocks
     {
         public event OnSaveEvent OnSave;
         public event OnLoadEvent OnGetAllInsurancePolicies;
+        public event OnLoadEvent OnFindInsurancePoliciesByCustomerName;
 
         public void Save(List<Domain.Models.InsurancePolicy> policies)
         {
@@ -24,6 +25,15 @@ namespace Xenios.Mocks
         {
             if (OnGetAllInsurancePolicies != null)
                 OnGetAllInsurancePolicies();
+
+            return new List<Domain.Models.InsurancePolicy>();
+        }
+
+
+        public List<Domain.Models.InsurancePolicy> FindInsurancePoliciesByCustomerName(string searchValue)
+        {
+            if (OnFindInsurancePoliciesByCustomerName != null)
+                OnFindInsurancePoliciesByCustomerName();
 
             return new List<Domain.Models.InsurancePolicy>();
         }

@@ -33,5 +33,21 @@ namespace Xenios.UI.Test
             dataService.GetAllInsurancePolicies();
             Assert.IsTrue(isNotified);
         }
+
+        [TestMethod]
+        public void Should_call_find_insurance_policies_by_customer_name_on_business_data_service()
+        {
+            var mockBusinessService = new Mocks.MockInsurancePolicyDataService();
+            var dataService = new UI.Services.DataService();
+            dataService.InsurancePolicyDataService = mockBusinessService;
+
+            bool isNotified = false;
+            mockBusinessService.OnFindInsurancePoliciesByCustomerName += () => { isNotified = true; };
+
+            dataService.FindInsurancePoliciesByCustomerName("ignored");
+            Assert.IsTrue(isNotified);
+        }
+
+        
     }
 }

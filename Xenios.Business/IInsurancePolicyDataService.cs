@@ -11,5 +11,7 @@ namespace Xenios.Business
         void Save(List<Domain.Models.InsurancePolicy> policies);
 
         List<Domain.Models.InsurancePolicy> GetAllInsurancePolicies();
+
+        List<Domain.Models.InsurancePolicy> FindInsurancePoliciesByCustomerName(string searchValue);
     }
 }
