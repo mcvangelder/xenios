@@ -73,6 +73,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Services\DataService.cs" />
     <Compile Include="Services\IApplicationService.cs" />
     <Compile Include="Services\IDataService.cs" />
     <Compile Include="ViewModel\InsurancePolicyViewModel.cs" />
@@ -121,6 +122,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Xenios.Business\Xenios.Business.csproj">
+      <Project>{d173da56-c0c4-419f-a0b9-2920f0e10832}</Project>
+      <Name>Xenios.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Xenios.DomainModels\Xenios.Domain.csproj">
       <Project>{2c057155-539f-4f76-93d3-f04dbf4a5306}</Project>
       <Name>Xenios.Domain</Name>

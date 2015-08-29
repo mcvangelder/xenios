@@ -74,10 +74,12 @@
     <Compile Include="Helpers\InsurancePolicyHelper.cs" />
     <Compile Include="Mocks\MockApplicationService.cs" />
     <Compile Include="Mocks\MockDataService.cs" />
+    <Compile Include="Mocks\MockInsurancePolicyDataService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataAccess\DataPersistenceTest.cs" />
     <Compile Include="DataAccess\RepositoryUpdatedTest.cs" />
     <Compile Include="UI.Test\InsurancePolicyViewModelTest.cs" />
+    <Compile Include="UI.Test\UIDataServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xenios.Business\Xenios.Business.csproj">

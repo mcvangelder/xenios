@@ -9,7 +9,7 @@ namespace Xenios.Business
 {
     public delegate void InsurancePoloicyUpdated(List<InsurancePolicy> reloadedInformations);
 
-    public class InsurancePolicyDataService : IDisposable
+    public class InsurancePolicyDataService : IInsurancePolicyDataService, IDisposable
     {
         private DataAccess.InsurancePolicyRepository _policiesRepository;
         private DataAccess.RepositoryUpdatedNotificationService _repositoryUpdatedNotificationService;
@@ -63,15 +63,14 @@ namespace Xenios.Business
                 _repositoryUpdatedNotificationService.Dispose();
             }
         }
+        public void Save(List<InsurancePolicy> insurancePolicies)
+        {
+            _policiesRepository.SaveAll(insurancePolicies);
+        }
 
         ~InsurancePolicyDataService()
         {
             Dispose(true);
-        }
-
-        public void Save(List<InsurancePolicy> insurancePolicies)
-        {
-            _policiesRepository.SaveAll(insurancePolicies);
         }
     }
 }

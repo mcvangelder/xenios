@@ -55,6 +55,7 @@ namespace Xenios.Test.Helpers
             return insuranceInformation;
         }
 
+        // TODO MVG - This does belong in helper method as it is testing the DataService explicitly. Move this to the appropriate test class
         public static void AssertPolicyCanBeFoundByCustomerName(List<InsurancePolicy> expectedPolicies, string customerName, string repositoryFile)
         {
             using (var service = new InsurancePolicyDataService(repositoryFile))
