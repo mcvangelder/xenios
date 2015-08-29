@@ -30,7 +30,7 @@ namespace Xenios.UI.Test
         }
 
         [TestMethod]
-        public void Should_search_insurance_informations_by_customer_first_name()
+        public void Should_search_insurance_informations_by_customer_name()
         {
             var dataService = new Xenios.Mocks.MockDataService();
 

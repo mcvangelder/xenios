@@ -39,6 +39,13 @@ namespace Xenios.Business
             return _informationRepository.GetAll();
         }
 
+        public List<InsuranceInformation> FindInsurancePoliciesByCustomerName(String customerName)
+        {
+            return _informationRepository.GetAll().Where(
+                            policy => policy.Customer.FirstName.ToLower().Contains(customerName.ToLower())
+                    ).ToList();
+        }
+
         public event InsuranceInformationUpdated NotifyInsuranceInformationUpdated;
 
         public void Dispose()

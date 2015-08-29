@@ -13,15 +13,15 @@ namespace Xenios.Business.Test
     {
         private const int informationsCount = 5;
         private const string fileName = @"c:\temp\insurance_information_retrievalTest.txt";
-        
+        private DataAccess.InsuranceInformationRepository _repository;
 
         private void CreateRepositoryWithDefaultInformation()
         {
-            var repo = new DataAccess.InsuranceInformationRepository(fileName);
+            _repository = new DataAccess.InsuranceInformationRepository(fileName);
             var informations = Xenios.Test.Helpers.InsuranceInformationHelper.CreateInsuranceInformations(informationsCount);
             foreach(var info in informations)
             {
-                repo.Save(info);
+                _repository.Save(info);
             }
         }
 
@@ -78,6 +78,30 @@ namespace Xenios.Business.Test
 
                 var savedInformation = insuranceInformationRetrievalService.GetAllInsurancePolicies().Single();
                 Xenios.Test.Helpers.InsuranceInformationHelper.AssertAreEqual(insuranceInformation, savedInformation);
+            }
+        }
+
+        [TestMethod]
+        public void Should_find_customer_by_first_name()
+        {
+            DeleteRepository();
+
+            var expectedInfo = Xenios.Test.Helpers.InsuranceInformationHelper.CreateInsuranceInformation();
+            _repository = new DataAccess.InsuranceInformationRepository(fileName);
+            _repository.Save(expectedInfo);
+
+            var expectedCustomer = expectedInfo.Customer;
+            var expectedFirstName = expectedCustomer.FirstName;
+            var expectedCount = 1;
+
+            using(var service = new InsuranceInformationDataService(fileName))
+            {
+                var searchResults = service.FindInsurancePoliciesByCustomerName(expectedFirstName);
+                var searchResultsCount = searchResults.Count;
+                var searchResult = searchResults.First();
+
+                Assert.AreEqual(expectedCount, searchResultsCount);
+                Xenios.Test.Helpers.InsuranceInformationHelper.AssertAreEqual(expectedInfo, searchResult);
             }
         }
     }

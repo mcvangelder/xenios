@@ -124,13 +124,20 @@ namespace Xenios.UI.ViewModel
                 }
 
                 _searchText = value;
-                var infos = _dataService.FindInsuranceInformationsByCustomerName(value);
-                InsuranceInformations.Clear();
-                if (infos != null)
-                    infos.ForEach(info => InsuranceInformations.Add(info));
-
+                FindInsuranceInformationsByCustomerName(value);
                 RaisePropertyChanged(SearchTextPropertyName);
             }
+        }
+
+        private void FindInsuranceInformationsByCustomerName(string value)
+        {
+            InsuranceInformations.Clear();
+
+            var infos = _dataService.FindInsuranceInformationsByCustomerName(value);
+            if (infos == null)
+                return;
+
+            infos.ForEach(info => InsuranceInformations.Add(info));
         }
     }
 }
