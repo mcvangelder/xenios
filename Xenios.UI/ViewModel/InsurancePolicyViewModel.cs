@@ -151,16 +151,48 @@ namespace Xenios.UI.ViewModel
             }
         }
 
+        /// <summary>
+        /// The <see cref="IsDataUpToData" /> property's name.
+        /// </summary>
+        public const string IsDataUpToDataPropertyName = "IsDataUpToData";
+
+        private bool? _isDataUpToDate = null;
+
+        /// <summary>
+        /// Sets and gets the IsDataUpToData property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public bool? IsDataUpToData
+        {
+            get
+            {
+                return _isDataUpToDate;
+            }
+
+            set
+            {
+                if (_isDataUpToDate == value)
+                {
+                    return;
+                }
+
+                _isDataUpToDate = value;
+                RaisePropertyChanged(IsDataUpToDataPropertyName);
+            }
+        }
+
         private void LoadInsuranceInformations()
         {
             InsurancePolicies.Clear();
+
+            var policies = _dataService.GetAllInsurancePolicies();
+            if (policies != null)
+            {
+                policies.ForEach(item => InsurancePolicies.Add(item));
+            }
+
             LastReadDateTime = DateTime.Now;
-
-            var infos = _dataService.GetAllInsurancePolicies();
-            if (infos == null)
-                return;
-
-            infos.ForEach(item => InsurancePolicies.Add(item));
+            IsDataUpToData = true;
         }
 
         private void FindInsurancePoliciesByCustomerName(string value)

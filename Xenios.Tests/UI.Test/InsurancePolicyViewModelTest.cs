@@ -54,9 +54,8 @@ namespace Xenios.UI.Test
         public void Should_find_all_policies_when_search_string_is_empty()
         {
             var dataService = new Xenios.Mocks.MockDataService();
-
-            var viewModel = new ViewModel.InsurancePolicyViewModel(dataService);
             var expectedPolicies = dataService.GetAllInsurancePolicies();
+            var viewModel = new ViewModel.InsurancePolicyViewModel(dataService);
 
             // set to non empty string to simulate a pre-existing search
             viewModel.SearchText = "make a non-empty search first";
@@ -73,13 +72,21 @@ namespace Xenios.UI.Test
         public void Should_update_last_read_datetime_after_loading_policies()
         {
             var dataService = new Xenios.Mocks.MockDataService();
-
             var viewModel = new ViewModel.InsurancePolicyViewModel(dataService);
             var lastReadDateTime = viewModel.LastReadDateTime;
             viewModel.PathToFile = "mockfilepath";
 
             Assert.AreNotEqual(lastReadDateTime, viewModel.LastReadDateTime);
+        }
 
+        [TestMethod]
+        public void Should_indicate_data_is_up_to_date_upon_loading()
+        {
+            var dataService = new Xenios.Mocks.MockDataService();
+            var viewModel = new ViewModel.InsurancePolicyViewModel(dataService);
+            viewModel.PathToFile = "mockfilepath";
+
+            Assert.IsTrue(viewModel.IsDataUpToData.GetValueOrDefault(false));
         }
     }
 }
