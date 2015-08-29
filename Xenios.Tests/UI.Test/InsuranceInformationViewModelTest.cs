@@ -12,8 +12,8 @@ namespace Xenios.UI.Test
         {
             var dataService =  new Xenios.Mocks.MockDataService();
             
-            ViewModel.InsuranceInformationViewModel viewModel =
-               new ViewModel.InsuranceInformationViewModel(dataService);
+            ViewModel.InsurancePolicyViewModel viewModel =
+               new ViewModel.InsurancePolicyViewModel(dataService);
             
             var isNotified = false;
 
@@ -34,7 +34,7 @@ namespace Xenios.UI.Test
         {
             var dataService = new Xenios.Mocks.MockDataService();
 
-            var viewModel = new ViewModel.InsuranceInformationViewModel(dataService);
+            var viewModel = new ViewModel.InsurancePolicyViewModel(dataService);
             viewModel.PathToFile = "mockfilepath";
 
             var expectedInfos = dataService.FindInsuranceInformationsByCustomerName("ignored");
@@ -47,7 +47,7 @@ namespace Xenios.UI.Test
             var searchResultInfo = viewModel.InsuranceInformations.First();
 
             Assert.AreEqual(expectedInfosCount, searchResultCount);
-            Xenios.Test.Helpers.InsuranceInformationHelper.AssertAreEqual(expectedInfo, searchResultInfo);
+            Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(expectedInfo, searchResultInfo);
         }
     }
 }

@@ -8,20 +8,20 @@ using System.Threading.Tasks;
 
 namespace Xenios.DataAccess
 {
-    public delegate void RepositoryUpdated(InsuranceInformationRepository repository);
+    public delegate void RepositoryUpdated(InsurancePolicyRepository repository);
 
     public class RepositoryUpdatedNotificationService : IDisposable
     {
-        private InsuranceInformationRepository _repository;
+        private InsurancePolicyRepository _repository;
         private FileSystemWatcher _fileSystemWatcher;
 
-        public RepositoryUpdatedNotificationService(InsuranceInformationRepository repository)
+        public RepositoryUpdatedNotificationService(InsurancePolicyRepository repository)
         {
             _repository = repository;
             ConfigureFileWatcher(repository);
         }
 
-        private void ConfigureFileWatcher(InsuranceInformationRepository repository)
+        private void ConfigureFileWatcher(InsurancePolicyRepository repository)
         {
             var fileName = repository.FileName;
             var directory = Path.GetDirectoryName(fileName);

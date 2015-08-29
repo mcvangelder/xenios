@@ -8,22 +8,22 @@ using Xenios.Domain.Models;
 
 namespace Xenios.Test.Helpers
 {
-    public class InsuranceInformationHelper
+    public class InsurancePolicyHelper
     {
-        public static List<Xenios.Domain.Models.InsuranceInformation> CreateInsuranceInformations(int count)
+        public static List<Xenios.Domain.Models.InsurancePolicy> CreateInsurancePolicies(int count)
         {
-            var result = new List<Xenios.Domain.Models.InsuranceInformation>(count);
+            var result = new List<Xenios.Domain.Models.InsurancePolicy>(count);
             for (var i = 0; i < count; i++)
-                result.Add(CreateInsuranceInformation());
+                result.Add(CreateInsurancePolicy());
 
             return result;
         }
 
-        public static Domain.Models.InsuranceInformation CreateInsuranceInformation()
+        public static Domain.Models.InsurancePolicy CreateInsurancePolicy()
         {
             var guidString = Guid.NewGuid().ToString();
 
-            var insuranceInformation = new Domain.Models.InsuranceInformation
+            var insuranceInformation = new Domain.Models.InsurancePolicy
             {
                 Id = Guid.NewGuid(),
                 Customer = new Domain.Models.CustomerInformation
@@ -54,7 +54,7 @@ namespace Xenios.Test.Helpers
             return insuranceInformation;
         }
 
-        public static void AssertAreEqual(InsuranceInformation expected, InsuranceInformation actual)
+        public static void AssertAreEqual(InsurancePolicy expected, InsurancePolicy actual)
         {
             Assert.AreEqual(expected.Id, actual.Id);
             Assert.AreEqual(expected.InsuranceType, actual.InsuranceType);

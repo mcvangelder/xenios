@@ -9,31 +9,31 @@ using Newtonsoft.Json;
 
 namespace Xenios.DataAccess
 {
-    public class InsuranceInformationRepository
+    public class InsurancePolicyRepository
     {
         private string _fileName;
         public String FileName { get { return _fileName; } }
 
-        public InsuranceInformationRepository(string fileName)
+        public InsurancePolicyRepository(string fileName)
         {
             _fileName = fileName;
         }
 
-        public void Save(InsuranceInformation insuranceInformation)
+        public void Save(InsurancePolicy insurancePolicy)
         {
             using(var fileStream = new FileStream(_fileName, FileMode.Append,FileAccess.Write))
             {
                 using(var streamWriter = new StreamWriter(fileStream))
                 {
-                    var json = JsonConvert.SerializeObject(insuranceInformation);
+                    var json = JsonConvert.SerializeObject(insurancePolicy);
                     streamWriter.WriteLine(json);
                 }
             }
         }
 
-        public List<InsuranceInformation> GetAll()
+        public List<InsurancePolicy> GetAll()
         {
-            var allInsuranceInformations = new List<InsuranceInformation>();
+            var allInsurancyPolicies = new List<InsurancePolicy>();
 
             using (var fileStream = new FileStream(_fileName, FileMode.Open, FileAccess.Read))
             {
@@ -42,13 +42,13 @@ namespace Xenios.DataAccess
                     String infoJson = String.Empty;
                     while (!String.IsNullOrEmpty(infoJson = streamReader.ReadLine()))
                     {
-                        var infoObject = JsonConvert.DeserializeObject<InsuranceInformation>(infoJson);
-                        allInsuranceInformations.Add(infoObject);
+                        var infoObject = JsonConvert.DeserializeObject<InsurancePolicy>(infoJson);
+                        allInsurancyPolicies.Add(infoObject);
                     }
                 }
             }
 
-            return allInsuranceInformations;
+            return allInsurancyPolicies;
         }
     }
 }

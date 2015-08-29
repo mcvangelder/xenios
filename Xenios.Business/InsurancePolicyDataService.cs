@@ -7,46 +7,46 @@ using Xenios.Domain.Models;
 
 namespace Xenios.Business
 {
-    public delegate void InsuranceInformationUpdated(List<InsuranceInformation> reloadedInformations);
+    public delegate void InsurancePoloicyUpdated(List<InsurancePolicy> reloadedInformations);
 
-    public class InsuranceInformationDataService : IDisposable
+    public class InsurancePolicyDataService : IDisposable
     {
-        private DataAccess.InsuranceInformationRepository _informationRepository;
+        private DataAccess.InsurancePolicyRepository _informationRepository;
         private DataAccess.RepositoryUpdatedNotificationService _repositoryUpdatedNotificationService;
 
-        public InsuranceInformationDataService(String sourceFile)
+        public InsurancePolicyDataService(String sourceFile)
         {
-            _informationRepository = new DataAccess.InsuranceInformationRepository(sourceFile);
-            CreateInsuranceInformationNotificationService();
+            _informationRepository = new DataAccess.InsurancePolicyRepository(sourceFile);
+            CreateinsurancePolicyNotificationService();
         }
 
-        private void CreateInsuranceInformationNotificationService()
+        private void CreateinsurancePolicyNotificationService()
         {
             _repositoryUpdatedNotificationService = new DataAccess.RepositoryUpdatedNotificationService(_informationRepository);
             _repositoryUpdatedNotificationService.NotifyRepositoryUpdated += _repositoryUpdatedNotificationService_NotifyRepositoryUpdated;
         }
 
-        void _repositoryUpdatedNotificationService_NotifyRepositoryUpdated(DataAccess.InsuranceInformationRepository repository)
+        void _repositoryUpdatedNotificationService_NotifyRepositoryUpdated(DataAccess.InsurancePolicyRepository repository)
         {
-            if(NotifyInsuranceInformationUpdated != null)
+            if(NotifyInsurancePolicyUpdated != null)
             {
-                NotifyInsuranceInformationUpdated(repository.GetAll());
+                NotifyInsurancePolicyUpdated(repository.GetAll());
             }
         }
 
-        public List<InsuranceInformation> GetAllInsurancePolicies()
+        public List<InsurancePolicy> GetAllInsurancePolicies()
         {
             return _informationRepository.GetAll();
         }
 
-        public List<InsuranceInformation> FindInsurancePoliciesByCustomerName(String customerName)
+        public List<InsurancePolicy> FindInsurancePoliciesByCustomerName(String customerName)
         {
             return _informationRepository.GetAll().Where(
                             policy => policy.Customer.FirstName.ToLower().Contains(customerName.ToLower())
                     ).ToList();
         }
 
-        public event InsuranceInformationUpdated NotifyInsuranceInformationUpdated;
+        public event InsurancePoloicyUpdated NotifyInsurancePolicyUpdated;
 
         public void Dispose()
         {
@@ -62,9 +62,9 @@ namespace Xenios.Business
             }
         }
 
-        public void Save(InsuranceInformation insuranceInformation)
+        public void Save(InsurancePolicy insurancePolicy)
         {
-            _informationRepository.Save(insuranceInformation);
+            _informationRepository.Save(insurancePolicy);
         }
     }
 }

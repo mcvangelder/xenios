@@ -9,13 +9,13 @@ namespace Xenios.DataAccess.Tests
     public class RepositoryUpdatedTest
     {
         private string _fileName = @"c:\temp\temp_repository.txt";
-        private InsuranceInformationRepository repository;
+        private InsurancePolicyRepository repository;
 
         [TestInitialize]
         public void CreateRepository()
         {
             DeleteRepositoryFile();
-            repository = new InsuranceInformationRepository(_fileName);
+            repository = new InsurancePolicyRepository(_fileName);
         }
 
         [TestCleanup]
@@ -36,9 +36,9 @@ namespace Xenios.DataAccess.Tests
                         isNotified.Set();
                     };
 
-                var insuranceInformation = Xenios.Test.Helpers.InsuranceInformationHelper.CreateInsuranceInformation();
+                var insurancePolicy = Xenios.Test.Helpers.InsurancePolicyHelper.CreateInsurancePolicy();
 
-                repository.Save(insuranceInformation);
+                repository.Save(insurancePolicy);
                 var isNotifiedSet = isNotified.WaitOne(TimeSpan.FromSeconds(1));
 
                 Assert.IsTrue(isNotifiedSet, "NotifyRepositoryUpdated was not called");

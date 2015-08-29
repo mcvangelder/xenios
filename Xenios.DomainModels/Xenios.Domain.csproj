@@ -44,7 +44,7 @@
     <Compile Include="Enums\TermUnits.cs" />
     <Compile Include="Models\PaymentInformation.cs" />
     <Compile Include="Models\CustomerInformation.cs" />
-    <Compile Include="Models\InsuranceInformation.cs" />
+    <Compile Include="Models\InsurancePolicy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -21,13 +21,13 @@ namespace Xenios.DataAccess.Tests
         [TestMethod]
         public void Should_persist_insurance_info()
         {
-            var infoRepo = new DataAccess.InsuranceInformationRepository(fileName);
-            var insuranceInformation = Xenios.Test.Helpers.InsuranceInformationHelper.CreateInsuranceInformation();
+            var infoRepo = new DataAccess.InsurancePolicyRepository(fileName);
+            var insuranceInformation = Xenios.Test.Helpers.InsurancePolicyHelper.CreateInsurancePolicy();
 
             infoRepo.Save(insuranceInformation);
             var savedInformation = infoRepo.GetAll().FirstOrDefault(i => i.Id == insuranceInformation.Id);
 
-            Xenios.Test.Helpers.InsuranceInformationHelper.AssertAreEqual(insuranceInformation, savedInformation);
+            Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(insuranceInformation, savedInformation);
         }
 
         [TestMethod]
@@ -36,8 +36,8 @@ namespace Xenios.DataAccess.Tests
         {
             using (var fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
             {
-                var informationService = new InsuranceInformationRepository(fileName);
-                var insuranceInformation = Xenios.Test.Helpers.InsuranceInformationHelper.CreateInsuranceInformation();
+                var informationService = new InsurancePolicyRepository(fileName);
+                var insuranceInformation = Xenios.Test.Helpers.InsurancePolicyHelper.CreateInsurancePolicy();
                 informationService.Save(insuranceInformation);
             }
         }

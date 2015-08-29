@@ -11,8 +11,8 @@ namespace Xenios.UI.Services
     {
         String SourceFile { get; set; }
 
-        List<InsuranceInformation> GetAllInsuranceInformations();
+        List<InsurancePolicy> GetAllInsuranceInformations();
 
-        List<InsuranceInformation> FindInsuranceInformationsByCustomerName(string searchValue);
+        List<InsurancePolicy> FindInsuranceInformationsByCustomerName(string searchValue);
     }
 }

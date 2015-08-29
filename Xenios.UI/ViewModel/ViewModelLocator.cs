@@ -42,14 +42,14 @@ namespace Xenios.UI.ViewModel
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
 
-            SimpleIoc.Default.Register<InsuranceInformationViewModel>();
+            SimpleIoc.Default.Register<InsurancePolicyViewModel>();
         }
 
-        public InsuranceInformationViewModel Main
+        public InsurancePolicyViewModel Main
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<InsuranceInformationViewModel>();
+                return ServiceLocator.Current.GetInstance<InsurancePolicyViewModel>();
             }
         }
         

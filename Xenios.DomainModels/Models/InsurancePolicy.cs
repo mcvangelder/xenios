@@ -7,7 +7,7 @@ using Xenios.Domain.Enums;
 
 namespace Xenios.Domain.Models
 {
-    public class InsuranceInformation
+    public class InsurancePolicy
     {
         public Guid Id { get; set; }
 

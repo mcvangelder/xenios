@@ -17,11 +17,11 @@ namespace Xenios.UI.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class InsuranceInformationViewModel : ViewModelBase
+    public class InsurancePolicyViewModel : ViewModelBase
     {
         private IDataService _dataService;
 
-        public InsuranceInformationViewModel(IDataService dataService)
+        public InsurancePolicyViewModel(IDataService dataService)
         {
             _dataService = dataService;
         }
@@ -73,13 +73,13 @@ namespace Xenios.UI.ViewModel
         /// </summary>
         public const string InsuranceInformationsPropertyName = "InsuranceInformations";
 
-        private ObservableCollection<Domain.Models.InsuranceInformation> _insuranceInformations = new ObservableCollection<Domain.Models.InsuranceInformation>();
+        private ObservableCollection<Domain.Models.InsurancePolicy> _insuranceInformations = new ObservableCollection<Domain.Models.InsurancePolicy>();
 
         /// <summary>
         /// Sets and gets the InsuranceInformations property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public ObservableCollection<Domain.Models.InsuranceInformation> InsuranceInformations
+        public ObservableCollection<Domain.Models.InsurancePolicy> InsuranceInformations
         {
             get
             {
