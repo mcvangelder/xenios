@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xenios.Business;
 using Xenios.Domain.Models;
 
 namespace Xenios.Test.Helpers
@@ -52,6 +53,20 @@ namespace Xenios.Test.Helpers
                 TermUnit = Domain.Enums.TermUnits.Months
             };
             return insuranceInformation;
+        }
+
+        public static void AssertPolicyCanBeFoundByCustomerName(int expectedCount, InsurancePolicy expectedPolicy, string customerName, string repositoryFile)
+        {
+            using (var service = new InsurancePolicyDataService(repositoryFile))
+            {
+                var searchResults = service.FindInsurancePoliciesByCustomerName(customerName);
+                var searchResultsCount = searchResults.Count;
+
+                Assert.AreEqual(expectedCount, searchResultsCount);
+
+                var searchResult = searchResults.First();
+                Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(expectedPolicy, searchResult);
+            }
         }
 
         public static void AssertAreEqual(InsurancePolicy expected, InsurancePolicy actual)

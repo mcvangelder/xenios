@@ -94,15 +94,8 @@ namespace Xenios.Business.Test
             var expectedCustomer = expectedInfo.Customer;
             var expectedFirstName = expectedCustomer.FirstName;
 
-            using(var service = new InsurancePolicyDataService(defaultFileName))
-            {
-                var searchResults = service.FindInsurancePoliciesByCustomerName(expectedFirstName);
-                var searchResultsCount = searchResults.Count;
-                var searchResult = searchResults.First();
-
-                Assert.AreEqual(expectedCount, searchResultsCount);
-                Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(expectedInfo, searchResult);
-            }
+            Xenios.Test.Helpers.InsurancePolicyHelper.
+                AssertPolicyCanBeFoundByCustomerName(expectedCount, expectedInfo, expectedFirstName, defaultFileName);
         }
 
         [TestMethod]
@@ -115,16 +108,8 @@ namespace Xenios.Business.Test
             var expectedCustomer = expectedInfo.Customer;
             var expectedLastName = expectedCustomer.LastName;
 
-            using(var service = new InsurancePolicyDataService(defaultFileName))
-            {
-                var searchResults = service.FindInsurancePoliciesByCustomerName(expectedLastName);
-                var searchResultsCount = searchResults.Count;
-
-                Assert.AreEqual(expectedCount, searchResultsCount);
-                
-                var searchResult = searchResults.First();
-                Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(expectedInfo, searchResult);
-            }
+            Xenios.Test.Helpers.InsurancePolicyHelper.
+                AssertPolicyCanBeFoundByCustomerName(expectedCount, expectedInfo, expectedLastName, defaultFileName);
         }
     }
 }
