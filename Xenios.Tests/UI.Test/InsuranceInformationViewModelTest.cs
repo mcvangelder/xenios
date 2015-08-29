@@ -30,21 +30,24 @@ namespace Xenios.UI.Test
         }
 
         [TestMethod]
-        public void Should_search_insurance_informations_by_first_name()
+        public void Should_search_insurance_informations_by_customer_first_name()
         {
             var dataService = new Xenios.Mocks.MockDataService();
 
             var viewModel = new ViewModel.InsuranceInformationViewModel(dataService);
             viewModel.PathToFile = "mockfilepath";
 
-            var searchInfo = viewModel.InsuranceInformations.First();
+            var expectedInfos = dataService.FindInsuranceInformationsByCustomerName("ignored");
+            var expectedInfosCount = 1;
+            var expectedInfo = expectedInfos.First();
 
-            viewModel.SearchText = searchInfo.Customer.FirstName;
+            viewModel.SearchText = "ignored";
+
             var searchResultCount = viewModel.InsuranceInformations.Count;
             var searchResultInfo = viewModel.InsuranceInformations.First();
 
-            Assert.AreEqual(1, searchResultCount);
-            Xenios.Test.Helpers.InsuranceInformationHelper.AssertAreEqual(searchInfo, searchResultInfo);
+            Assert.AreEqual(expectedInfosCount, searchResultCount);
+            Xenios.Test.Helpers.InsuranceInformationHelper.AssertAreEqual(expectedInfo, searchResultInfo);
         }
     }
 }

@@ -98,6 +98,39 @@ namespace Xenios.UI.ViewModel
             }
         }
 
-        public string SearchText { get; set; }
+        /// <summary>
+        /// The <see cref="SearchText" /> property's name.
+        /// </summary>
+        public const string SearchTextPropertyName = "SearchText";
+
+        private String _searchText = String.Empty;
+
+        /// <summary>
+        /// Sets and gets the SearchText property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public String SearchText
+        {
+            get
+            {
+                return _searchText;
+            }
+
+            set
+            {
+                if (_searchText == value)
+                {
+                    return;
+                }
+
+                _searchText = value;
+                var infos = _dataService.FindInsuranceInformationsByCustomerName(value);
+                InsuranceInformations.Clear();
+                if (infos != null)
+                    infos.ForEach(info => InsuranceInformations.Add(info));
+
+                RaisePropertyChanged(SearchTextPropertyName);
+            }
+        }
     }
 }

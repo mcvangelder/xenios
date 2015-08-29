@@ -9,11 +9,22 @@ namespace Xenios.Mocks
 {
     internal class MockDataService : IDataService
     {
-        public List<Domain.Models.InsuranceInformation> GetAllInsuranceInformations()
+        private List<Domain.Models.InsuranceInformation> _insuranceInfos;
+        public String SourceFile { get; set; }
+        
+        public MockDataService()
         {
-            return Xenios.Test.Helpers.InsuranceInformationHelper.CreateInsuranceInformations(5);
+            _insuranceInfos = Xenios.Test.Helpers.InsuranceInformationHelper.CreateInsuranceInformations(5);
         }
 
-        public String SourceFile { get; set; }
+        public List<Domain.Models.InsuranceInformation> GetAllInsuranceInformations()
+        {
+            return _insuranceInfos;
+        }
+
+        public List<Domain.Models.InsuranceInformation> FindInsuranceInformationsByCustomerName(string searchValue)
+        {
+            return new List<Domain.Models.InsuranceInformation>() { _insuranceInfos.First() };
+        }
     }
 }
