@@ -17,12 +17,12 @@ namespace Xenios.Mocks
             _insuranceInfos = Xenios.Test.Helpers.InsurancePolicyHelper.CreateInsurancePolicies(5);
         }
 
-        public List<Domain.Models.InsurancePolicy> GetAllInsuranceInformations()
+        public List<Domain.Models.InsurancePolicy> GetAllInsurancePolicies()
         {
             return _insuranceInfos;
         }
 
-        public List<Domain.Models.InsurancePolicy> FindInsuranceInformationsByCustomerName(string searchValue)
+        public List<Domain.Models.InsurancePolicy> FindInsurancePoliciesByCustomerName(string searchValue)
         {
             return new List<Domain.Models.InsurancePolicy>() { _insuranceInfos.First() };
         }

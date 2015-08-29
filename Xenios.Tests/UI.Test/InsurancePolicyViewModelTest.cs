@@ -17,13 +17,13 @@ namespace Xenios.UI.Test
             
             var isNotified = false;
 
-            viewModel.InsuranceInformations.CollectionChanged += (sender, args) => {
+            viewModel.InsurancePolicies.CollectionChanged += (sender, args) => {
                 isNotified = true;
             };
 
             viewModel.PathToFile = @"\mockpath\mockfile";
             
-            var isUpdated = viewModel.InsuranceInformations.Count > 0;
+            var isUpdated = viewModel.InsurancePolicies.Count > 0;
 
             Assert.AreEqual(viewModel.PathToFile, dataService.SourceFile);
             Assert.IsTrue(isNotified && isUpdated);
@@ -37,14 +37,14 @@ namespace Xenios.UI.Test
             var viewModel = new ViewModel.InsurancePolicyViewModel(dataService);
             viewModel.PathToFile = "mockfilepath";
 
-            var expectedInfos = dataService.FindInsuranceInformationsByCustomerName("ignored");
+            var expectedInfos = dataService.FindInsurancePoliciesByCustomerName("ignored");
             var expectedInfosCount = 1;
             var expectedInfo = expectedInfos.First();
 
             viewModel.SearchText = "ignored";
 
-            var searchResultCount = viewModel.InsuranceInformations.Count;
-            var searchResultInfo = viewModel.InsuranceInformations.First();
+            var searchResultCount = viewModel.InsurancePolicies.Count;
+            var searchResultInfo = viewModel.InsurancePolicies.First();
 
             Assert.AreEqual(expectedInfosCount, searchResultCount);
             Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(expectedInfo, searchResultInfo);
@@ -56,24 +56,17 @@ namespace Xenios.UI.Test
             var dataService = new Xenios.Mocks.MockDataService();
 
             var viewModel = new ViewModel.InsurancePolicyViewModel(dataService);
-            var expectedPolicies = dataService.GetAllInsuranceInformations();
-            var expectedCount = expectedPolicies.Count;
+            var expectedPolicies = dataService.GetAllInsurancePolicies();
 
             // set to non empty string to simulate a pre-existing search
             viewModel.SearchText = "make a non-empty search first";
             // set to empty string to simulate clearing a search
             viewModel.SearchText = String.Empty;
 
-            var searchResultCount = viewModel.InsuranceInformations.Count;
-            var searchResults = viewModel.InsuranceInformations;
+            var searchResults = viewModel.InsurancePolicies;
 
-            Assert.AreEqual(expectedCount, searchResultCount);
-            for (int i = 0; i < expectedPolicies.Count; i++)
-            {
-                var expectedPolicy = expectedPolicies[0];
-                var searchPolicy = searchResults[0];
-                Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(expectedPolicy, searchPolicy);
-            }
+            Xenios.Test.Helpers.InsurancePolicyHelper.
+                AssertAreEqual(expectedPolicies, searchResults.ToList());
         }
     }
 }

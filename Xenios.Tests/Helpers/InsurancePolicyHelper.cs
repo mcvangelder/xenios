@@ -59,16 +59,9 @@ namespace Xenios.Test.Helpers
         {
             using (var service = new InsurancePolicyDataService(repositoryFile))
             {
-                var searchResults = service.FindInsurancePoliciesByCustomerName(customerName);
-                var searchResultsCount = searchResults.Count;
+                var actualPolicies = service.FindInsurancePoliciesByCustomerName(customerName);
 
-                Assert.AreEqual(expectedPolicies.Count, searchResultsCount);
-                for (int i = 0; i < expectedPolicies.Count; i++)
-                {
-                    var searchResultPolicy = searchResults[i];
-                    var expectedPolicy = expectedPolicies[i];
-                    Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(expectedPolicy, searchResultPolicy);
-                }
+                AssertAreEqual(expectedPolicies, actualPolicies);
             }
         }
 
@@ -95,6 +88,19 @@ namespace Xenios.Test.Helpers
             Assert.AreEqual(expected.PaymentInformation.CreditCardType, actual.PaymentInformation.CreditCardType);
             Assert.AreEqual(expected.PaymentInformation.CreditCardVerificationNumber, actual.PaymentInformation.CreditCardVerificationNumber);
             Assert.AreEqual(expected.PaymentInformation.ExpirationDate, actual.PaymentInformation.ExpirationDate);
+        }
+
+        public static void AssertAreEqual(List<Domain.Models.InsurancePolicy> expectedPolicies,List<Domain.Models.InsurancePolicy> actualPolicies)
+        {
+            int expectedPoliciesCount = expectedPolicies.Count, actualPoliciesCount = actualPolicies.Count;
+
+            Assert.AreEqual(expectedPoliciesCount, actualPoliciesCount);
+            for (int i = 0; i < expectedPoliciesCount; i++)
+            {
+                var expectedPolicy = expectedPolicies[0];
+                var searchPolicy = actualPolicies[0];
+                Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(expectedPolicy, searchPolicy);
+            }
         }
     }
 }

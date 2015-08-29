@@ -61,41 +61,41 @@ namespace Xenios.UI.ViewModel
 
         private void LoadInsuranceInformations()
         {
-            InsuranceInformations.Clear();
-            var infos = _dataService.GetAllInsuranceInformations();
+            InsurancePolicies.Clear();
+            var infos = _dataService.GetAllInsurancePolicies();
             if (infos == null)
                 return;
 
-            infos.ForEach(item => InsuranceInformations.Add(item));
+            infos.ForEach(item => InsurancePolicies.Add(item));
         }
 
         /// <summary>
-        /// The <see cref="InsuranceInformations" /> property's name.
+        /// The <see cref="InsurancePolicies" /> property's name.
         /// </summary>
-        public const string InsuranceInformationsPropertyName = "InsuranceInformations";
+        public const string InsurancePoliciesPropertyName = "InsurancePolicies";
 
-        private ObservableCollection<Domain.Models.InsurancePolicy> _insuranceInformations = new ObservableCollection<Domain.Models.InsurancePolicy>();
+        private ObservableCollection<Domain.Models.InsurancePolicy> _insurancePolicies = new ObservableCollection<Domain.Models.InsurancePolicy>();
 
         /// <summary>
-        /// Sets and gets the InsuranceInformations property.
+        /// Sets and gets the InsurancePolicies property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public ObservableCollection<Domain.Models.InsurancePolicy> InsuranceInformations
+        public ObservableCollection<Domain.Models.InsurancePolicy> InsurancePolicies
         {
             get
             {
-                return _insuranceInformations;
+                return _insurancePolicies;
             }
 
             set
             {
-                if (_insuranceInformations == value)
+                if (_insurancePolicies == value)
                 {
                     return;
                 }
 
-                _insuranceInformations = value;
-                RaisePropertyChanged(InsuranceInformationsPropertyName);
+                _insurancePolicies = value;
+                RaisePropertyChanged(InsurancePoliciesPropertyName);
             }
         }
 
@@ -125,24 +125,24 @@ namespace Xenios.UI.ViewModel
                 }
 
                 _searchText = value;
-                FindInsuranceInformationsByCustomerName(value);
+                FindInsurancePoliciesByCustomerName(value);
                 RaisePropertyChanged(SearchTextPropertyName);
             }
         }
 
-        private void FindInsuranceInformationsByCustomerName(string value)
+        private void FindInsurancePoliciesByCustomerName(string value)
         {
-            InsuranceInformations.Clear();
+            InsurancePolicies.Clear();
             List<Domain.Models.InsurancePolicy> policies = null;
 
             if (String.IsNullOrEmpty(value))
-                policies = _dataService.GetAllInsuranceInformations();
+                policies = _dataService.GetAllInsurancePolicies();
 
-            policies = policies ?? _dataService.FindInsuranceInformationsByCustomerName(value);
+            policies = policies ?? _dataService.FindInsurancePoliciesByCustomerName(value);
             if (policies == null)
                 return;
 
-            policies.ForEach(info => InsuranceInformations.Add(info));
+            policies.ForEach(info => InsurancePolicies.Add(info));
         }
     }
 }
