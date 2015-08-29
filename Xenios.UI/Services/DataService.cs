@@ -15,5 +15,10 @@ namespace Xenios.UI.Services
         {
             InsurancePolicyDataService.Save(policies);
         }
+
+        public void GetAllInsurancePolicies()
+        {
+            InsurancePolicyDataService.GetAllInsurancePolicies();
+        }
     }
 }
