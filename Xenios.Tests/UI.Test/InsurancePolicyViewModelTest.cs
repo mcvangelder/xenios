@@ -9,6 +9,7 @@ namespace Xenios.UI.Test
     {
         private Mocks.MockDataService _dataService;
         private ViewModel.InsurancePolicyViewModel _viewModel;
+        private Mocks.MockApplicationService _applicationService;
 
         private const string mockFilePath = @"\mockpath\mockfile";
 
@@ -17,6 +18,7 @@ namespace Xenios.UI.Test
         {
             _dataService = new Xenios.Mocks.MockDataService();
             _viewModel = new ViewModel.InsurancePolicyViewModel(_dataService);
+            _applicationService = new Mocks.MockApplicationService();
         }
 
         [TestMethod]
@@ -134,6 +136,18 @@ namespace Xenios.UI.Test
             _viewModel.SavePoliciesCommand.Execute(null);
 
             Assert.IsTrue(isNotified);
+        }
+
+        [TestMethod]
+        public void Should_close_application_when_close_command_executed()
+        {
+            var isNotifed = false;
+
+            _applicationService.OnExit += () => { isNotifed = true; };
+            _viewModel.ApplicationService = _applicationService;
+            _viewModel.ExitApplicationCommand.Execute(null);
+            
+            Assert.IsTrue(isNotifed);
         }
     }
 }

@@ -25,13 +25,18 @@ namespace Xenios.UI.ViewModel
     {
         private IDataService _dataService;
 
+        public IApplicationService ApplicationService { get; set; }
+
         public InsurancePolicyViewModel(IDataService dataService)
         {
             _dataService = dataService;
             _dataService.PoliciesChanged += _dataService_PoliciesChanged;
+
             RefreshPolicyListCommand = new RelayCommand(LoadInsurancePolicies);
             SavePoliciesCommand = new RelayCommand(SavePolicies);
+            ExitApplicationCommand = new RelayCommand(ExitApplication);
         }
+
 
         void _dataService_PoliciesChanged(List<Domain.Models.InsurancePolicy> newPolicyList)
         {
@@ -41,6 +46,8 @@ namespace Xenios.UI.ViewModel
         public RelayCommand RefreshPolicyListCommand { get; set; }
 
         public RelayCommand SavePoliciesCommand { get; set; }
+
+        public RelayCommand ExitApplicationCommand { get; set; }
 
         /// <summary>
         /// The <see cref="PathToFile" /> property's name.
@@ -219,20 +226,13 @@ namespace Xenios.UI.ViewModel
             IsDataUpToDate = true;
         }
 
-        //private void FindInsurancePoliciesByCustomerName(string value)
-        //{
-        //    InsurancePolicies.Clear();
-        //    List<Domain.Models.InsurancePolicy> policies = null;
+        private void ExitApplication()
+        {
+            if (ApplicationService == null)
+                return;
 
-        //    if (String.IsNullOrEmpty(value))
-        //        policies = _dataService.GetAllInsurancePolicies();
-
-        //    policies = policies ?? _dataService.FindInsurancePoliciesByCustomerName(value);
-        //    if (policies == null)
-        //        return;
-
-        //    policies.ForEach(info => InsurancePolicies.Add(info));
-        //}
+            ApplicationService.Exit();
+        }
 
         private void SavePolicies()
         {
