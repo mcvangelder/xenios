@@ -1,5 +1,6 @@
 using GalaSoft.MvvmLight;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Xenios.UI.Services;
 
@@ -132,12 +133,16 @@ namespace Xenios.UI.ViewModel
         private void FindInsuranceInformationsByCustomerName(string value)
         {
             InsuranceInformations.Clear();
+            List<Domain.Models.InsurancePolicy> policies = null;
 
-            var infos = _dataService.FindInsuranceInformationsByCustomerName(value);
-            if (infos == null)
+            if (String.IsNullOrEmpty(value))
+                policies = _dataService.GetAllInsuranceInformations();
+
+            policies = policies ?? _dataService.FindInsuranceInformationsByCustomerName(value);
+            if (policies == null)
                 return;
 
-            infos.ForEach(info => InsuranceInformations.Add(info));
+            policies.ForEach(info => InsuranceInformations.Add(info));
         }
     }
 }

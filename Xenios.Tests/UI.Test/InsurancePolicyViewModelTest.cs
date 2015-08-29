@@ -49,5 +49,31 @@ namespace Xenios.UI.Test
             Assert.AreEqual(expectedInfosCount, searchResultCount);
             Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(expectedInfo, searchResultInfo);
         }
+
+        [TestMethod]
+        public void Should_find_all_policies_when_search_string_is_empty()
+        {
+            var dataService = new Xenios.Mocks.MockDataService();
+
+            var viewModel = new ViewModel.InsurancePolicyViewModel(dataService);
+            var expectedPolicies = dataService.GetAllInsuranceInformations();
+            var expectedCount = expectedPolicies.Count;
+
+            // set to non empty string to simulate a pre-existing search
+            viewModel.SearchText = "make a non-empty search first";
+            // set to empty string to simulate clearing a search
+            viewModel.SearchText = String.Empty;
+
+            var searchResultCount = viewModel.InsuranceInformations.Count;
+            var searchResults = viewModel.InsuranceInformations;
+
+            Assert.AreEqual(expectedCount, searchResultCount);
+            for (int i = 0; i < expectedPolicies.Count; i++)
+            {
+                var expectedPolicy = expectedPolicies[0];
+                var searchPolicy = searchResults[0];
+                Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(expectedPolicy, searchPolicy);
+            }
+        }
     }
 }
