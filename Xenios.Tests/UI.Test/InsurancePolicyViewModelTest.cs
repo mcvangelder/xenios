@@ -5,7 +5,7 @@ using System.Linq;
 namespace Xenios.UI.Test
 {
     [TestClass]
-    public class InsuranceInformationViewModelTest
+    public class InsurancePolicyViewModelTest
     {
         [TestMethod]
         public void Should_open_file_and_load_insurance_informations()
