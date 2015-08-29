@@ -100,7 +100,8 @@ namespace Xenios.Business.Test
             var expectedFirstName = expectedCustomer.FirstName;
 
             Xenios.Test.Helpers.InsurancePolicyHelper.
-                AssertPolicyCanBeFoundByCustomerName(expectedCount, expectedInfo, expectedFirstName, defaultFileName);
+                AssertPolicyCanBeFoundByCustomerName(
+                    new List<InsurancePolicy> {expectedInfo}, expectedFirstName, defaultFileName);
         }
 
         [TestMethod]
@@ -114,14 +115,15 @@ namespace Xenios.Business.Test
             var expectedLastName = expectedCustomer.LastName;
 
             Xenios.Test.Helpers.InsurancePolicyHelper.
-                AssertPolicyCanBeFoundByCustomerName(expectedCount, expectedInfo, expectedLastName, defaultFileName);
+                AssertPolicyCanBeFoundByCustomerName(
+                    new List<InsurancePolicy>() { expectedInfo }, expectedLastName, defaultFileName);
         }
 
         [TestMethod]
-        public void Should_find_policy_having_customer_with_first_or_last_name()
+        public void Should_find_policy_having_customer_containing_first_or_last_name()
         {
             var expectedName = "expected_name";
-            var expectedCount = 2;
+            var expectedPartial = "expected";
 
             var randomPolicies = Xenios.Test.Helpers.InsurancePolicyHelper.CreateInsurancePolicies(2);
             var expectedInfoByFirstName = randomPolicies.First();
@@ -132,19 +134,9 @@ namespace Xenios.Business.Test
 
             CreateRepository(policies: randomPolicies);
 
-            using (var service = new InsurancePolicyDataService(defaultFileName))
-            {
-                var searchResults = service.FindInsurancePoliciesByCustomerName(expectedName);
-                var searchResultsCount = searchResults.Count;
-
-                Assert.AreEqual(expectedCount, searchResultsCount);
-
-                var searchResultFirstName = searchResults.First();
-                var searchResultLastName = searchResults.Last();
-
-                Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(expectedInfoByFirstName, searchResultFirstName);
-                Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(expectedInfoByLastName, searchResultLastName);
-            }
+            Xenios.Test.Helpers.InsurancePolicyHelper.
+                AssertPolicyCanBeFoundByCustomerName(
+                    randomPolicies, expectedPartial, defaultFileName);
         }
     }
 }

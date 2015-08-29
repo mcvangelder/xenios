@@ -55,17 +55,20 @@ namespace Xenios.Test.Helpers
             return insuranceInformation;
         }
 
-        public static void AssertPolicyCanBeFoundByCustomerName(int expectedCount, InsurancePolicy expectedPolicy, string customerName, string repositoryFile)
+        public static void AssertPolicyCanBeFoundByCustomerName(List<InsurancePolicy> expectedPolicies, string customerName, string repositoryFile)
         {
             using (var service = new InsurancePolicyDataService(repositoryFile))
             {
                 var searchResults = service.FindInsurancePoliciesByCustomerName(customerName);
                 var searchResultsCount = searchResults.Count;
 
-                Assert.AreEqual(expectedCount, searchResultsCount);
-
-                var searchResult = searchResults.First();
-                Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(expectedPolicy, searchResult);
+                Assert.AreEqual(expectedPolicies.Count, searchResultsCount);
+                for (int i = 0; i < expectedPolicies.Count; i++)
+                {
+                    var searchResultPolicy = searchResults[i];
+                    var expectedPolicy = expectedPolicies[i];
+                    Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(expectedPolicy, searchResultPolicy);
+                }
             }
         }
 
