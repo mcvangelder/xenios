@@ -59,15 +59,6 @@ namespace Xenios.UI.ViewModel
             }
         }
 
-        private void LoadInsuranceInformations()
-        {
-            InsurancePolicies.Clear();
-            var infos = _dataService.GetAllInsurancePolicies();
-            if (infos == null)
-                return;
-
-            infos.ForEach(item => InsurancePolicies.Add(item));
-        }
 
         /// <summary>
         /// The <see cref="InsurancePolicies" /> property's name.
@@ -128,6 +119,48 @@ namespace Xenios.UI.ViewModel
                 FindInsurancePoliciesByCustomerName(value);
                 RaisePropertyChanged(SearchTextPropertyName);
             }
+        }
+
+        /// <summary>
+        /// The <see cref="LastReadDateTime" /> property's name.
+        /// </summary>
+        public const string LastReadDateTimePropertyName = "LastReadDateTime";
+
+        private DateTime? _lastReadDateTime = null;
+
+        /// <summary>
+        /// Sets and gets the LastReadDateTime property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public DateTime? LastReadDateTime
+        {
+            get
+            {
+                return _lastReadDateTime;
+            }
+
+            set
+            {
+                if (_lastReadDateTime == value)
+                {
+                    return;
+                }
+
+                _lastReadDateTime = value;
+                RaisePropertyChanged(LastReadDateTimePropertyName);
+            }
+        }
+
+        private void LoadInsuranceInformations()
+        {
+            InsurancePolicies.Clear();
+            LastReadDateTime = DateTime.Now;
+
+            var infos = _dataService.GetAllInsurancePolicies();
+            if (infos == null)
+                return;
+
+            infos.ForEach(item => InsurancePolicies.Add(item));
         }
 
         private void FindInsurancePoliciesByCustomerName(string value)

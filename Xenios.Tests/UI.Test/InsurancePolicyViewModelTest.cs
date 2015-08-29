@@ -68,5 +68,18 @@ namespace Xenios.UI.Test
             Xenios.Test.Helpers.InsurancePolicyHelper.
                 AssertAreEqual(expectedPolicies, searchResults.ToList());
         }
+
+        [TestMethod]
+        public void Should_update_last_read_datetime_after_loading_policies()
+        {
+            var dataService = new Xenios.Mocks.MockDataService();
+
+            var viewModel = new ViewModel.InsurancePolicyViewModel(dataService);
+            var lastReadDateTime = viewModel.LastReadDateTime;
+            viewModel.PathToFile = "mockfilepath";
+
+            Assert.AreNotEqual(lastReadDateTime, viewModel.LastReadDateTime);
+
+        }
     }
 }
