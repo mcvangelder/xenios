@@ -12,7 +12,7 @@ namespace Xenios.UI.Services
     {
         event PoliciesChangedEvent PoliciesChanged;
 
-        String SourceFile { get; set; }
+        String SourceFile { set; }
 
         List<InsurancePolicy> GetAllInsurancePolicies();
 

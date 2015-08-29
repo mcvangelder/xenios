@@ -6,12 +6,19 @@ using System.Threading.Tasks;
 
 namespace Xenios.Business
 {
-    public interface IInsurancePolicyDataService
+    public abstract class AbsractInsurancePolicyDataService
     {
-        void Save(List<Domain.Models.InsurancePolicy> policies);
+        protected String FileName { get; set; }
 
-        List<Domain.Models.InsurancePolicy> GetAllInsurancePolicies();
+        protected AbsractInsurancePolicyDataService(String fileName)
+        {
+            FileName = fileName;
+        }
 
-        List<Domain.Models.InsurancePolicy> FindInsurancePoliciesByCustomerName(string searchValue);
+        public abstract void Save(List<Domain.Models.InsurancePolicy> policies);
+
+        public abstract List<Domain.Models.InsurancePolicy> GetAllInsurancePolicies();
+
+        public abstract List<Domain.Models.InsurancePolicy> FindInsurancePoliciesByCustomerName(string searchValue);
     }
 }

@@ -7,14 +7,16 @@ namespace Xenios.UI.Test
     public class UIDataServiceTest
     {
         private Mocks.MockInsurancePolicyDataService _mockBusinessService;
-        private UI.Services.DataService _dataService;
+        private UI.Services.DataService<Mocks.MockInsurancePolicyDataService> _dataService;
+
+        private const string mockFilePath = @"mock/file/path";
 
         [TestInitialize]
         public void CreateUIDataService()
         {
-            _mockBusinessService = new Mocks.MockInsurancePolicyDataService();
-            _dataService = new UI.Services.DataService();
-            _dataService.InsurancePolicyDataService = _mockBusinessService;
+            _dataService = new UI.Services.DataService<Mocks.MockInsurancePolicyDataService>();
+            _dataService.SourceFile = mockFilePath;
+            _mockBusinessService = _dataService.InsurancePolicyDataService;
         }
 
         [TestMethod]
@@ -45,6 +47,16 @@ namespace Xenios.UI.Test
 
             _dataService.FindInsurancePoliciesByCustomerName("ignored");
             Assert.IsTrue(isNotified);
+        }
+
+        [TestMethod]
+        public void Should_create_new_business_data_service_when_source_file_changes()
+        {
+            var previousBusinessService = _dataService.InsurancePolicyDataService;
+            _dataService.SourceFile = "another/mock/path";
+            var currentBusinessService = _dataService.InsurancePolicyDataService;
+
+            Assert.AreNotSame(previousBusinessService, currentBusinessService);
         }
     }
 }

@@ -9,12 +9,12 @@ namespace Xenios.Business
 {
     public delegate void InsurancePoloicyUpdated(List<InsurancePolicy> reloadedInformations);
 
-    public class InsurancePolicyDataService : IInsurancePolicyDataService, IDisposable
+    public class InsurancePolicyDataService : AbsractInsurancePolicyDataService, IDisposable
     {
         private DataAccess.InsurancePolicyRepository _policiesRepository;
         private DataAccess.RepositoryUpdatedNotificationService _repositoryUpdatedNotificationService;
 
-        public InsurancePolicyDataService(String sourceFile)
+        public InsurancePolicyDataService(String sourceFile) : base(sourceFile)
         {
             _policiesRepository = new DataAccess.InsurancePolicyRepository(sourceFile);
             CreateinsurancePolicyNotificationService();
@@ -28,21 +28,21 @@ namespace Xenios.Business
 
         void _repositoryUpdatedNotificationService_NotifyRepositoryUpdated(DataAccess.InsurancePolicyRepository repository)
         {
-            if(NotifyInsurancePolicyUpdated != null)
+            if (NotifyInsurancePolicyUpdated != null)
             {
                 NotifyInsurancePolicyUpdated(repository.GetAll());
             }
         }
 
-        public List<InsurancePolicy> GetAllInsurancePolicies()
+        public override List<InsurancePolicy> GetAllInsurancePolicies()
         {
             return _policiesRepository.GetAll();
         }
 
-        public List<InsurancePolicy> FindInsurancePoliciesByCustomerName(String customerName)
+        public override List<InsurancePolicy> FindInsurancePoliciesByCustomerName(String customerName)
         {
             return _policiesRepository.GetAll().Where(
-                            policy => 
+                            policy =>
                                 policy.Customer.FirstName.ToLower().Contains(customerName.ToLower()) ||
                                 policy.Customer.LastName.ToLower().Contains(customerName.ToLower())
                     ).ToList();
@@ -55,15 +55,15 @@ namespace Xenios.Business
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-        
+
         private void Dispose(bool disposing)
         {
-            if(disposing)
+            if (disposing)
             {
                 _repositoryUpdatedNotificationService.Dispose();
             }
         }
-        public void Save(List<InsurancePolicy> insurancePolicies)
+        public override void Save(List<InsurancePolicy> insurancePolicies)
         {
             _policiesRepository.SaveAll(insurancePolicies);
         }

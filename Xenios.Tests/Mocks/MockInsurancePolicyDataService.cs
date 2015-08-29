@@ -9,19 +9,23 @@ namespace Xenios.Mocks
 {
     public delegate void OnLoadEvent();
 
-    public class MockInsurancePolicyDataService : IInsurancePolicyDataService
+    public class MockInsurancePolicyDataService : AbsractInsurancePolicyDataService
     {
+        public MockInsurancePolicyDataService(String fileName)
+            :base(fileName)
+        { }
+
         public event OnSaveEvent OnSave;
         public event OnLoadEvent OnGetAllInsurancePolicies;
         public event OnLoadEvent OnFindInsurancePoliciesByCustomerName;
 
-        public void Save(List<Domain.Models.InsurancePolicy> policies)
+        public override void Save(List<Domain.Models.InsurancePolicy> policies)
         {
             if (OnSave != null)
                 OnSave(policies);
         }
 
-        public List<Domain.Models.InsurancePolicy> GetAllInsurancePolicies()
+        public override List<Domain.Models.InsurancePolicy> GetAllInsurancePolicies()
         {
             if (OnGetAllInsurancePolicies != null)
                 OnGetAllInsurancePolicies();
@@ -29,8 +33,7 @@ namespace Xenios.Mocks
             return new List<Domain.Models.InsurancePolicy>();
         }
 
-
-        public List<Domain.Models.InsurancePolicy> FindInsurancePoliciesByCustomerName(string searchValue)
+        public override List<Domain.Models.InsurancePolicy> FindInsurancePoliciesByCustomerName(string searchValue)
         {
             if (OnFindInsurancePoliciesByCustomerName != null)
                 OnFindInsurancePoliciesByCustomerName();

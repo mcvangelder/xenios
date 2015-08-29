@@ -7,11 +7,11 @@ using Xenios.Business;
 
 namespace Xenios.UI.Services
 {
-    public class DataService : IDataService
+    public class DataService<T> : IDataService where T: AbsractInsurancePolicyDataService
     {
         public event PoliciesChangedEvent PoliciesChanged;
 
-        public IInsurancePolicyDataService InsurancePolicyDataService { get; set; }
+        public T InsurancePolicyDataService { get; private set; }
 
         public void Save(List<Domain.Models.InsurancePolicy> policies)
         {
@@ -28,16 +28,22 @@ namespace Xenios.UI.Services
             return InsurancePolicyDataService.FindInsurancePoliciesByCustomerName(searchValue);
         }
 
+        private String _sourceFile;
         public string SourceFile
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
             set
             {
-                throw new NotImplementedException();
+                if (_sourceFile == value)
+                    return;
+
+                _sourceFile = value;
+                CreateInsurancePolicyDataService(value);
             }
+        }
+
+        private void CreateInsurancePolicyDataService(string value)
+        {
+            InsurancePolicyDataService = (T)Activator.CreateInstance(typeof(T), value);
         }
 
     }
