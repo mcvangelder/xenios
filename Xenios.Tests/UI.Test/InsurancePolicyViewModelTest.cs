@@ -94,5 +94,15 @@ namespace Xenios.UI.Test
 
             Assert.IsFalse(_viewModel.IsDataUpToDate.GetValueOrDefault(true));
         }
+
+        [TestMethod]
+        public void Should_refresh_data_when_refresh_command_executed()
+        {
+            var previousLastReadDateTime = _viewModel.LastReadDateTime;
+            _viewModel.RefreshPolicyListCommand.Execute(null);
+            var currentLastReadDateTime = _viewModel.LastReadDateTime;
+
+            Assert.AreNotEqual(previousLastReadDateTime, currentLastReadDateTime);
+        }
     }
 }
