@@ -121,5 +121,17 @@ namespace Xenios.UI.Test
             Assert.AreEqual(1, previousSearchResults.Count);
             Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(previousSearchResults, currentSearchResults);
         }
+
+        [TestMethod]
+        public void Should_save_data_when_save_command_executed()
+        {
+            var isNotified = false;
+            _dataService.OnSave += (policies) => { isNotified = true; };
+
+            _viewModel.PathToFile = mockFilePath;
+            _viewModel.SavePoliciesCommand.Execute(null);
+
+            Assert.IsTrue(isNotified);
+        }
     }
 }

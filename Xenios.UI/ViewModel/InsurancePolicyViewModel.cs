@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Xenios.UI.Services;
+using System.Linq;
 
 namespace Xenios.UI.ViewModel
 {
@@ -28,6 +29,7 @@ namespace Xenios.UI.ViewModel
             _dataService = dataService;
             _dataService.PoliciesChanged += _dataService_PoliciesChanged;
             RefreshPolicyListCommand = new RelayCommand(() => FindInsurancePoliciesByCustomerName(SearchText));
+            SavePoliciesCommand = new RelayCommand(SavePolicies);
         }
 
         void _dataService_PoliciesChanged(List<Domain.Models.InsurancePolicy> newPolicyList)
@@ -36,6 +38,8 @@ namespace Xenios.UI.ViewModel
         }
 
         public RelayCommand RefreshPolicyListCommand { get; set; }
+
+        public RelayCommand SavePoliciesCommand { get; set; }
 
         /// <summary>
         /// The <see cref="PathToFile" /> property's name.
@@ -218,6 +222,11 @@ namespace Xenios.UI.ViewModel
                 return;
 
             policies.ForEach(info => InsurancePolicies.Add(info));
+        }
+
+        private void SavePolicies()
+        {
+            _dataService.Save(_insurancePolicies.ToList());
         }
     }
 }
