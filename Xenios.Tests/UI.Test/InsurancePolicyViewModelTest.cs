@@ -7,44 +7,48 @@ namespace Xenios.UI.Test
     [TestClass]
     public class InsurancePolicyViewModelTest
     {
+        private Mocks.MockDataService _dataService;
+        private ViewModel.InsurancePolicyViewModel _viewModel;
+
+        private const string mockFilePath = @"\mockpath\mockfile";
+
+        [TestInitialize]
+        public void CreateViewModel()
+        {
+            _dataService = new Xenios.Mocks.MockDataService();
+            _viewModel = new ViewModel.InsurancePolicyViewModel(_dataService);
+        }
+
         [TestMethod]
         public void Should_open_file_and_load_insurance_informations()
         {
-            var dataService =  new Xenios.Mocks.MockDataService();
-            
-            ViewModel.InsurancePolicyViewModel viewModel =
-               new ViewModel.InsurancePolicyViewModel(dataService);
-            
             var isNotified = false;
 
-            viewModel.InsurancePolicies.CollectionChanged += (sender, args) => {
+            _viewModel.InsurancePolicies.CollectionChanged += (sender, args) => {
                 isNotified = true;
             };
 
-            viewModel.PathToFile = @"\mockpath\mockfile";
+            _viewModel.PathToFile = mockFilePath;
             
-            var isUpdated = viewModel.InsurancePolicies.Count > 0;
+            var isUpdated = _viewModel.InsurancePolicies.Count > 0;
 
-            Assert.AreEqual(viewModel.PathToFile, dataService.SourceFile);
+            Assert.AreEqual(_viewModel.PathToFile, _dataService.SourceFile);
             Assert.IsTrue(isNotified && isUpdated);
         }
 
         [TestMethod]
         public void Should_search_insurance_informations_by_customer_name()
         {
-            var dataService = new Xenios.Mocks.MockDataService();
+            _viewModel.PathToFile = mockFilePath;
 
-            var viewModel = new ViewModel.InsurancePolicyViewModel(dataService);
-            viewModel.PathToFile = "mockfilepath";
-
-            var expectedInfos = dataService.FindInsurancePoliciesByCustomerName("ignored");
+            var expectedInfos = _dataService.FindInsurancePoliciesByCustomerName("ignored");
             var expectedInfosCount = 1;
             var expectedInfo = expectedInfos.First();
 
-            viewModel.SearchText = "ignored";
+            _viewModel.SearchText = "ignored";
 
-            var searchResultCount = viewModel.InsurancePolicies.Count;
-            var searchResultInfo = viewModel.InsurancePolicies.First();
+            var searchResultCount = _viewModel.InsurancePolicies.Count;
+            var searchResultInfo = _viewModel.InsurancePolicies.First();
 
             Assert.AreEqual(expectedInfosCount, searchResultCount);
             Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(expectedInfo, searchResultInfo);
@@ -53,16 +57,14 @@ namespace Xenios.UI.Test
         [TestMethod]
         public void Should_find_all_policies_when_search_string_is_empty()
         {
-            var dataService = new Xenios.Mocks.MockDataService();
-            var expectedPolicies = dataService.GetAllInsurancePolicies();
-            var viewModel = new ViewModel.InsurancePolicyViewModel(dataService);
+            var expectedPolicies = _dataService.GetAllInsurancePolicies();
 
             // set to non empty string to simulate a pre-existing search
-            viewModel.SearchText = "make a non-empty search first";
+            _viewModel.SearchText = "make a non-empty search first";
             // set to empty string to simulate clearing a search
-            viewModel.SearchText = String.Empty;
+            _viewModel.SearchText = String.Empty;
 
-            var searchResults = viewModel.InsurancePolicies;
+            var searchResults = _viewModel.InsurancePolicies;
 
             Xenios.Test.Helpers.InsurancePolicyHelper.
                 AssertAreEqual(expectedPolicies, searchResults.ToList());
@@ -71,33 +73,26 @@ namespace Xenios.UI.Test
         [TestMethod]
         public void Should_update_last_read_datetime_after_loading_policies()
         {
-            var dataService = new Xenios.Mocks.MockDataService();
-            var viewModel = new ViewModel.InsurancePolicyViewModel(dataService);
-            var lastReadDateTime = viewModel.LastReadDateTime;
-            viewModel.PathToFile = "mockfilepath";
+            var lastReadDateTime = _viewModel.LastReadDateTime;
+            _viewModel.PathToFile = mockFilePath;
 
-            Assert.AreNotEqual(lastReadDateTime, viewModel.LastReadDateTime);
+            Assert.AreNotEqual(lastReadDateTime, _viewModel.LastReadDateTime);
         }
 
         [TestMethod]
         public void Should_indicate_data_is_up_to_date_upon_loading()
         {
-            var dataService = new Xenios.Mocks.MockDataService();
-            var viewModel = new ViewModel.InsurancePolicyViewModel(dataService);
-            viewModel.PathToFile = "mockfilepath";
+            _viewModel.PathToFile = mockFilePath;
 
-            Assert.IsTrue(viewModel.IsDataUpToDate.GetValueOrDefault(false));
+            Assert.IsTrue(_viewModel.IsDataUpToDate.GetValueOrDefault(false));
         }
 
         [TestMethod]
         public void Should_indicate_data_is_not_up_to_date()
         {
-            var dataService = new Xenios.Mocks.MockDataService();
-            var viewModel = new ViewModel.InsurancePolicyViewModel(dataService);
+            _dataService.RaiseNewPoliciesAvailable();
 
-            dataService.RaiseNewPoliciesAvailable();
-
-            Assert.IsFalse(viewModel.IsDataUpToDate.GetValueOrDefault(true));
+            Assert.IsFalse(_viewModel.IsDataUpToDate.GetValueOrDefault(true));
         }
     }
 }
