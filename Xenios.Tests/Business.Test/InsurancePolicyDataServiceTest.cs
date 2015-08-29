@@ -19,11 +19,7 @@ namespace Xenios.Business.Test
         {
             DeleteRepository(fileName);
             _repository = new DataAccess.InsurancePolicyRepository(fileName);
-
-            foreach(var policy in policies)
-            {
-                _repository.Save(policy);
-            }
+            _repository.SaveAll(policies);
         }
 
         private void CreateRepository(int initialRecordCount = defaultPolicyCount, String fileName = defaultFileName)
@@ -65,9 +61,9 @@ namespace Xenios.Business.Test
 
                 // Add a new policy record directly through an unmonitored repository to simulate an external process
                 // updating the repository
-                var newInformation = Xenios.Test.Helpers.InsurancePolicyHelper.CreateInsurancePolicy();
+                var newInformation = Xenios.Test.Helpers.InsurancePolicyHelper.CreateInsurancePolicies(1);
                 var repo = new DataAccess.InsurancePolicyRepository(defaultFileName);
-                repo.Save(newInformation);
+                repo.SaveAll(newInformation);
 
                 isNotifiedEvent.WaitOne(TimeSpan.FromSeconds(1));
                 Assert.AreEqual(1, newInfosCount);
@@ -79,12 +75,12 @@ namespace Xenios.Business.Test
         {
             CreateRepository(initialRecordCount: 0);
 
-            var expectedPolicy = Xenios.Test.Helpers.InsurancePolicyHelper.CreateInsurancePolicy();
-            using (var insuranceInformationRetrievalService = new InsurancePolicyDataService(defaultFileName))
+            var expectedPolicy = Xenios.Test.Helpers.InsurancePolicyHelper.CreateInsurancePolicies(1);
+            using (var service = new InsurancePolicyDataService(defaultFileName))
             {
-                insuranceInformationRetrievalService.Save(expectedPolicy);
+                service.Save(expectedPolicy);
 
-                var savedPolicy = insuranceInformationRetrievalService.GetAllInsurancePolicies().Single();
+                var savedPolicy = service.GetAllInsurancePolicies();
                 Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(expectedPolicy, savedPolicy);
             }
         }

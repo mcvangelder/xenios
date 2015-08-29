@@ -98,6 +98,8 @@ namespace Xenios.UI.Test
         [TestMethod]
         public void Should_refresh_data_when_refresh_command_executed()
         {
+            _viewModel.PathToFile = mockFilePath;
+
             var previousLastReadDateTime = _viewModel.LastReadDateTime;
             _viewModel.RefreshPolicyListCommand.Execute(null);
             var currentLastReadDateTime = _viewModel.LastReadDateTime;

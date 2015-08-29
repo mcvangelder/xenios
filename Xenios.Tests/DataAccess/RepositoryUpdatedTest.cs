@@ -36,9 +36,9 @@ namespace Xenios.DataAccess.Tests
                         isNotified.Set();
                     };
 
-                var insurancePolicy = Xenios.Test.Helpers.InsurancePolicyHelper.CreateInsurancePolicy();
+                var insurancePolicy = Xenios.Test.Helpers.InsurancePolicyHelper.CreateInsurancePolicies(1);
 
-                repository.Save(insurancePolicy);
+                repository.SaveAll(insurancePolicy);
                 var isNotifiedSet = isNotified.WaitOne(TimeSpan.FromSeconds(1));
 
                 Assert.IsTrue(isNotifiedSet, "NotifyRepositoryUpdated was not called");

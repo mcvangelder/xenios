@@ -19,14 +19,17 @@ namespace Xenios.DataAccess
             _fileName = fileName;
         }
 
-        public void Save(InsurancePolicy insurancePolicy)
+        public void SaveAll(List<InsurancePolicy> insurancePolicies)
         {
-            using(var fileStream = new FileStream(_fileName, FileMode.Append,FileAccess.Write))
+            using(var fileStream = new FileStream(_fileName, FileMode.Create ,FileAccess.Write))
             {
-                using(var streamWriter = new StreamWriter(fileStream))
+                using (var streamWriter = new StreamWriter(fileStream))
                 {
-                    var json = JsonConvert.SerializeObject(insurancePolicy);
-                    streamWriter.WriteLine(json);
+                    foreach (var policy in insurancePolicies)
+                    {
+                        var json = JsonConvert.SerializeObject(policy);
+                        streamWriter.WriteLine(json);
+                    }
                 }
             }
         }

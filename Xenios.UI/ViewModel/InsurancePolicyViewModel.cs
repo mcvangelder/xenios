@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Xenios.UI.Services;
 using System.Linq;
+using Xenios.Domain.Models;
 
 namespace Xenios.UI.ViewModel
 {
@@ -28,7 +29,7 @@ namespace Xenios.UI.ViewModel
         {
             _dataService = dataService;
             _dataService.PoliciesChanged += _dataService_PoliciesChanged;
-            RefreshPolicyListCommand = new RelayCommand(() => FindInsurancePoliciesByCustomerName(SearchText));
+            RefreshPolicyListCommand = new RelayCommand(LoadInsurancePolicies);
             SavePoliciesCommand = new RelayCommand(SavePolicies);
         }
 
@@ -130,7 +131,7 @@ namespace Xenios.UI.ViewModel
                 }
 
                 _searchText = value;
-                FindInsurancePoliciesByCustomerName(value);
+                LoadInsurancePolicies();
                 RaisePropertyChanged(SearchTextPropertyName);
             }
         }
@@ -198,8 +199,17 @@ namespace Xenios.UI.ViewModel
         private void LoadInsurancePolicies()
         {
             InsurancePolicies.Clear();
+            List<InsurancePolicy> policies = null;
 
-            var policies = _dataService.GetAllInsurancePolicies();
+            if (String.IsNullOrEmpty(_searchText))
+            {
+                policies = _dataService.GetAllInsurancePolicies();
+            }
+            else
+            {
+                policies = _dataService.FindInsurancePoliciesByCustomerName(_searchText);
+            }
+
             if (policies != null)
             {
                 policies.ForEach(item => InsurancePolicies.Add(item));
@@ -209,20 +219,20 @@ namespace Xenios.UI.ViewModel
             IsDataUpToDate = true;
         }
 
-        private void FindInsurancePoliciesByCustomerName(string value)
-        {
-            InsurancePolicies.Clear();
-            List<Domain.Models.InsurancePolicy> policies = null;
+        //private void FindInsurancePoliciesByCustomerName(string value)
+        //{
+        //    InsurancePolicies.Clear();
+        //    List<Domain.Models.InsurancePolicy> policies = null;
 
-            if (String.IsNullOrEmpty(value))
-                policies = _dataService.GetAllInsurancePolicies();
+        //    if (String.IsNullOrEmpty(value))
+        //        policies = _dataService.GetAllInsurancePolicies();
 
-            policies = policies ?? _dataService.FindInsurancePoliciesByCustomerName(value);
-            if (policies == null)
-                return;
+        //    policies = policies ?? _dataService.FindInsurancePoliciesByCustomerName(value);
+        //    if (policies == null)
+        //        return;
 
-            policies.ForEach(info => InsurancePolicies.Add(info));
-        }
+        //    policies.ForEach(info => InsurancePolicies.Add(info));
+        //}
 
         private void SavePolicies()
         {
