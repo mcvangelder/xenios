@@ -64,6 +64,11 @@ namespace Xenios.Business
             }
         }
 
+        ~InsurancePolicyDataService()
+        {
+            Dispose(true);
+        }
+
         public void Save(List<InsurancePolicy> insurancePolicies)
         {
             _policiesRepository.SaveAll(insurancePolicies);

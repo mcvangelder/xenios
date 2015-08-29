@@ -55,5 +55,10 @@ namespace Xenios.DataAccess
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+        ~RepositoryUpdatedNotificationService()
+        {
+            Dispose(true);
+        }
     }
 }
