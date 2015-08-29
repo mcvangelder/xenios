@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xenios.Business", "Xenios.B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xenios.Tests", "Xenios.Tests\Xenios.Tests.csproj", "{86120A61-7118-48EE-AB4D-B8CC97B4A934}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xenios.UI", "Xenios.UI\Xenios.UI.csproj", "{A083D774-33A9-49CD-94D8-02D2A64218DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{86120A61-7118-48EE-AB4D-B8CC97B4A934}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86120A61-7118-48EE-AB4D-B8CC97B4A934}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86120A61-7118-48EE-AB4D-B8CC97B4A934}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A083D774-33A9-49CD-94D8-02D2A64218DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A083D774-33A9-49CD-94D8-02D2A64218DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A083D774-33A9-49CD-94D8-02D2A64218DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A083D774-33A9-49CD-94D8-02D2A64218DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

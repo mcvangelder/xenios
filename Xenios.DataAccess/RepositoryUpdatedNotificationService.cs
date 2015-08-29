@@ -28,7 +28,8 @@ namespace Xenios.DataAccess
             var file = Path.GetFileName(fileName);
 
             _fileSystemWatcher = new FileSystemWatcher(directory, file);
-            _fileSystemWatcher.NotifyFilter = NotifyFilters.LastWrite;
+            // TODO: Consider Deletes and Renames if time
+            _fileSystemWatcher.NotifyFilter = NotifyFilters.LastWrite; 
             _fileSystemWatcher.Changed += fileSystemWatcher_Changed;
             _fileSystemWatcher.EnableRaisingEvents = true;
         }
