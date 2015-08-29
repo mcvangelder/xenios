@@ -11,19 +11,24 @@ namespace Xenios.Business.Test
     [TestClass]
     public class InsurancePolicyDataServiceTest
     {
-        private const int defaultInformationsCount = 5;
+        private const int defaultPolicyCount = 5;
         private const string defaultFileName = @"c:\temp\insurance_information_retrievalTest.txt";
         private DataAccess.InsurancePolicyRepository _repository;
 
-        private void CreateRepository(String fileName = defaultFileName, int initialRecordCount = defaultInformationsCount)
+        private void CreateRepository(List<InsurancePolicy> policies, String fileName = defaultFileName)
         {
             DeleteRepository(fileName);
             _repository = new DataAccess.InsurancePolicyRepository(fileName);
-            var informations = Xenios.Test.Helpers.InsurancePolicyHelper.CreateInsurancePolicies(initialRecordCount);
-            foreach(var info in informations)
+
+            foreach(var policy in policies)
             {
-                _repository.Save(info);
+                _repository.Save(policy);
             }
+        }
+
+        private void CreateRepository(int initialRecordCount = defaultPolicyCount, String fileName = defaultFileName)
+        {
+            CreateRepository(Xenios.Test.Helpers.InsurancePolicyHelper.CreateInsurancePolicies(initialRecordCount), fileName);
         }
 
         public void DeleteRepository(String fileName = defaultFileName)
@@ -35,11 +40,11 @@ namespace Xenios.Business.Test
         public void Should_get_all_insurance_informations()
         {
             CreateRepository();
-            InsurancePolicyDataService service = 
+            InsurancePolicyDataService service =
                             new InsurancePolicyDataService(defaultFileName);
 
             var allInfos = service.GetAllInsurancePolicies();
-            Assert.IsTrue(allInfos.Count == defaultInformationsCount);
+            Assert.IsTrue(allInfos.Count == defaultPolicyCount);
         }
 
         [TestMethod]
@@ -110,6 +115,36 @@ namespace Xenios.Business.Test
 
             Xenios.Test.Helpers.InsurancePolicyHelper.
                 AssertPolicyCanBeFoundByCustomerName(expectedCount, expectedInfo, expectedLastName, defaultFileName);
+        }
+
+        [TestMethod]
+        public void Should_find_policy_having_customer_with_first_or_last_name()
+        {
+            var expectedName = "expected_name";
+            var expectedCount = 2;
+
+            var randomPolicies = Xenios.Test.Helpers.InsurancePolicyHelper.CreateInsurancePolicies(2);
+            var expectedInfoByFirstName = randomPolicies.First();
+            var expectedInfoByLastName = randomPolicies.Last();
+
+            expectedInfoByFirstName.Customer.FirstName = expectedName;
+            expectedInfoByLastName.Customer.LastName = expectedName;
+
+            CreateRepository(policies: randomPolicies);
+
+            using (var service = new InsurancePolicyDataService(defaultFileName))
+            {
+                var searchResults = service.FindInsurancePoliciesByCustomerName(expectedName);
+                var searchResultsCount = searchResults.Count;
+
+                Assert.AreEqual(expectedCount, searchResultsCount);
+
+                var searchResultFirstName = searchResults.First();
+                var searchResultLastName = searchResults.Last();
+
+                Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(expectedInfoByFirstName, searchResultFirstName);
+                Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(expectedInfoByLastName, searchResultLastName);
+            }
         }
     }
 }
