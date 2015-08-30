@@ -55,6 +55,8 @@ namespace Xenios.UI.ViewModel
 
         public RelayCommand ExitApplicationCommand { get; set; }
 
+        public RelayCommand CloseFileCommand { get; set; }
+
         /// <summary>
         /// The <see cref="PathToFile" /> property's name.
         /// </summary>

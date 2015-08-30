@@ -17,6 +17,7 @@ namespace Xenios.Mocks
 
         public event PoliciesChangedEvent PoliciesChanged;
         public event OnSaveEvent OnSave;
+        public event OnCalledEvent OnClose;
 
         public MockDataService()
         {
@@ -43,6 +44,12 @@ namespace Xenios.Mocks
         {
             if (OnSave != null)
                 OnSave(policies);
+        }
+
+        public void Close()
+        {
+            if (OnClose != null)
+                OnClose();
         }
     }
 }
