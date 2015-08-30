@@ -58,7 +58,7 @@
 				<TextBox Height="22" TextWrapping="NoWrap" IsEnabled="{Binding IsSearchEnabled}" Text="{Binding SearchText, Mode=OneWayToSource}"  Width="200" HorizontalAlignment="Right"/>
 			</StackPanel>
 		</Grid>
-		<DataGrid IsEnabled="{Binding IsEnabled}" ItemsSource="{Binding InsurancePolicies}" ColumnWidth="*" Height="200.72" AutoGenerateColumns="False" AlternatingRowBackground="#FFFABBBB" >
+		<DataGrid IsEnabled="{Binding IsEnabled}" ItemsSource="{Binding InsurancePolicies}" ColumnWidth="*" Height="200.72" AutoGenerateColumns="False" AlternatingRowBackground="#FFFABBBB">
 			<DataGrid.Columns>
 				<DataGridTextColumn Binding="{Binding Customer.FirstName, Mode=TwoWay}" ClipboardContentBinding="{x:Null}" Header="First Name" MaxWidth="100" MinWidth="50" SortDirection="Ascending"/>
 				<DataGridTextColumn Binding="{Binding Customer.LastName}" ClipboardContentBinding="{x:Null}" Header="Last Name" MaxWidth="100" MinWidth="50" SortDirection="Ascending" SortMemberPath="{Binding Mode=OneWay}"/>
@@ -66,8 +66,19 @@
 				<DataGridTextColumn Binding="{Binding Customer.City}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="City" MaxWidth="100" MinWidth="50"/>
 				<DataGridTextColumn Binding="{Binding Customer.State}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="State"/>
 				<DataGridTextColumn Binding="{Binding Customer.PostalCode}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Postal Code" MaxWidth="100" MinWidth="50"/>
-				<DataGridTextColumn Binding="{Binding InsuranceType}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Insurance Type" MaxWidth="100" MinWidth="50"/>
-				<DataGridTextColumn Binding="{Binding CoverageBeginDateTime}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Coverage State Date" MaxWidth="100" MinWidth="50"/>
+				<DataGridTextColumn Binding="{Binding InsuranceType}" ClipboardContentBinding="{x:Null}" Header="Insurance Type"/>
+                <DataGridTemplateColumn CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Coverage State Date"  Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock HorizontalAlignment="Center" Text="{Binding CoverageBeginDateTime, Mode=OneWay, StringFormat='MM/dd/yy'}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <DatePicker HorizontalAlignment="Center" SelectedDate="{Binding CoverageBeginDateTime, Mode=TwoWay}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
 				<DataGridTextColumn Binding="{Binding PaymentInformation.CreditCardType}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Credit Card Type"/>
 				<DataGridTextColumn Binding="{Binding PaymentInformation.CreditCardNumber}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Credit Card Number" MaxWidth="100" MinWidth="50"/>
 				<DataGridTextColumn Binding="{Binding PaymentInformation.CreditCardVerificationNumber}" ClipboardContentBinding="{x:Null}" Header="CCV"/>
