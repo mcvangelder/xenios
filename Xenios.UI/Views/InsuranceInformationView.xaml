@@ -53,7 +53,7 @@
 			<Image Grid.Column="0" HorizontalAlignment="Left" Source="../Resources/Swords_And_Shield_clip_art_medium.png"/>
 			<TextBlock Grid.Column="1" Margin="5,15" FontSize="30"><Run Text="Xenios Insurance Input Form"/></TextBlock>
 			<StackPanel Grid.Column="2" Orientation="Horizontal" Background="White" HorizontalAlignment="Right" Height="25" VerticalAlignment="Bottom">
-				<Button Margin="2" Content="Button" Style="{DynamicResource RefreshButton}"/>
+				<Button Margin="2" IsEnabled="{Binding IsEnabled}" Command="{Binding RefreshPolicyListCommand}" Content="Button" Style="{DynamicResource RefreshButton}"/>
                 <Image Source="../Resources/search.png" Margin="5,0,0,0"/>
 				<TextBox Height="22" TextWrapping="NoWrap" IsEnabled="{Binding IsSearchEnabled}" Text="{Binding SearchText, Mode=OneWayToSource}"  Width="200" HorizontalAlignment="Right"/>
 			</StackPanel>
