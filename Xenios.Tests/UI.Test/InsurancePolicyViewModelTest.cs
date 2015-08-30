@@ -180,5 +180,14 @@ namespace Xenios.UI.Test
 
             Assert.IsFalse(isNotified);
         }
+
+        [TestMethod]
+        public void Should_clear_InsurancePolicies_when_PathToFile_is_set_to_empty()
+        {
+            _viewModel.PathToFile = mockFilePath;
+            _viewModel.PathToFile = String.Empty;
+
+            Assert.AreEqual(0, _viewModel.InsurancePolicies.Count);
+        }
     }
 }

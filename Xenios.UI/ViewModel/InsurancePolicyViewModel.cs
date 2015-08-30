@@ -87,14 +87,19 @@ namespace Xenios.UI.ViewModel
                 }
 
                 _dataService.SourceFile = _pathToFile = value;
-                if (!String.IsNullOrEmpty(value))
-                {
-                    LoadInsurancePolicies();
-                }
+                UpdateInsurancePolicyCollection(value);
+
                 RaisePropertyChanged(PathToFilePropertyName);
             }
         }
 
+        private void UpdateInsurancePolicyCollection(string value)
+        {
+            if (String.IsNullOrEmpty(value))
+                ClearInsurancePolicies();
+            else
+                LoadInsurancePolicies();
+        }
 
         /// <summary>
         /// The <see cref="InsurancePolicies" /> property's name.
@@ -217,9 +222,14 @@ namespace Xenios.UI.ViewModel
             }
         }
 
-        private void LoadInsurancePolicies()
+        private void ClearInsurancePolicies()
         {
             InsurancePolicies.Clear();
+        }
+
+        private void LoadInsurancePolicies()
+        {
+            ClearInsurancePolicies();
             List<InsurancePolicy> policies = null;
 
             if (String.IsNullOrEmpty(_searchText))
