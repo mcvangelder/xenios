@@ -28,12 +28,13 @@ namespace Xenios.UI.ViewModel
         public IApplicationService ApplicationService { get; set; }
         public IDataService DataService { get { return _dataService; } }
 
+        private bool IsPathToFileSpecified { get { return !String.IsNullOrEmpty(PathToFile); } }
         public InsurancePolicyViewModel()
         {
-            RefreshPolicyListCommand = new RelayCommand(LoadInsurancePolicies);
-            SavePoliciesCommand = new RelayCommand(SavePolicies);
+            RefreshPolicyListCommand = new RelayCommand(LoadInsurancePolicies, () => IsPathToFileSpecified);
+            SavePoliciesCommand = new RelayCommand(SavePolicies, () => IsPathToFileSpecified);
             ExitApplicationCommand = new RelayCommand(ExitApplication);
-            CloseFileCommand = new RelayCommand(CloseFile);
+            CloseFileCommand = new RelayCommand(CloseFile,() => IsPathToFileSpecified);
             OpenFileDialogCommand = new RelayCommand(OpenFileDialog);
         }
 
@@ -88,9 +89,16 @@ namespace Xenios.UI.ViewModel
 
                 _dataService.SourceFile = _pathToFile = value;
                 UpdateInsurancePolicyCollection(value);
-
+                NotifyPathToFileDependentCommands();
                 RaisePropertyChanged(PathToFilePropertyName);
             }
+        }
+
+        private void NotifyPathToFileDependentCommands()
+        {
+            SavePoliciesCommand.RaiseCanExecuteChanged();
+            CloseFileCommand.RaiseCanExecuteChanged();
+            RefreshPolicyListCommand.RaiseCanExecuteChanged();
         }
 
         private void UpdateInsurancePolicyCollection(string value)

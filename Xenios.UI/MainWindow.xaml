@@ -2,8 +2,15 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Views="clr-namespace:Xenios.UI.Views" x:Class="Xenios.UI.MainWindow"
-        Title="Xenios Car Insurance">
-	<Grid>
-		<Views:InsuranceInformationView Margin="0" />
+        Title="Xenios Car Insurance" Icon="Swords_And_Shield_clip_art_small.png" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding ElementName=policiesControl, Path=DataContext.OpenFileDialogCommand}" Key="O" Modifiers="Control"/>
+        <KeyBinding Command="{Binding ElementName=policiesControl, Path=DataContext.CloseFileCommand}" Key="F4" Modifiers="Control"/>
+        <KeyBinding Command="{Binding ElementName=policiesControl, Path=DataContext.SavePoliciesCommand}" Key="S" Modifiers="Control"/>
+        <KeyBinding Command="{Binding ElementName=policiesControl, Path=DataContext.ExitApplicationCommand}" Key="F4" Modifiers="Alt"/>
+        <KeyBinding Command="{Binding ElementName=policiesControl, Path=DataContext.RefreshPolicyListCommand}" Key="F5"/>
+    </Window.InputBindings>
+    <Grid>
+		<Views:InsuranceInformationView x:Name="policiesControl" Margin="0" />
 	</Grid>
 </Window>

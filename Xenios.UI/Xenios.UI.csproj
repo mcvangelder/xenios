@@ -75,6 +75,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Infrastructure\RelayCommandKeyBinding.cs" />
     <Compile Include="Services\DataServiceWrapper.cs" />
     <Compile Include="Services\IApplicationService.cs" />
     <Compile Include="Services\IDataService.cs" />
@@ -140,6 +141,9 @@
       <Project>{2c057155-539f-4f76-93d3-f04dbf4a5306}</Project>
       <Name>Xenios.Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Swords_And_Shield_clip_art_small.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
