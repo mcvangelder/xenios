@@ -7,14 +7,14 @@ namespace Xenios.UI.Test
     public class UIDataServiceTest
     {
         private Mocks.MockInsurancePolicyDataService _mockBusinessService;
-        private UI.Services.DataService<Mocks.MockInsurancePolicyDataService> _dataService;
+        private UI.Services.DataServiceWrapper<Mocks.MockInsurancePolicyDataService> _dataService;
 
         private const string mockFilePath = @"mock/file/path";
 
         [TestInitialize]
         public void CreateUIDataService()
         {
-            _dataService = new UI.Services.DataService<Mocks.MockInsurancePolicyDataService>();
+            _dataService = new UI.Services.DataServiceWrapper<Mocks.MockInsurancePolicyDataService>();
             _dataService.SourceFile = mockFilePath;
             _mockBusinessService = _dataService.InsurancePolicyDataService;
         }

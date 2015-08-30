@@ -73,7 +73,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Services\DataService.cs" />
+    <Compile Include="Services\DataServiceWrapper.cs" />
     <Compile Include="Services\IApplicationService.cs" />
     <Compile Include="Services\IDataService.cs" />
     <Compile Include="ViewModel\InsurancePolicyViewModel.cs" />

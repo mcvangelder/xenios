@@ -7,7 +7,7 @@ using Xenios.Business;
 
 namespace Xenios.UI.Services
 {
-    public class DataService<T> : IDataService where T: AbsractInsurancePolicyDataService
+    public class DataServiceWrapper<T> : IDataService where T: AbsractInsurancePolicyDataService
     {
         public event PoliciesChangedEvent PoliciesChanged;
 
