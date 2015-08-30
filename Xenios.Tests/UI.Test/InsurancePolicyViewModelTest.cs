@@ -191,10 +191,18 @@ namespace Xenios.UI.Test
         }
 
         [TestMethod]
-        public void Should_enable_search_box_when_PathToFile_is_set_non_empty()
+        public void Should_enable_when_PathToFile_is_set_non_empty()
         {
             _viewModel.PathToFile = mockFilePath;
-            Assert.IsTrue(_viewModel.IsSearchEnabled);
+            Assert.IsTrue(_viewModel.IsEnabled);
+        }
+
+        [TestMethod]
+        public void Should_not_enable_when_PathToFile_is_set_empty()
+        {
+            _viewModel.PathToFile = mockFilePath;
+            _viewModel.PathToFile = String.Empty;
+            Assert.IsFalse(_viewModel.IsEnabled);
         }
     }
 }

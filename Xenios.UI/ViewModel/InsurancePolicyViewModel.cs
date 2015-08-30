@@ -60,7 +60,7 @@ namespace Xenios.UI.ViewModel
             _dataService.SourceFile = _pathToFile;
             UpdateInsurancePolicyCollection(_pathToFile);
             NotifyPathToFileDependentCommands();
-            IsSearchEnabled = true;
+            IsEnabled = !String.IsNullOrWhiteSpace(_pathToFile);
         }
 
         public void SetDataService(IDataService service)
@@ -253,32 +253,32 @@ namespace Xenios.UI.ViewModel
         }
 
         /// <summary>
-        /// The <see cref="IsSearchEnabled" /> property's name.
+        /// The <see cref="IsEnabled" /> property's name.
         /// </summary>
-        public const string IsSearchEnabledPropertyName = "IsSearchEnabled";
+        public const string IsEnabledPropertyName = "IsEnabled";
 
-        private bool _isSearchEnabled = false;
+        private bool _isEnabled = false;
 
         /// <summary>
         /// Sets and gets the IsSearchEnabled property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public bool IsSearchEnabled
+        public bool IsEnabled
         {
             get
             {
-                return _isSearchEnabled;
+                return _isEnabled;
             }
 
             set
             {
-                if (_isSearchEnabled == value)
+                if (_isEnabled == value)
                 {
                     return;
                 }
 
-                _isSearchEnabled = value;
-                RaisePropertyChanged(IsSearchEnabledPropertyName);
+                _isEnabled = value;
+                RaisePropertyChanged(IsEnabledPropertyName);
             }
         }
 

@@ -13,6 +13,24 @@
         DataContext="{Binding InsurancePolicy, Source={StaticResource Locator}}" 
        >
     <StackPanel>
+    	<VisualStateManager.VisualStateGroups>
+    		<VisualStateGroup x:Name="VisualStateGroup">
+    			<VisualState x:Name="UpToDate">
+    				<Storyboard>
+    					<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="textBlock">
+    						<EasingColorKeyFrame KeyTime="0" Value="#FF16AB38"/>
+    					</ColorAnimationUsingKeyFrames>
+    				</Storyboard>
+    			</VisualState>
+    			<VisualState x:Name="OutOfDate">
+    				<Storyboard>
+    					<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="textBlock">
+    						<EasingColorKeyFrame KeyTime="0" Value="#FFC80B0B"/>
+    					</ColorAnimationUsingKeyFrames>
+    				</Storyboard>
+    			</VisualState>
+    		</VisualStateGroup>
+    	</VisualStateManager.VisualStateGroups>
         <Menu Height="20">
             <MenuItem Header="File">
                 <MenuItem Header="Open" InputGestureText="Ctrl-O" HorizontalAlignment="Left" Width="150" Command="{Binding OpenFileDialogCommand}"/>
@@ -35,7 +53,7 @@
 			<TextBlock Grid.Column="1" Margin="5,15" FontSize="30" Text="Xenios Insurance Input Form"/>
             <StackPanel Grid.Column="2" Orientation="Horizontal" Background="White" HorizontalAlignment="Right" Height="25" VerticalAlignment="Bottom">
                 <TextBlock Text="Search:" VerticalAlignment="Center"/>
-                <TextBox Height="22" TextWrapping="NoWrap" Text="{Binding SearchText, Mode=OneWayToSource}"  Width="200" HorizontalAlignment="Right"/>
+                <TextBox Height="22" TextWrapping="NoWrap" IsEnabled="{Binding IsSearchEnabled}" Text="{Binding SearchText, Mode=OneWayToSource}"  Width="200" HorizontalAlignment="Right"/>
             </StackPanel>
         </Grid>
         <DataGrid ItemsSource="{Binding InsurancePolicies}" ColumnWidth="*" Height="200.72" AutoGenerateColumns="False" >
@@ -60,12 +78,8 @@
         <StatusBar HorizontalAlignment="Stretch" Height="20" Margin="0,5,0,0" VerticalAlignment="Center" >
             <StatusBarItem HorizontalAlignment="Left" VerticalAlignment="Top">
                 <StackPanel>
-                    <!--<Ellipse x:Name="ellipse" Height="12" Width="12">
-                    	<i:Interaction.Behaviors>
-                    		<ei:DataStateBehavior Binding="{Binding IsDataUpToDate}" Value="True" TrueState="UpToDateState" FalseState="OutOfDateState"/>
-                    	</i:Interaction.Behaviors>
-                    </Ellipse>-->
-                    <TextBlock Text="{Binding IsDataUpToDate, StringFormat=Is Latest: \{0\}}"/>
+                    <TextBlock x:Name="textBlock" Text="{Binding IsDataUpToDate, StringFormat=Is Latest: \{0\}}">
+                    </TextBlock>
                 </StackPanel>
             </StatusBarItem>
             <StatusBarItem HorizontalAlignment="Right" VerticalAlignment="Top">
