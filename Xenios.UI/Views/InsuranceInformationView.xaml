@@ -6,85 +6,86 @@
         xmlns:ignore="http://www.ignore.com"
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
-        xmlns:System="clr-namespace:System;assembly=mscorlib" 
-        x:Class="Xenios.UI.Views.InsuranceInformationView"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
         xmlns:xi="clr-namespace:Xenios.UI.Infrastructure"
+        xmlns:ViewModel="clr-namespace:Xenios.UI.ViewModel" 
+        x:Class="Xenios.UI.Views.InsuranceInformationView"
         mc:Ignorable="d ignore"
         DataContext="{Binding InsurancePolicy, Source={StaticResource Locator}}" 
        >
-    <StackPanel>
-    	<VisualStateManager.VisualStateGroups>
-    		<VisualStateGroup x:Name="VisualStateGroup">
-    			<VisualState x:Name="UpToDate">
-    				<Storyboard>
-    					<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="textBlock">
-    						<EasingColorKeyFrame KeyTime="0" Value="#FF16AB38"/>
-    					</ColorAnimationUsingKeyFrames>
-    				</Storyboard>
-    			</VisualState>
-    			<VisualState x:Name="OutOfDate">
-    				<Storyboard>
-    					<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="textBlock">
-    						<EasingColorKeyFrame KeyTime="0" Value="#FFC80B0B"/>
-    					</ColorAnimationUsingKeyFrames>
-    				</Storyboard>
-    			</VisualState>
-    		</VisualStateGroup>
-    	</VisualStateManager.VisualStateGroups>
-        <Menu Height="20">
-            <MenuItem Header="File">
-                <MenuItem Header="Open" InputGestureText="Ctrl-O" HorizontalAlignment="Left" Width="150" Command="{Binding OpenFileDialogCommand}"/>
-                <MenuItem Header="Close" InputGestureText="Ctrl-F4" HorizontalAlignment="Left" Width="150" Command="{Binding CloseFileCommand}"/>
-                <Separator/>
-                <MenuItem Header="Save" InputGestureText="Ctrl-S" HorizontalAlignment="Left" Width="150" Command="{Binding SavePoliciesCommand}"/>
-                <Separator/>
-                <MenuItem Header="Quit" InputGestureText="Alt-F4" HorizontalAlignment="Left" Width="150" Command="{Binding ExitApplicationCommand}"/>
-            </MenuItem>
-            <MenuItem Header="View">
-                <MenuItem Header="Refresh" InputGestureText="F5" HorizontalAlignment="Left" Width="150" Command="{Binding RefreshPolicyListCommand}" />
-            </MenuItem>
-        </Menu>
-        <Grid HorizontalAlignment="Stretch" Margin="5">
+	<StackPanel>
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup x:Name="VisualStateGroup">
+				<VisualState x:Name="UpToDate">
+					<Storyboard>
+						<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="textBlock">
+							<EasingColorKeyFrame KeyTime="0" Value="#FF16AB38"/>
+						</ColorAnimationUsingKeyFrames>
+					</Storyboard>
+				</VisualState>
+				<VisualState x:Name="OutOfDate">
+					<Storyboard>
+						<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="textBlock">
+							<EasingColorKeyFrame KeyTime="0" Value="#FFC80B0B"/>
+						</ColorAnimationUsingKeyFrames>
+					</Storyboard>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
+		<Menu Height="20">
+			<MenuItem Header="File">
+				<MenuItem Header="Open" InputGestureText="Ctrl-O" HorizontalAlignment="Left" Width="150" Command="{Binding OpenFileDialogCommand}" />
+				<MenuItem Header="Close" InputGestureText="Ctrl-F4" HorizontalAlignment="Left" Width="150" Command="{Binding CloseFileCommand}"/>
+				<Separator/>
+				<MenuItem Header="Save" InputGestureText="Ctrl-S" HorizontalAlignment="Left" Width="150" Command="{Binding SavePoliciesCommand}"/>
+				<Separator/>
+				<MenuItem Header="Quit" InputGestureText="Alt-F4" HorizontalAlignment="Left" Width="150" Command="{Binding ExitApplicationCommand}"/>
+			</MenuItem>
+			<MenuItem Header="View">
+				<MenuItem Header="Refresh" InputGestureText="F5" HorizontalAlignment="Left" Width="150" Command="{Binding RefreshPolicyListCommand}" />
+			</MenuItem>
+		</Menu>
+		<Grid HorizontalAlignment="Stretch" Margin="5">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="65"/>
 				<ColumnDefinition/>
 			</Grid.ColumnDefinitions>
 			<Image Grid.Column="0" HorizontalAlignment="Left" Source="../Resources/Swords_And_Shield_clip_art_medium.png"/>
-			<TextBlock Grid.Column="1" Margin="5,15" FontSize="30" Text="Xenios Insurance Input Form"/>
-            <StackPanel Grid.Column="2" Orientation="Horizontal" Background="White" HorizontalAlignment="Right" Height="25" VerticalAlignment="Bottom">
-                <TextBlock Text="Search:" VerticalAlignment="Center"/>
-                <TextBox Height="22" TextWrapping="NoWrap" IsEnabled="{Binding IsSearchEnabled}" Text="{Binding SearchText, Mode=OneWayToSource}"  Width="200" HorizontalAlignment="Right"/>
-            </StackPanel>
-        </Grid>
-        <DataGrid IsEnabled="{Binding IsEnabled}" ItemsSource="{Binding InsurancePolicies}" ColumnWidth="*" Height="200.72" AutoGenerateColumns="False" >
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Customer.FirstName}" ClipboardContentBinding="{x:Null}" Header="First Name" MaxWidth="100" MinWidth="50" SortDirection="Ascending"/>
-                <DataGridTextColumn Binding="{Binding Customer.LastName}" ClipboardContentBinding="{x:Null}" Header="Last Name" MaxWidth="100" MinWidth="50" SortDirection="Ascending" SortMemberPath="{Binding Mode=OneWay}"/>
-                <DataGridTextColumn Binding="{Binding Customer.AddressLine1}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Address" MaxWidth="500" MinWidth="50"/>
-                <DataGridTextColumn Binding="{Binding Customer.City}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="City" MaxWidth="100" MinWidth="50"/>
-                <DataGridTextColumn Binding="{Binding Customer.State}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="State"/>
-                <DataGridTextColumn Binding="{Binding Customer.PostalCode}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Postal Code" MaxWidth="100" MinWidth="50"/>
-                <DataGridTextColumn Binding="{Binding InsuranceType}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Insurance Type" MaxWidth="100" MinWidth="50"/>
-                <DataGridTextColumn Binding="{Binding CoverageBeginDateTime}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Coverage State Date" MaxWidth="100" MinWidth="50"/>
-                <DataGridTextColumn Binding="{Binding PaymentInformation.CreditCardType}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Credit Card Type"/>
-                <DataGridTextColumn Binding="{Binding PaymentInformation.CreditCardNumber}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Credit Card Number" MaxWidth="100" MinWidth="50"/>
-                <DataGridTextColumn Binding="{Binding PaymentInformation.CreditCardVerificationNumber}" ClipboardContentBinding="{x:Null}" Header="CCV"/>
-                <DataGridTextColumn Binding="{Binding PaymentInformation.ExpirationDate}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Expiration Date" MaxWidth="100" MinWidth="50"/>
-                <DataGridTextColumn Binding="{Binding Price}" ClipboardContentBinding="{x:Null}" Header="Price"/>
-                <DataGridTextColumn Binding="{Binding TermLength}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Term Length" MaxWidth="100" MinWidth="50"/>
-                <DataGridTextColumn Binding="{Binding TermUnit}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Term Type" MaxWidth="100" MinWidth="50"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <StatusBar HorizontalAlignment="Stretch" Height="20" Margin="0,5,0,0" VerticalAlignment="Center" >
-            <StatusBarItem Visibility="{Binding StatusBarItemVisibility}" HorizontalAlignment="Left" VerticalAlignment="Top">
-                <StackPanel>
-                    <TextBlock x:Name="textBlock" Text="{Binding IsDataUpToDate, StringFormat=Is Latest: \{0\}}">
-                    </TextBlock>
-                </StackPanel>
-            </StatusBarItem>
-            <StatusBarItem Visibility="{Binding StatusBarItemVisibility}" HorizontalAlignment="Right" VerticalAlignment="Top">
-                <TextBlock Text="{Binding LastReadDateTime, Mode=OneWay, StringFormat=Last Read: \{0\}}"  />
-            </StatusBarItem>
-        </StatusBar>
-    </StackPanel>
+			<TextBlock Grid.Column="1" Margin="5,15" FontSize="30"><Run Text="Xenios Insurance Input Form"/></TextBlock>
+			<StackPanel Grid.Column="2" Orientation="Horizontal" Background="White" HorizontalAlignment="Right" Height="25" VerticalAlignment="Bottom">
+				<Button Margin="2" Content="Button" Style="{DynamicResource RefreshButton}"/>
+                <Image Source="../Resources/search.png" Margin="5,0,0,0"/>
+				<TextBox Height="22" TextWrapping="NoWrap" IsEnabled="{Binding IsSearchEnabled}" Text="{Binding SearchText, Mode=OneWayToSource}"  Width="200" HorizontalAlignment="Right"/>
+			</StackPanel>
+		</Grid>
+		<DataGrid IsEnabled="{Binding IsEnabled}" ItemsSource="{Binding InsurancePolicies}" ColumnWidth="*" Height="200.72" AutoGenerateColumns="False" d:DataContext="{d:DesignInstance {x:Type ViewModel:InsurancePolicyViewModel}}" >
+			<DataGrid.Columns>
+				<DataGridTextColumn Binding="{Binding Customer.FirstName}" ClipboardContentBinding="{x:Null}" Header="First Name" MaxWidth="100" MinWidth="50" SortDirection="Ascending"/>
+				<DataGridTextColumn Binding="{Binding Customer.LastName}" ClipboardContentBinding="{x:Null}" Header="Last Name" MaxWidth="100" MinWidth="50" SortDirection="Ascending" SortMemberPath="{Binding Mode=OneWay}"/>
+				<DataGridTextColumn Binding="{Binding Customer.AddressLine1}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Address" MaxWidth="500" MinWidth="50"/>
+				<DataGridTextColumn Binding="{Binding Customer.City}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="City" MaxWidth="100" MinWidth="50"/>
+				<DataGridTextColumn Binding="{Binding Customer.State}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="State"/>
+				<DataGridTextColumn Binding="{Binding Customer.PostalCode}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Postal Code" MaxWidth="100" MinWidth="50"/>
+				<DataGridTextColumn Binding="{Binding InsuranceType}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Insurance Type" MaxWidth="100" MinWidth="50"/>
+				<DataGridTextColumn Binding="{Binding CoverageBeginDateTime}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Coverage State Date" MaxWidth="100" MinWidth="50"/>
+				<DataGridTextColumn Binding="{Binding PaymentInformation.CreditCardType}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Credit Card Type"/>
+				<DataGridTextColumn Binding="{Binding PaymentInformation.CreditCardNumber}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Credit Card Number" MaxWidth="100" MinWidth="50"/>
+				<DataGridTextColumn Binding="{Binding PaymentInformation.CreditCardVerificationNumber}" ClipboardContentBinding="{x:Null}" Header="CCV"/>
+				<DataGridTextColumn Binding="{Binding PaymentInformation.ExpirationDate}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Expiration Date" MaxWidth="100" MinWidth="50"/>
+				<DataGridTextColumn Binding="{Binding Price}" ClipboardContentBinding="{x:Null}" Header="Price"/>
+				<DataGridTextColumn Binding="{Binding TermLength}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Term Length" MaxWidth="100" MinWidth="50"/>
+				<DataGridTextColumn Binding="{Binding TermUnit}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Term Type" MaxWidth="100" MinWidth="50"/>
+			</DataGrid.Columns>
+		</DataGrid>
+		<StatusBar HorizontalAlignment="Stretch" Height="20" Margin="0,5,0,0" VerticalAlignment="Center" >
+			<StatusBarItem Visibility="{Binding StatusBarItemVisibility}" HorizontalAlignment="Left" VerticalAlignment="Top">
+				<StackPanel>
+					<TextBlock x:Name="textBlock" Text="{Binding IsDataUpToDate, StringFormat=Is Latest: \{0\}}"/>
+				</StackPanel>
+			</StatusBarItem>
+			<StatusBarItem Visibility="{Binding StatusBarItemVisibility}" HorizontalAlignment="Right" VerticalAlignment="Top">
+				<TextBlock Text="{Binding LastReadDateTime, Mode=OneWay, StringFormat=Last Read: \{0\}}"  />
+			</StatusBarItem>
+		</StatusBar>
+	</StackPanel>
 </UserControl>

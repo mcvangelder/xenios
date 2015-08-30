@@ -299,6 +299,9 @@ namespace Xenios.UI.ViewModel
         {
             get
             {
+                if (IsInDesignModeStatic)
+                    return Visibility.Visible;
+
                 return _statusBarItemVisbility;
             }
 

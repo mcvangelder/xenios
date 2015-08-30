@@ -47,6 +47,7 @@
       <HintPath>..\packages\MvvmLightLibs.5.1.1.0\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Expression.Effects" />
     <Reference Include="Microsoft.Expression.Interactions" />
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -148,6 +149,14 @@
   <ItemGroup>
     <Resource Include="Resources\Swords_And_Shield_clip_art_medium.png" />
     <Resource Include="Resources\Swords_And_Shield_clip_art_small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\refresh_Icon_32.png" />
+    <Resource Include="Resources\status_warning_Icon_32.png" />
+    <Resource Include="Resources\status_Green_Icon_32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
