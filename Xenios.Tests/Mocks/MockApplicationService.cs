@@ -12,6 +12,7 @@ namespace Xenios.Mocks
     {
         public event OnCalledEvent OnExit;
         public event OnCalledEvent OnChooseFile;
+        public event OnCalledEvent OnAlert;
 
         public void ExitApplication()
         {
@@ -27,6 +28,15 @@ namespace Xenios.Mocks
                 OnChooseFile();
 
             return String.Empty;
+        }
+
+
+        public void Alert(string p)
+        {
+            if(OnAlert != null)
+            {
+                OnAlert();
+            }
         }
     }
 }

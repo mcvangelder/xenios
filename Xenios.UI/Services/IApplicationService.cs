@@ -11,5 +11,7 @@ namespace Xenios.UI.Services
         void ExitApplication();
 
         String ChooseFile();
+
+        void Alert(string p);
     }
 }

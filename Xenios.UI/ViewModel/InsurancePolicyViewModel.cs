@@ -358,7 +358,14 @@ namespace Xenios.UI.ViewModel
 
         private void SavePolicies()
         {
-            _dataService.Save(_insurancePolicies.ToList());
+            if (_isDataUpToDate.GetValueOrDefault(false))
+            {
+                _dataService.Save(_insurancePolicies.ToList());
+            }
+            else
+            {
+                ApplicationService.Alert("You must refresh before you can save.");
+            }
         }
 
         private void CloseFile()

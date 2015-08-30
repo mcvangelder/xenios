@@ -219,5 +219,20 @@ namespace Xenios.UI.Test
             _viewModel.PathToFile = String.Empty;
             Assert.AreEqual(_viewModel.StatusBarItemVisibility, System.Windows.Visibility.Collapsed);
         }
+
+        [TestMethod]
+        public void Should_alert_user_to_refresh_when_out_of_date_and_trying_to_save()
+        {
+            var isAlerted = false;
+
+            _viewModel.PathToFile = mockFilePath;
+            _viewModel.IsDataUpToDate = false;
+            _applicationService.OnAlert += () => { isAlerted = true; };
+            _dataService.OnSave += (policies) => { Assert.Fail("Save was called!.");};
+
+            _viewModel.SavePoliciesCommand.Execute(null);
+
+            Assert.IsTrue(isAlerted);
+        }
     }
 }

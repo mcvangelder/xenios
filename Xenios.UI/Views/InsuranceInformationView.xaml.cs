@@ -41,5 +41,11 @@ namespace Xenios.UI.Views
 
             return chosenFile;
         }
+
+
+        public void Alert(string alertText)
+        {
+            MessageBox.Show(alertText, "Alert!", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+        }
     }
 }
