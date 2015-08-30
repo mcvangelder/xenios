@@ -29,7 +29,7 @@ namespace Xenios.DataAccess
 
             _fileSystemWatcher = new FileSystemWatcher(directory, file);
             // TODO: Consider Deletes and Renames if time
-            _fileSystemWatcher.NotifyFilter = NotifyFilters.LastWrite; 
+            _fileSystemWatcher.NotifyFilter = NotifyFilters.LastWrite;
             _fileSystemWatcher.Changed += fileSystemWatcher_Changed;
             _fileSystemWatcher.EnableRaisingEvents = true;
         }
@@ -44,9 +44,10 @@ namespace Xenios.DataAccess
 
         private void Dispose(bool dispose)
         {
-            if(dispose)
+            if (dispose)
             {
-                _fileSystemWatcher.Dispose();
+                if (_fileSystemWatcher != null)
+                    _fileSystemWatcher.Dispose();
             }
         }
 

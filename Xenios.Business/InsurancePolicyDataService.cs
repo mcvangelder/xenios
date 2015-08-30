@@ -50,7 +50,8 @@ namespace Xenios.Business
         {
             if (disposing)
             {
-                _repositoryUpdatedNotificationService.Dispose();
+                if(_repositoryUpdatedNotificationService != null)
+                    _repositoryUpdatedNotificationService.Dispose();
             }
         }
         public override void Save(List<InsurancePolicy> insurancePolicies)
