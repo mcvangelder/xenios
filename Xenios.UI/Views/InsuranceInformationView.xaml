@@ -50,7 +50,7 @@
 					<Separator/>
 					<MenuItem Header="Save" HorizontalAlignment="Left" Width="139.506666666667"/>
 					<Separator/>
-					<MenuItem Header="Quit" HorizontalAlignment="Left" Width="139.506666666667"/>
+					<MenuItem Header="Quit" HorizontalAlignment="Left" Width="139.506666666667" Command="{Binding ExitApplicationCommand}"/>
 				</MenuItem>
 				<MenuItem Header="View">
 					<MenuItem Header="Refresh" HorizontalAlignment="Left" Width="139.506666666667" Command="{Binding RefreshPolicyListCommand}" />

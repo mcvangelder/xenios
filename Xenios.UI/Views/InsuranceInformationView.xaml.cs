@@ -23,7 +23,7 @@ namespace Xenios.UI.Views
 
         public void ExitApplication()
         {
-            throw new System.NotImplementedException();
+            Window.GetWindow(this).Close();
         }
 
         public string ChooseFile()
