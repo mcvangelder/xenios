@@ -36,6 +36,31 @@ namespace Xenios.UI.ViewModel
             ExitApplicationCommand = new RelayCommand(ExitApplication);
             CloseFileCommand = new RelayCommand(CloseFile,() => IsPathToFileSpecified);
             OpenFileDialogCommand = new RelayCommand(OpenFileDialog);
+
+            PropertyChanged += InsurancePolicyViewModel_PropertyChanged;
+        }
+
+        void InsurancePolicyViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case PathToFilePropertyName:
+                    ProcessPathToFileChange();
+                    break;
+                case SearchTextPropertyName:
+                    LoadInsurancePolicies();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void ProcessPathToFileChange()
+        {
+            _dataService.SourceFile = _pathToFile;
+            UpdateInsurancePolicyCollection(_pathToFile);
+            NotifyPathToFileDependentCommands();
+            IsSearchEnabled = true;
         }
 
         public void SetDataService(IDataService service)
@@ -86,10 +111,7 @@ namespace Xenios.UI.ViewModel
                 {
                     return;
                 }
-
-                _dataService.SourceFile = _pathToFile = value;
-                UpdateInsurancePolicyCollection(value);
-                NotifyPathToFileDependentCommands();
+                _pathToFile = value;
                 RaisePropertyChanged(PathToFilePropertyName);
             }
         }
@@ -165,7 +187,7 @@ namespace Xenios.UI.ViewModel
                 }
 
                 _searchText = value;
-                LoadInsurancePolicies();
+               
                 RaisePropertyChanged(SearchTextPropertyName);
             }
         }
@@ -227,6 +249,36 @@ namespace Xenios.UI.ViewModel
 
                 _isDataUpToDate = value;
                 RaisePropertyChanged(IsDataUpToDatePropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="IsSearchEnabled" /> property's name.
+        /// </summary>
+        public const string IsSearchEnabledPropertyName = "IsSearchEnabled";
+
+        private bool _isSearchEnabled = false;
+
+        /// <summary>
+        /// Sets and gets the IsSearchEnabled property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public bool IsSearchEnabled
+        {
+            get
+            {
+                return _isSearchEnabled;
+            }
+
+            set
+            {
+                if (_isSearchEnabled == value)
+                {
+                    return;
+                }
+
+                _isSearchEnabled = value;
+                RaisePropertyChanged(IsSearchEnabledPropertyName);
             }
         }
 

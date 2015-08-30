@@ -189,5 +189,12 @@ namespace Xenios.UI.Test
 
             Assert.AreEqual(0, _viewModel.InsurancePolicies.Count);
         }
+
+        [TestMethod]
+        public void Should_enable_search_box_when_PathToFile_is_set_non_empty()
+        {
+            _viewModel.PathToFile = mockFilePath;
+            Assert.IsTrue(_viewModel.IsSearchEnabled);
+        }
     }
 }
