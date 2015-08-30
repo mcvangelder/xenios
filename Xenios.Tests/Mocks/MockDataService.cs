@@ -17,8 +17,7 @@ namespace Xenios.Mocks
 
         public event PoliciesChangedEvent PoliciesChanged;
         public event OnSaveEvent OnSave;
-        public event OnCalledEvent OnClose;
-
+  
         public MockDataService()
         {
             _insuranceInfos = Xenios.Test.Helpers.InsurancePolicyHelper.CreateInsurancePolicies(5);
@@ -44,12 +43,6 @@ namespace Xenios.Mocks
         {
             if (OnSave != null)
                 OnSave(policies);
-        }
-
-        public void Close()
-        {
-            if (OnClose != null)
-                OnClose();
         }
     }
 }

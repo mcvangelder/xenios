@@ -141,7 +141,7 @@ namespace Xenios.UI.Test
         }
 
         [TestMethod]
-        public void Should_close_application_when_close_command_executed()
+        public void Should_close_application_when_exit_command_executed()
         {
             var isNotifed = false;
 
@@ -150,6 +150,14 @@ namespace Xenios.UI.Test
             _viewModel.ExitApplicationCommand.Execute(null);
             
             Assert.IsTrue(isNotifed);
+        }
+
+        [TestMethod]
+        public void Should_set_path_to_file_empty_when_close_file_command_executed()
+        {
+            _viewModel.CloseFileCommand.Execute(null);
+
+            Assert.IsTrue(String.IsNullOrEmpty(_viewModel.PathToFile));
         }
     }
 }

@@ -33,6 +33,7 @@ namespace Xenios.UI.ViewModel
             RefreshPolicyListCommand = new RelayCommand(LoadInsurancePolicies);
             SavePoliciesCommand = new RelayCommand(SavePolicies);
             ExitApplicationCommand = new RelayCommand(ExitApplication);
+            CloseFileCommand = new RelayCommand(CloseFile);
         }
 
         public void SetDataService(IDataService service)
@@ -246,5 +247,11 @@ namespace Xenios.UI.ViewModel
         {
             _dataService.Save(_insurancePolicies.ToList());
         }
+
+        private void CloseFile()
+        {
+            PathToFile = String.Empty;
+        }
+
     }
 }
