@@ -31,7 +31,7 @@
 				<ColumnDefinition Width="65"/>
 				<ColumnDefinition/>
 			</Grid.ColumnDefinitions>
-			<Image Grid.Column="0" HorizontalAlignment="Left" Source="Swords_And_Shield_clip_art_medium.png"/>
+			<Image Grid.Column="0" HorizontalAlignment="Left" Source="../Resources/Swords_And_Shield_clip_art_medium.png"/>
 			<TextBlock Grid.Column="1" Margin="5,15" FontSize="30" Text="Xenios Insurance Input Form"/>
             <StackPanel Grid.Column="2" Orientation="Horizontal" Background="White" HorizontalAlignment="Right" Height="25" VerticalAlignment="Bottom">
                 <TextBlock Text="Search:" VerticalAlignment="Center"/>
