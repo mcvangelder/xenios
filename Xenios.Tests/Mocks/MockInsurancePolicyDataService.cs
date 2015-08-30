@@ -49,5 +49,10 @@ namespace Xenios.Mocks
                 OnDispose();
             }
         }
+
+        internal void RaisePoliciesChanged()
+        {
+            RaiseNotifyInsurancePoliciesUpdated(new List<Domain.Models.InsurancePolicy>());
+        }
     }
 }

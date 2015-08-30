@@ -53,7 +53,7 @@ namespace Xenios.Business.Test
 
             using (var service = new InsurancePolicyDataService(defaultFileName))
             {
-                service.NotifyInsurancePolicyUpdated += (infos) =>
+                service.NotifyInsurancePoliciesUpdated += (infos) =>
                 {
                     newInfosCount = infos.Count;
                     isNotifiedEvent.Set();

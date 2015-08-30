@@ -44,10 +44,19 @@ namespace Xenios.UI.Services
         private void CreateInsurancePolicyDataService(string value)
         {
             if (InsurancePolicyDataService is IDisposable)
+            {
+                InsurancePolicyDataService.NotifyInsurancePoliciesUpdated -= RaisePoliciesChanged;
                 ((IDisposable)InsurancePolicyDataService).Dispose();
-                
+            }
+  
             InsurancePolicyDataService = (T)Activator.CreateInstance(typeof(T), value);
+            InsurancePolicyDataService.NotifyInsurancePoliciesUpdated += RaisePoliciesChanged;
         }
 
+        void RaisePoliciesChanged(List<Domain.Models.InsurancePolicy> policies)
+        {
+            if (PoliciesChanged != null)
+                PoliciesChanged(policies);
+        }
     }
 }

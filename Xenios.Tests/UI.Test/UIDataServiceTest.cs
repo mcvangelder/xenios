@@ -19,6 +19,8 @@ namespace Xenios.UI.Test
             _mockBusinessService = _dataService.InsurancePolicyDataService;
         }
 
+        // TODO MVG: Test clean up to dispose data service
+
         [TestMethod]
         public void Should_call_save_on_business_data_service()
         {
@@ -66,6 +68,17 @@ namespace Xenios.UI.Test
             _mockBusinessService.OnDispose += () => { isNotified = true; };
 
             _dataService.SourceFile = "another/mock/path";
+            Assert.IsTrue(isNotified);
+        }
+
+        [TestMethod]
+        public void Should_notify_when_changes_to_policy_repository_are_made()
+        {
+            var isNotified = false;
+
+            _dataService.PoliciesChanged += (policies) => { isNotified = true; };
+            _mockBusinessService.RaisePoliciesChanged();
+
             Assert.IsTrue(isNotified);
         }
     }

@@ -8,6 +8,8 @@ namespace Xenios.Business
 {
     public abstract class AbsractInsurancePolicyDataService
     {
+        public event InsurancePoliciesUpdated NotifyInsurancePoliciesUpdated;
+
         protected String FileName { get; set; }
 
         protected AbsractInsurancePolicyDataService(String fileName)
@@ -20,5 +22,13 @@ namespace Xenios.Business
         public abstract List<Domain.Models.InsurancePolicy> GetAllInsurancePolicies();
 
         public abstract List<Domain.Models.InsurancePolicy> FindInsurancePoliciesByCustomerName(string searchValue);
+
+        protected void RaiseNotifyInsurancePoliciesUpdated(List<Domain.Models.InsurancePolicy> policies)
+        {
+            if (NotifyInsurancePoliciesUpdated != null)
+            {
+                NotifyInsurancePoliciesUpdated(policies);
+            }
+        }
     }
 }
