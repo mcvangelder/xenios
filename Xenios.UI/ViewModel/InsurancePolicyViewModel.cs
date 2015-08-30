@@ -148,6 +148,9 @@ namespace Xenios.UI.ViewModel
         {
             get
             {
+                if (IsInDesignModeStatic)
+                    PathToFile = @"c:\temp\xenios.txt";
+
                 return _insurancePolicies;
             }
 

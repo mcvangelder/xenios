@@ -58,7 +58,7 @@
 				<TextBox Height="22" TextWrapping="NoWrap" IsEnabled="{Binding IsSearchEnabled}" Text="{Binding SearchText, Mode=OneWayToSource}"  Width="200" HorizontalAlignment="Right"/>
 			</StackPanel>
 		</Grid>
-		<DataGrid IsEnabled="{Binding IsEnabled}" ItemsSource="{Binding InsurancePolicies}" ColumnWidth="*" Height="200.72" AutoGenerateColumns="False" d:DataContext="{d:DesignInstance {x:Type ViewModel:InsurancePolicyViewModel}}" >
+		<DataGrid IsEnabled="{Binding IsEnabled}" ItemsSource="{Binding InsurancePolicies}" ColumnWidth="*" Height="200.72" AutoGenerateColumns="False" >
 			<DataGrid.Columns>
 				<DataGridTextColumn Binding="{Binding Customer.FirstName}" ClipboardContentBinding="{x:Null}" Header="First Name" MaxWidth="100" MinWidth="50" SortDirection="Ascending"/>
 				<DataGridTextColumn Binding="{Binding Customer.LastName}" ClipboardContentBinding="{x:Null}" Header="Last Name" MaxWidth="100" MinWidth="50" SortDirection="Ascending" SortMemberPath="{Binding Mode=OneWay}"/>
