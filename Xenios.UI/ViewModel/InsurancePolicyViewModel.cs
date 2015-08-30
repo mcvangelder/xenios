@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using Xenios.UI.Services;
 using System.Linq;
 using Xenios.Domain.Models;
+using System.Windows;
 
 namespace Xenios.UI.ViewModel
 {
@@ -61,6 +62,7 @@ namespace Xenios.UI.ViewModel
             UpdateInsurancePolicyCollection(_pathToFile);
             NotifyPathToFileDependentCommands();
             IsEnabled = !String.IsNullOrWhiteSpace(_pathToFile);
+            StatusBarItemVisibility = IsEnabled ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public void SetDataService(IDataService service)
@@ -279,6 +281,36 @@ namespace Xenios.UI.ViewModel
 
                 _isEnabled = value;
                 RaisePropertyChanged(IsEnabledPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="StatusBarItemVisibility" /> property's name.
+        /// </summary>
+        public const string StatusBarItemVisibilityPropertyName = "StatusBarItemVisibility";
+
+        private Visibility _statusBarItemVisbility = Visibility.Collapsed;
+
+        /// <summary>
+        /// Sets and gets the StatusBarVisibility property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public Visibility StatusBarItemVisibility
+        {
+            get
+            {
+                return _statusBarItemVisbility;
+            }
+
+            set
+            {
+                if (_statusBarItemVisbility == value)
+                {
+                    return;
+                }
+
+                _statusBarItemVisbility = value;
+                RaisePropertyChanged(StatusBarItemVisibilityPropertyName);
             }
         }
 

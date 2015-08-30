@@ -204,5 +204,20 @@ namespace Xenios.UI.Test
             _viewModel.PathToFile = String.Empty;
             Assert.IsFalse(_viewModel.IsEnabled);
         }
+
+        [TestMethod]
+        public void Should_make_status_bar_item_visible_when_PathToFile_is_set_non_empty()
+        {
+            _viewModel.PathToFile = mockFilePath;
+            Assert.AreEqual(_viewModel.StatusBarItemVisibility, System.Windows.Visibility.Visible);
+        }
+
+        [TestMethod]
+        public void Should_make_status_bar_item_collapsed_when_PathToFile_is_set_emtpy()
+        {
+            _viewModel.PathToFile = mockFilePath;
+            _viewModel.PathToFile = String.Empty;
+            Assert.AreEqual(_viewModel.StatusBarItemVisibility, System.Windows.Visibility.Collapsed);
+        }
     }
 }

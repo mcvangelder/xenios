@@ -56,7 +56,7 @@
                 <TextBox Height="22" TextWrapping="NoWrap" IsEnabled="{Binding IsSearchEnabled}" Text="{Binding SearchText, Mode=OneWayToSource}"  Width="200" HorizontalAlignment="Right"/>
             </StackPanel>
         </Grid>
-        <DataGrid ItemsSource="{Binding InsurancePolicies}" ColumnWidth="*" Height="200.72" AutoGenerateColumns="False" >
+        <DataGrid IsEnabled="{Binding IsEnabled}" ItemsSource="{Binding InsurancePolicies}" ColumnWidth="*" Height="200.72" AutoGenerateColumns="False" >
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Customer.FirstName}" ClipboardContentBinding="{x:Null}" Header="First Name" MaxWidth="100" MinWidth="50" SortDirection="Ascending"/>
                 <DataGridTextColumn Binding="{Binding Customer.LastName}" ClipboardContentBinding="{x:Null}" Header="Last Name" MaxWidth="100" MinWidth="50" SortDirection="Ascending" SortMemberPath="{Binding Mode=OneWay}"/>
@@ -76,17 +76,15 @@
             </DataGrid.Columns>
         </DataGrid>
         <StatusBar HorizontalAlignment="Stretch" Height="20" Margin="0,5,0,0" VerticalAlignment="Center" >
-            <StatusBarItem HorizontalAlignment="Left" VerticalAlignment="Top">
+            <StatusBarItem Visibility="{Binding StatusBarItemVisibility}" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <StackPanel>
                     <TextBlock x:Name="textBlock" Text="{Binding IsDataUpToDate, StringFormat=Is Latest: \{0\}}">
                     </TextBlock>
                 </StackPanel>
             </StatusBarItem>
-            <StatusBarItem HorizontalAlignment="Right" VerticalAlignment="Top">
+            <StatusBarItem Visibility="{Binding StatusBarItemVisibility}" HorizontalAlignment="Right" VerticalAlignment="Top">
                 <TextBlock Text="{Binding LastReadDateTime, Mode=OneWay, StringFormat=Last Read: \{0\}}"  />
             </StatusBarItem>
         </StatusBar>
-
-
     </StackPanel>
 </UserControl>
