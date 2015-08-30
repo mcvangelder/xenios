@@ -53,7 +53,7 @@
 					<MenuItem Header="Quit" HorizontalAlignment="Left" Width="139.506666666667"/>
 				</MenuItem>
 				<MenuItem Header="View">
-					<MenuItem Header="Refresh" HorizontalAlignment="Left" Width="139.506666666667"/>
+					<MenuItem Header="Refresh" HorizontalAlignment="Left" Width="139.506666666667" Command="{Binding RefreshPolicyListCommand}" />
 				</MenuItem>
 			</Menu>
 			<StackPanel Orientation="Horizontal" Background="White" HorizontalAlignment="Right">
