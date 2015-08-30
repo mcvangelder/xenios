@@ -17,7 +17,9 @@ namespace Xenios.UI.Test
         public void CreateViewModel()
         {
             _dataService = new Xenios.Mocks.MockDataService();
-            _viewModel = new ViewModel.InsurancePolicyViewModel(_dataService);
+            _viewModel = new ViewModel.InsurancePolicyViewModel();
+            _viewModel.SetDataService(_dataService);
+
             _applicationService = new Mocks.MockApplicationService();
         }
 

@@ -15,6 +15,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
+using Xenios.UI.Services;
 
 namespace Xenios.UI.ViewModel
 {
@@ -24,6 +25,7 @@ namespace Xenios.UI.ViewModel
     /// </summary>
     public class ViewModelLocator
     {
+        private XeniosServiceLocator _xeniosServiceLocator = new XeniosServiceLocator();
         /// <summary>
         /// Initializes a new instance of the ViewModelLocator class.
         /// </summary>
@@ -45,11 +47,13 @@ namespace Xenios.UI.ViewModel
             SimpleIoc.Default.Register<InsurancePolicyViewModel>();
         }
 
-        public InsurancePolicyViewModel Main
+        public InsurancePolicyViewModel InsurancePolicy
         {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<InsurancePolicyViewModel>();
+            get{
+                var instance = ServiceLocator.Current.GetInstance<InsurancePolicyViewModel>();
+                var service = _xeniosServiceLocator.InsurancePolicyDataService;
+                instance.SetDataService(service);
+                return instance;
             }
         }
         

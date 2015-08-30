@@ -76,6 +76,7 @@
     <Compile Include="Services\DataServiceWrapper.cs" />
     <Compile Include="Services\IApplicationService.cs" />
     <Compile Include="Services\IDataService.cs" />
+    <Compile Include="Services\XeniosServiceLocator.cs" />
     <Compile Include="ViewModel\InsurancePolicyViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs">
       <SubType>Code</SubType>

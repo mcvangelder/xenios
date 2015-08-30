@@ -26,17 +26,23 @@ namespace Xenios.UI.ViewModel
         private IDataService _dataService;
 
         public IApplicationService ApplicationService { get; set; }
+        public IDataService DataService { get { return _dataService; } }
 
-        public InsurancePolicyViewModel(IDataService dataService)
+        public InsurancePolicyViewModel()
         {
-            _dataService = dataService;
-            _dataService.PoliciesChanged += _dataService_PoliciesChanged;
-
             RefreshPolicyListCommand = new RelayCommand(LoadInsurancePolicies);
             SavePoliciesCommand = new RelayCommand(SavePolicies);
             ExitApplicationCommand = new RelayCommand(ExitApplication);
         }
 
+        public void SetDataService(IDataService service)
+        {
+            if (_dataService == service)
+                return;
+
+            _dataService = service;
+            _dataService.PoliciesChanged += _dataService_PoliciesChanged;
+        }
 
         void _dataService_PoliciesChanged(List<Domain.Models.InsurancePolicy> newPolicyList)
         {

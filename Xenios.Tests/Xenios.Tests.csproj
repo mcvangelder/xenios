@@ -80,6 +80,7 @@
     <Compile Include="DataAccess\RepositoryUpdatedTest.cs" />
     <Compile Include="UI.Test\InsurancePolicyViewModelTest.cs" />
     <Compile Include="UI.Test\UIDataServiceTest.cs" />
+    <Compile Include="UI.Test\ViewModelLocatorTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xenios.Business\Xenios.Business.csproj">
