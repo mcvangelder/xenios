@@ -144,6 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Swords_And_Shield_clip_art_small.png" />
+    <Resource Include="Views\Swords_And_Shield_clip_art_medium.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -26,11 +26,18 @@
                 <MenuItem Header="Refresh" InputGestureText="F5" HorizontalAlignment="Left" Width="150" Command="{Binding RefreshPolicyListCommand}" />
             </MenuItem>
         </Menu>
-        <StackPanel Orientation="Horizontal" Background="White" HorizontalAlignment="Right">
-            <TextBlock Text="Search:" VerticalAlignment="Center"/>
-            <TextBox Height="22" TextWrapping="NoWrap" Text="{Binding SearchText, Mode=OneWayToSource}" Margin="5" Width="200" HorizontalAlignment="Right"/>
-
-        </StackPanel>
+        <Grid HorizontalAlignment="Stretch" Margin="5">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="65"/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+			<Image Grid.Column="0" HorizontalAlignment="Left" Source="Swords_And_Shield_clip_art_medium.png"/>
+			<TextBlock Grid.Column="1" Margin="5,15" FontSize="30" Text="Xenios Insurance Input Form"/>
+            <StackPanel Grid.Column="2" Orientation="Horizontal" Background="White" HorizontalAlignment="Right" Height="25" VerticalAlignment="Bottom">
+                <TextBlock Text="Search:" VerticalAlignment="Center"/>
+                <TextBox Height="22" TextWrapping="NoWrap" Text="{Binding SearchText, Mode=OneWayToSource}"  Width="200" HorizontalAlignment="Right"/>
+            </StackPanel>
+        </Grid>
         <DataGrid ItemsSource="{Binding InsurancePolicies}" ColumnWidth="*" Height="200.72" AutoGenerateColumns="False" >
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Customer.FirstName}" ClipboardContentBinding="{x:Null}" Header="First Name" MaxWidth="100" MinWidth="50" SortDirection="Ascending"/>
