@@ -17,6 +17,7 @@ namespace Xenios.Mocks
 
         public event PoliciesChangedEvent PoliciesChanged;
         public event OnSaveEvent OnSave;
+        public event OnCalledEvent OnGetAllInsurancePolicies;
   
         public MockDataService()
         {
@@ -25,6 +26,9 @@ namespace Xenios.Mocks
 
         public List<Domain.Models.InsurancePolicy> GetAllInsurancePolicies()
         {
+            if (OnGetAllInsurancePolicies != null)
+                OnGetAllInsurancePolicies();
+
             return _insuranceInfos;
         }
 

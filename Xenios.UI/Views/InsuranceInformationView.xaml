@@ -46,7 +46,7 @@
 			<Menu Height="20">
 				<MenuItem Header="File">
 					<MenuItem Header="Open" HorizontalAlignment="Left" Width="139.506666666667" Command="{Binding OpenFileDialogCommand}"/>
-					<MenuItem Header="Close" HorizontalAlignment="Left" Width="139.506666666667"/>
+					<MenuItem Header="Close" HorizontalAlignment="Left" Width="139.506666666667" Command="{Binding CloseFileCommand}"/>
 					<Separator/>
 					<MenuItem Header="Save" HorizontalAlignment="Left" Width="139.506666666667"/>
 					<Separator/>

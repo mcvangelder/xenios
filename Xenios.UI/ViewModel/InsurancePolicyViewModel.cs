@@ -87,8 +87,10 @@ namespace Xenios.UI.ViewModel
                 }
 
                 _dataService.SourceFile = _pathToFile = value;
-
-                LoadInsurancePolicies();
+                if (!String.IsNullOrEmpty(value))
+                {
+                    LoadInsurancePolicies();
+                }
                 RaisePropertyChanged(PathToFilePropertyName);
             }
         }

@@ -170,5 +170,15 @@ namespace Xenios.UI.Test
 
             Assert.IsTrue(isNotified);
         }
+
+        [TestMethod]
+        public void Should_not_attempt_to_load_insurance_policies_when_path_to_file_is_empty()
+        {
+            var isNotified = false;
+            _dataService.OnGetAllInsurancePolicies += () => { isNotified = true; };
+            _viewModel.PathToFile = String.Empty;
+
+            Assert.IsFalse(isNotified);
+        }
     }
 }
