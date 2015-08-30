@@ -37,20 +37,31 @@ namespace Xenios.UI.Services
                     return;
 
                 _sourceFile = value;
+                DisposeInsurancePolicyDataService();
+                if(String.IsNullOrEmpty(value))
+                    return;
+                
                 CreateInsurancePolicyDataService(value);
             }
         }
 
         private void CreateInsurancePolicyDataService(string value)
         {
-            if (InsurancePolicyDataService is IDisposable)
-            {
-                InsurancePolicyDataService.NotifyInsurancePoliciesUpdated -= RaisePoliciesChanged;
-                ((IDisposable)InsurancePolicyDataService).Dispose();
-            }
-  
             InsurancePolicyDataService = (T)Activator.CreateInstance(typeof(T), value);
             InsurancePolicyDataService.NotifyInsurancePoliciesUpdated += RaisePoliciesChanged;
+        }
+
+        private void DisposeInsurancePolicyDataService()
+        {
+            if(InsurancePolicyDataService != null)
+                InsurancePolicyDataService.NotifyInsurancePoliciesUpdated -= RaisePoliciesChanged;
+
+            if (InsurancePolicyDataService is IDisposable)
+            {
+                ((IDisposable)InsurancePolicyDataService).Dispose();
+            }
+
+            InsurancePolicyDataService = null;
         }
 
         void RaisePoliciesChanged(List<Domain.Models.InsurancePolicy> policies)

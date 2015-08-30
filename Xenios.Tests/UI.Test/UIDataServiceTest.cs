@@ -81,5 +81,17 @@ namespace Xenios.UI.Test
 
             Assert.IsTrue(isNotified);
         }
+
+        [TestMethod]
+        public void Should_dispose_and_remove_business_data_service_when_source_file_is_null_or_empty()
+        {
+            var isNotified = false;
+
+            _dataService.InsurancePolicyDataService.OnDispose += () => { isNotified = true; };
+            _dataService.SourceFile = String.Empty;
+
+            Assert.IsTrue(isNotified);
+            Assert.IsNull(_dataService.InsurancePolicyDataService);
+        }
     }
 }
