@@ -82,7 +82,18 @@
 				<DataGridTextColumn Binding="{Binding PaymentInformation.CreditCardType}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Credit Card Type"/>
 				<DataGridTextColumn Binding="{Binding PaymentInformation.CreditCardNumber}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Credit Card Number" MaxWidth="100" MinWidth="50"/>
 				<DataGridTextColumn Binding="{Binding PaymentInformation.CreditCardVerificationNumber}" ClipboardContentBinding="{x:Null}" Header="CCV"/>
-				<DataGridTextColumn Binding="{Binding PaymentInformation.ExpirationDate}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Expiration Date" MaxWidth="100" MinWidth="50"/>
+                <DataGridTemplateColumn CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Expiration Date" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock HorizontalAlignment="Center" Text="{Binding PaymentInformation.ExpirationDate, Mode=OneWay, StringFormat='MM/dd/yy'}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <DatePicker HorizontalAlignment="Center" SelectedDate="{Binding PaymentInformation.ExpirationDate, Mode=TwoWay}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
 				<DataGridTextColumn Binding="{Binding Price}" ClipboardContentBinding="{x:Null}" Header="Price"/>
 				<DataGridTextColumn Binding="{Binding TermLength}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Term Length" MaxWidth="100" MinWidth="50"/>
 				<DataGridTextColumn Binding="{Binding TermUnit}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Term Type" MaxWidth="100" MinWidth="50"/>
