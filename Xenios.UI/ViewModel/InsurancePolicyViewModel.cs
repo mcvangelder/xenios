@@ -243,7 +243,7 @@ namespace Xenios.UI.ViewModel
             if (ApplicationService == null)
                 return;
 
-            ApplicationService.Exit();
+            ApplicationService.ExitApplication();
         }
 
         private void SavePolicies()
@@ -258,7 +258,11 @@ namespace Xenios.UI.ViewModel
 
         private void OpenFileDialog()
         {
-            ApplicationService.OpenFileDialog();
+            var chosenFile = ApplicationService.ChooseFile();
+            if (String.IsNullOrEmpty(chosenFile))
+                return;
+
+            PathToFile = chosenFile;
         }
     }
 }

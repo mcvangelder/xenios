@@ -11,9 +11,9 @@ namespace Xenios.Mocks
     public class MockApplicationService : IApplicationService
     {
         public event OnCalledEvent OnExit;
-        public event OnCalledEvent OnOpenFileDialog;
+        public event OnCalledEvent OnChooseFile;
 
-        public void Exit()
+        public void ExitApplication()
         {
             if(OnExit != null)
             {
@@ -21,10 +21,12 @@ namespace Xenios.Mocks
             }
         }
 
-        public void OpenFileDialog()
+        public string ChooseFile()
         {
-            if (OnOpenFileDialog != null)
-                OnOpenFileDialog();
+            if (OnChooseFile != null)
+                OnChooseFile();
+
+            return String.Empty;
         }
     }
 }

@@ -165,7 +165,7 @@ namespace Xenios.UI.Test
         public void Should_call_open_file_dialog_on_application_service()
         {
             var isNotified = false;
-            _applicationService.OnOpenFileDialog += () => { isNotified = true; };
+            _applicationService.OnChooseFile += () => { isNotified = true; };
             _viewModel.OpenFileDialogCommand.Execute(null);
 
             Assert.IsTrue(isNotified);

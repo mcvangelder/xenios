@@ -8,8 +8,8 @@ namespace Xenios.UI.Services
 {
     public interface IApplicationService
     {
-        void Exit();
+        void ExitApplication();
 
-        void OpenFileDialog();
+        String ChooseFile();
     }
 }
