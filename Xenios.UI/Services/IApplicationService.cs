@@ -9,5 +9,7 @@ namespace Xenios.UI.Services
     public interface IApplicationService
     {
         void Exit();
+
+        void OpenFileDialog();
     }
 }

@@ -21,6 +21,8 @@ namespace Xenios.UI.Test
             _viewModel.SetDataService(_dataService);
 
             _applicationService = new Mocks.MockApplicationService();
+            _viewModel.ApplicationService = _applicationService;
+
         }
 
         [TestMethod]
@@ -146,7 +148,6 @@ namespace Xenios.UI.Test
             var isNotifed = false;
 
             _applicationService.OnExit += () => { isNotifed = true; };
-            _viewModel.ApplicationService = _applicationService;
             _viewModel.ExitApplicationCommand.Execute(null);
             
             Assert.IsTrue(isNotifed);
@@ -158,6 +159,16 @@ namespace Xenios.UI.Test
             _viewModel.CloseFileCommand.Execute(null);
 
             Assert.IsTrue(String.IsNullOrEmpty(_viewModel.PathToFile));
+        }
+
+        [TestMethod]
+        public void Should_call_open_file_dialog_on_application_service()
+        {
+            var isNotified = false;
+            _applicationService.OnOpenFileDialog += () => { isNotified = true; };
+            _viewModel.OpenFileDialogCommand.Execute(null);
+
+            Assert.IsTrue(isNotified);
         }
     }
 }

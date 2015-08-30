@@ -34,6 +34,7 @@ namespace Xenios.UI.ViewModel
             SavePoliciesCommand = new RelayCommand(SavePolicies);
             ExitApplicationCommand = new RelayCommand(ExitApplication);
             CloseFileCommand = new RelayCommand(CloseFile);
+            OpenFileDialogCommand = new RelayCommand(OpenFileDialog);
         }
 
         public void SetDataService(IDataService service)
@@ -57,6 +58,8 @@ namespace Xenios.UI.ViewModel
         public RelayCommand ExitApplicationCommand { get; set; }
 
         public RelayCommand CloseFileCommand { get; set; }
+
+        public RelayCommand OpenFileDialogCommand { get; set; }
 
         /// <summary>
         /// The <see cref="PathToFile" /> property's name.
@@ -253,5 +256,9 @@ namespace Xenios.UI.ViewModel
             PathToFile = String.Empty;
         }
 
+        private void OpenFileDialog()
+        {
+            ApplicationService.OpenFileDialog();
+        }
     }
 }

@@ -7,11 +7,11 @@ using Xenios.UI.Services;
 
 namespace Xenios.Mocks
 {
-    public delegate void OnExitEvent();
 
     public class MockApplicationService : IApplicationService
     {
-        public event OnExitEvent OnExit;
+        public event OnCalledEvent OnExit;
+        public event OnCalledEvent OnOpenFileDialog;
 
         public void Exit()
         {
@@ -19,6 +19,12 @@ namespace Xenios.Mocks
             {
                 OnExit();
             }
+        }
+
+        public void OpenFileDialog()
+        {
+            if (OnOpenFileDialog != null)
+                OnOpenFileDialog();
         }
     }
 }
