@@ -57,5 +57,56 @@
         		</Setter.Value>
         	</Setter>
         </Style>
+        <Style x:Key="SaveButton" TargetType="{x:Type Button}">
+        	<Setter Property="Template">
+        		<Setter.Value>
+        			<ControlTemplate TargetType="{x:Type Button}">
+        				<Grid>
+        					<Image x:Name="image" Source="Resources/save_icon.png" RenderTransformOrigin="0.5,0.5">
+        						<Image.RenderTransform>
+        							<TransformGroup>
+        								<ScaleTransform/>
+        								<SkewTransform/>
+        								<RotateTransform/>
+        								<TranslateTransform/>
+        							</TransformGroup>
+        						</Image.RenderTransform>
+        					</Image>
+        				</Grid>
+        				<ControlTemplate.Triggers>
+        					<Trigger Property="IsFocused" Value="True"/>
+        					<Trigger Property="IsDefaulted" Value="True"/>
+        					<Trigger Property="IsMouseOver" Value="True">
+        						<Setter Property="RenderTransform" TargetName="image">
+        							<Setter.Value>
+        								<TransformGroup>
+        									<ScaleTransform ScaleY="1.1" ScaleX="1.21"/>
+        									<SkewTransform/>
+        									<RotateTransform/>
+        									<TranslateTransform/>
+        								</TransformGroup>
+        							</Setter.Value>
+        						</Setter>
+        					</Trigger>
+        					<Trigger Property="IsPressed" Value="True">
+        						<Setter Property="RenderTransform" TargetName="image">
+        							<Setter.Value>
+        								<TransformGroup>
+        									<ScaleTransform ScaleY="0.9" ScaleX="0.9"/>
+        									<SkewTransform/>
+        									<RotateTransform Angle="25"/>
+        									<TranslateTransform/>
+        								</TransformGroup>
+        							</Setter.Value>
+        						</Setter>
+        					</Trigger>
+        					<Trigger Property="IsEnabled" Value="False">
+        						<Setter Property="Opacity" TargetName="image" Value="0.5"/>
+        					</Trigger>
+        				</ControlTemplate.Triggers>
+        			</ControlTemplate>
+        		</Setter.Value>
+        	</Setter>
+        </Style>
     </Application.Resources>
 </Application>
