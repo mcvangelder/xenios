@@ -320,6 +320,36 @@ namespace Xenios.UI.ViewModel
             }
         }
 
+        /// <summary>
+        /// The <see cref="TermTypesList" /> property's name.
+        /// </summary>
+        public const string TermTypesListPropertyName = "TermTypesList";
+
+        ObservableCollection<Domain.Enums.TermUnits> _types;
+        public ObservableCollection<Domain.Enums.TermUnits> TermTypesList
+        {
+            get {
+                if (_types != null)
+                    return _types;
+
+                CreateTermTypesList();
+
+                return _types;
+            }
+            set { 
+                _types = value;
+                RaisePropertyChanged(StatusBarItemVisibilityPropertyName);
+            }
+        }
+
+        private void CreateTermTypesList()
+        {
+            var allEnums = Enum.GetValues(typeof(Domain.Enums.TermUnits));
+            _types = new ObservableCollection<Domain.Enums.TermUnits>();
+            for (int i = 0; i < allEnums.Length; i++)
+                _types.Add((Domain.Enums.TermUnits)allEnums.GetValue(i));
+        }
+
         private void ClearInsurancePolicies()
         {
             InsurancePolicies.Clear();

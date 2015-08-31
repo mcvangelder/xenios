@@ -12,6 +12,7 @@
         x:Class="Xenios.UI.Views.InsuranceInformationView"
         mc:Ignorable="d ignore"
         DataContext="{Binding InsurancePolicy, Source={StaticResource Locator}}" 
+        x:Name="policiesView"
      >
     <Grid>
         <Grid.RowDefinitions>
@@ -95,7 +96,18 @@
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
 				<DataGridTextColumn Binding="{Binding TermLength}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Term Length" Width="Auto"/>
-				<DataGridTextColumn Binding="{Binding TermUnit}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Term Type" Width="Auto" />
+                <DataGridTemplateColumn CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Term Type" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding TermUnit}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox SelectedItem="{Binding TermUnit, Mode=TwoWay}" ItemsSource="{Binding ElementName=policiesView, Path=DataContext.TermTypesList}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
 			</DataGrid.Columns>
 		</DataGrid>
 		<StatusBar Grid.Row="3" HorizontalAlignment="Stretch" Height="20" Margin="0,5,0,0" VerticalAlignment="Center" >
