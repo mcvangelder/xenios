@@ -13,7 +13,7 @@ namespace Xenios.Domain.Models
 
         public CreditCardTypes CreditCardType { get; set; }
 
-        public string CreditCardNumber { get; set; }
+        public String CreditCardNumber { get; set; }
 
         public DateTime ExpirationDate { get; set; }
 

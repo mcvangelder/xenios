@@ -241,5 +241,12 @@ namespace Xenios.UI.Test
             var termTypes = _viewModel.TermTypesList;
             Assert.IsTrue(termTypes.Count > 0);
         }
+
+        [TestMethod]
+        public void Should_create_list_of_InsuranceTypes()
+        {
+            var insuranceTypes = _viewModel.InsuranceTypesList;
+            Assert.IsTrue(insuranceTypes.Count > 0);
+        }
     }
 }

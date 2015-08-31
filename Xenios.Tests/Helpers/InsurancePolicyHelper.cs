@@ -42,7 +42,7 @@ namespace Xenios.Test.Helpers
                 {
                     Id = Guid.NewGuid(),
                     CreditCardType = Domain.Enums.CreditCardTypes.Amex,
-                    CreditCardNumber = "1234-5678-9012-3456",
+                    CreditCardNumber = "1234567890123456",
                     ExpirationDate = DateTime.Now,
                     CreditCardVerificationNumber = "001"
                 },

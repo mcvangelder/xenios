@@ -55,7 +55,25 @@
 				<DataGridTextColumn Binding="{Binding Customer.City}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="City" Width="Auto" />
 				<DataGridTextColumn Binding="{Binding Customer.State}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="State" Width="Auto"/>
 				<DataGridTextColumn Binding="{Binding Customer.PostalCode}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Postal Code" Width="Auto" />
-				<DataGridTextColumn Binding="{Binding InsuranceType}" ClipboardContentBinding="{x:Null}" Header="Insurance Type" Width="Auto"/>
+                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="Insurance Type" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding InsuranceType}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <!--<ListBox ItemsSource="{Binding ElementName=policiesView, Path=DataContext.InsuranceTypesList}">
+                                <ListBox.ItemTemplate>
+                                    <HierarchicalDataTemplate>
+                                        <CheckBox IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected, Mode=TwoWay}" Content="{Binding InsuranceType, StringFormat=' {0'}"/>
+                                    </HierarchicalDataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>-->
+                            <TextBox Text="{Binding InsuranceType}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTemplateColumn CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Coverage State Date" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace Xenios.Domain.Enums
 {
+    [Flags]
     public enum InsuranceTypes : byte
     {
-        Comprehensive = 0,
-        Liability = 1,
-        Collision = 2,
-        Glass = 3,
-        Umbrella = 4
+        Unspecified = 0,
+        Comprehensive = 1,
+        Liability = 2,
+        Collision = 4,
+        Glass = 8,
+        Umbrella = 16
     }
 }
