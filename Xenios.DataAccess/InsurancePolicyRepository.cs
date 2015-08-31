@@ -21,37 +21,51 @@ namespace Xenios.DataAccess
 
         public void SaveAll(List<InsurancePolicy> insurancePolicies)
         {
-            using(var fileStream = new FileStream(_fileName, FileMode.Create ,FileAccess.Write))
+            Task t = Task.Factory.StartNew(() =>
             {
-                using (var streamWriter = new StreamWriter(fileStream))
+                using (var fileStream = new FileStream(_fileName, FileMode.Create, FileAccess.Write))
                 {
-                    foreach (var policy in insurancePolicies)
+                    using (var streamWriter = new StreamWriter(fileStream))
                     {
-                        var json = JsonConvert.SerializeObject(policy);
-                        streamWriter.WriteLine(json);
+                        foreach (var policy in insurancePolicies)
+                        {
+                            var json = JsonConvert.SerializeObject(policy);
+                            streamWriter.WriteLine(json);
+                        }
                     }
                 }
+            });
+            try
+            {
+                t.Wait();
+            } catch (AggregateException ae)
+            {
+                throw ae.InnerException;
             }
         }
 
         public List<InsurancePolicy> GetAll()
         {
-            var allInsurancyPolicies = new List<InsurancePolicy>();
-
-            using (var fileStream = new FileStream(_fileName, FileMode.Open, FileAccess.Read))
+            Task<List<InsurancePolicy>> t = Task.Factory.StartNew(() =>
             {
-                using (var streamReader = new StreamReader(fileStream))
+                var allInsurancyPolicies = new List<InsurancePolicy>();
+
+                using (var fileStream = new FileStream(_fileName, FileMode.Open, FileAccess.Read))
                 {
-                    String infoJson = String.Empty;
-                    while (!String.IsNullOrEmpty(infoJson = streamReader.ReadLine()))
+                    using (var streamReader = new StreamReader(fileStream))
                     {
-                        var infoObject = JsonConvert.DeserializeObject<InsurancePolicy>(infoJson);
-                        allInsurancyPolicies.Add(infoObject);
+                        String infoJson = String.Empty;
+                        while (!String.IsNullOrEmpty(infoJson = streamReader.ReadLine()))
+                        {
+                            var infoObject = JsonConvert.DeserializeObject<InsurancePolicy>(infoJson);
+                            allInsurancyPolicies.Add(infoObject);
+                        }
                     }
                 }
-            }
+                return allInsurancyPolicies;
+            });
 
-            return allInsurancyPolicies;
+            return t.Result;
         }
     }
 }

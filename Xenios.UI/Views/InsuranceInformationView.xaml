@@ -12,27 +12,16 @@
         x:Class="Xenios.UI.Views.InsuranceInformationView"
         mc:Ignorable="d ignore"
         DataContext="{Binding InsurancePolicy, Source={StaticResource Locator}}" 
-       >
-	<StackPanel>
-		<VisualStateManager.VisualStateGroups>
-			<VisualStateGroup x:Name="VisualStateGroup">
-				<VisualState x:Name="UpToDate">
-					<Storyboard>
-						<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="textBlock">
-							<EasingColorKeyFrame KeyTime="0" Value="#FF16AB38"/>
-						</ColorAnimationUsingKeyFrames>
-					</Storyboard>
-				</VisualState>
-				<VisualState x:Name="OutOfDate">
-					<Storyboard>
-						<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="textBlock">
-							<EasingColorKeyFrame KeyTime="0" Value="#FFC80B0B"/>
-						</ColorAnimationUsingKeyFrames>
-					</Storyboard>
-				</VisualState>
-			</VisualStateGroup>
-		</VisualStateManager.VisualStateGroups>
-		<Menu Height="20">
+        x:Name="policiesView"
+     >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0" Height="20">
 			<MenuItem Header="File">
 				<MenuItem Header="Open" InputGestureText="Ctrl-O" HorizontalAlignment="Left" Width="150" Command="{Binding OpenFileDialogCommand}" />
 				<MenuItem Header="Close" InputGestureText="Ctrl-F4" HorizontalAlignment="Left" Width="150" Command="{Binding CloseFileCommand}"/>
@@ -45,7 +34,7 @@
 				<MenuItem Header="Refresh" InputGestureText="F5" HorizontalAlignment="Left" Width="150" Command="{Binding RefreshPolicyListCommand}" />
 			</MenuItem>
 		</Menu>
-		<Grid HorizontalAlignment="Stretch" Margin="5">
+		<Grid Grid.Row="1" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Top">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="65"/>
 				<ColumnDefinition/>
@@ -58,16 +47,34 @@
 				<TextBox Height="22" TextWrapping="NoWrap" IsEnabled="{Binding IsSearchEnabled}" Text="{Binding SearchText, Mode=OneWayToSource}"  Width="200" HorizontalAlignment="Right"/>
 			</StackPanel>
 		</Grid>
-		<DataGrid IsEnabled="{Binding IsEnabled}" ItemsSource="{Binding InsurancePolicies}" ColumnWidth="*" Height="200.72" AutoGenerateColumns="False" AlternatingRowBackground="#FFFABBBB">
+		<DataGrid ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" MinWidth="800" MinHeight="100" Grid.Row="2" VerticalAlignment="Top" IsEnabled="{Binding IsEnabled}" ItemsSource="{Binding InsurancePolicies}" ColumnWidth="*" AutoGenerateColumns="False" AlternatingRowBackground="#FFFABBBB">
 			<DataGrid.Columns>
-				<DataGridTextColumn Binding="{Binding Customer.FirstName, Mode=TwoWay}" ClipboardContentBinding="{x:Null}" Header="First Name" MaxWidth="100" MinWidth="50" SortDirection="Ascending"/>
-				<DataGridTextColumn Binding="{Binding Customer.LastName}" ClipboardContentBinding="{x:Null}" Header="Last Name" MaxWidth="100" MinWidth="50" SortDirection="Ascending" SortMemberPath="{Binding Mode=OneWay}"/>
-				<DataGridTextColumn Binding="{Binding Customer.AddressLine1}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Address" MaxWidth="500" MinWidth="50"/>
-				<DataGridTextColumn Binding="{Binding Customer.City}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="City" MaxWidth="100" MinWidth="50"/>
-				<DataGridTextColumn Binding="{Binding Customer.State}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="State"/>
-				<DataGridTextColumn Binding="{Binding Customer.PostalCode}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Postal Code" MaxWidth="100" MinWidth="50"/>
-				<DataGridTextColumn Binding="{Binding InsuranceType}" ClipboardContentBinding="{x:Null}" Header="Insurance Type"/>
-                <DataGridTemplateColumn CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Coverage State Date"  Width="Auto">
+				<DataGridTextColumn Binding="{Binding Customer.FirstName, Mode=TwoWay}" ClipboardContentBinding="{x:Null}" Header="First Name" SortDirection="Ascending" Width="Auto"/>
+				<DataGridTextColumn Binding="{Binding Customer.LastName}" ClipboardContentBinding="{x:Null}" Header="Last Name" SortDirection="Ascending" SortMemberPath="{Binding Mode=OneWay}" Width="Auto"/>
+				<DataGridTextColumn Binding="{Binding Customer.AddressLine1}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Address" Width="Auto"/>
+				<DataGridTextColumn Binding="{Binding Customer.City}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="City" Width="Auto" />
+				<DataGridTextColumn Binding="{Binding Customer.State}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="State" Width="Auto"/>
+				<DataGridTextColumn Binding="{Binding Customer.PostalCode}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Postal Code" Width="Auto" />
+                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="Insurance Type" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding InsuranceType}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <!--<ListBox ItemsSource="{Binding ElementName=policiesView, Path=DataContext.InsuranceTypesList}">
+                                <ListBox.ItemTemplate>
+                                    <HierarchicalDataTemplate>
+                                        <CheckBox IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected, Mode=TwoWay}" Content="{Binding InsuranceType, StringFormat=' {0'}"/>
+                                    </HierarchicalDataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>-->
+                            <TextBox Text="{Binding InsuranceType}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Coverage State Date" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock HorizontalAlignment="Center" Text="{Binding CoverageBeginDateTime, Mode=OneWay, StringFormat='MM/dd/yy'}"/>
@@ -79,24 +86,57 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
-				<DataGridTextColumn Binding="{Binding PaymentInformation.CreditCardType}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Credit Card Type"/>
-				<DataGridTextColumn Binding="{Binding PaymentInformation.CreditCardNumber}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Credit Card Number" MaxWidth="100" MinWidth="50"/>
-				<DataGridTextColumn Binding="{Binding PaymentInformation.CreditCardVerificationNumber}" ClipboardContentBinding="{x:Null}" Header="CCV"/>
-				<DataGridTextColumn Binding="{Binding PaymentInformation.ExpirationDate}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Expiration Date" MaxWidth="100" MinWidth="50"/>
-				<DataGridTextColumn Binding="{Binding Price}" ClipboardContentBinding="{x:Null}" Header="Price"/>
-				<DataGridTextColumn Binding="{Binding TermLength}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Term Length" MaxWidth="100" MinWidth="50"/>
-				<DataGridTextColumn Binding="{Binding TermUnit}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Term Type" MaxWidth="100" MinWidth="50"/>
+				<DataGridTextColumn Binding="{Binding PaymentInformation.CreditCardType}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Credit Card Type" Width="Auto"/>
+				<DataGridTextColumn Binding="{Binding PaymentInformation.CreditCardNumber}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Credit Card Number" Width="Auto" />
+				<DataGridTextColumn Binding="{Binding PaymentInformation.CreditCardVerificationNumber}" ClipboardContentBinding="{x:Null}" Header="CCV" Width="Auto"/>
+                <DataGridTemplateColumn CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Expiration Date" Width="Auto" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock HorizontalAlignment="Center" Text="{Binding PaymentInformation.ExpirationDate, Mode=OneWay, StringFormat='MM/dd/yy'}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <DatePicker HorizontalAlignment="Center" SelectedDate="{Binding PaymentInformation.ExpirationDate, Mode=TwoWay}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="Price" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock HorizontalAlignment="Center" Text="{Binding Price, StringFormat=' {0:C}'}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <TextBox HorizontalAlignment="Center" Text="{Binding Price, Mode=TwoWay}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+				<DataGridTextColumn Binding="{Binding TermLength}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Term Length" Width="Auto"/>
+                <DataGridTemplateColumn CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Term Type" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding TermUnit}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox SelectedItem="{Binding TermUnit, Mode=TwoWay}" ItemsSource="{Binding ElementName=policiesView, Path=DataContext.TermTypesList}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
 			</DataGrid.Columns>
 		</DataGrid>
-		<StatusBar HorizontalAlignment="Stretch" Height="20" Margin="0,5,0,0" VerticalAlignment="Center" >
+		<StatusBar Grid.Row="3" HorizontalAlignment="Stretch" Height="20" Margin="0,5,0,0" VerticalAlignment="Center" >
 			<StatusBarItem Visibility="{Binding StatusBarItemVisibility}" HorizontalAlignment="Left" VerticalAlignment="Top">
 				<StackPanel>
-					<TextBlock x:Name="textBlock" Text="{Binding IsDataUpToDate, StringFormat=Is Latest: \{0\}, Mode=OneWay}"/>
+					<TextBlock x:Name="textBlock" Text="{Binding IsDataUpToDate, StringFormat='Is Latest: {0}', Mode=OneWay}"/>
 				</StackPanel>
 			</StatusBarItem>
 			<StatusBarItem Visibility="{Binding StatusBarItemVisibility}" HorizontalAlignment="Right" VerticalAlignment="Top">
-				<TextBlock Text="{Binding LastReadDateTime, Mode=OneWay, StringFormat=Last Read: \{0\}}"  />
+				<TextBlock Text="{Binding LastReadDateTime, Mode=OneWay, StringFormat='Last Read: {0}'}"  />
 			</StatusBarItem>
 		</StatusBar>
-	</StackPanel>
+	</Grid>
 </UserControl>

@@ -9,11 +9,17 @@ namespace Xenios.Domain.Models
 {
     public class PaymentInformation
     {
+        public PaymentInformation()
+        {
+            Id = Guid.NewGuid();
+            ExpirationDate = DateTime.Now;
+        }
+
         public Guid Id { get; set; }
 
         public CreditCardTypes CreditCardType { get; set; }
 
-        public string CreditCardNumber { get; set; }
+        public String CreditCardNumber { get; set; }
 
         public DateTime ExpirationDate { get; set; }
 

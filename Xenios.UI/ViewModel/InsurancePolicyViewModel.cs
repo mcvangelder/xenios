@@ -35,7 +35,7 @@ namespace Xenios.UI.ViewModel
             RefreshPolicyListCommand = new RelayCommand(LoadInsurancePolicies, () => IsPathToFileSpecified);
             SavePoliciesCommand = new RelayCommand(SavePolicies, () => IsPathToFileSpecified);
             ExitApplicationCommand = new RelayCommand(ExitApplication);
-            CloseFileCommand = new RelayCommand(CloseFile,() => IsPathToFileSpecified);
+            CloseFileCommand = new RelayCommand(CloseFile, () => IsPathToFileSpecified);
             OpenFileDialogCommand = new RelayCommand(OpenFileDialog);
 
             PropertyChanged += InsurancePolicyViewModel_PropertyChanged;
@@ -192,7 +192,7 @@ namespace Xenios.UI.ViewModel
                 }
 
                 _searchText = value;
-               
+
                 RaisePropertyChanged(SearchTextPropertyName);
             }
         }
@@ -318,6 +318,74 @@ namespace Xenios.UI.ViewModel
                 _statusBarItemVisbility = value;
                 RaisePropertyChanged(StatusBarItemVisibilityPropertyName);
             }
+        }
+
+        /// <summary>
+        /// The <see cref="TermTypesList" /> property's name.
+        /// </summary>
+        public const string TermTypesListPropertyName = "TermTypesList";
+
+        ICollection<Domain.Enums.TermUnits> _termTypes;
+        public ICollection<Domain.Enums.TermUnits> TermTypesList
+        {
+            get
+            {
+                if (_termTypes == null)
+                    _termTypes = CreateListFromEnums<Domain.Enums.TermUnits>();
+
+                return _termTypes;
+            }
+            set
+            {
+                if (_termTypes == value)
+                    return;
+
+                _termTypes = value;
+                RaisePropertyChanged(StatusBarItemVisibilityPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="InsuranceTypesList" /> property's name.
+        /// </summary>
+        public const string InsuranceTypesListPropertyName = "InsuranceTypesList";
+
+        private ICollection<Domain.Enums.InsuranceTypes> _insuranceTypes = null;
+
+        /// <summary>
+        /// Sets and gets the InsuranceTypesList property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public ICollection<Domain.Enums.InsuranceTypes> InsuranceTypesList
+        {
+            get
+            {
+                if (_insuranceTypes == null)
+                    _insuranceTypes = CreateListFromEnums<Domain.Enums.InsuranceTypes>();
+
+                return _insuranceTypes;
+            }
+
+            set
+            {
+                if (_insuranceTypes == value)
+                {
+                    return;
+                }
+
+                _insuranceTypes = value;
+                RaisePropertyChanged(InsuranceTypesListPropertyName);
+            }
+        }
+
+        private ICollection<T> CreateListFromEnums<T>()
+        {
+            var allEnums = Enum.GetValues(typeof(T));
+            var list = new ObservableCollection<T>();
+            for (int i = 0; i < allEnums.Length; i++)
+                list.Add((T)allEnums.GetValue(i));
+
+            return list;
         }
 
         private void ClearInsurancePolicies()
