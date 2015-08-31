@@ -52,9 +52,20 @@ namespace Xenios.UI.ViewModel
                 case SearchTextPropertyName:
                     LoadInsurancePolicies();
                     break;
+                case IsDataUpToDatePropertyName:
+                    SetStatusImage();
+                    break;
                 default:
                     break;
             }
+        }
+
+        private void SetStatusImage()
+        {
+            string imagePath = "pack://application:,,,/Xenios.UI;component/Resources/status_Green_Icon_32.png";
+            var bitMapImage = new BitmapImage(new Uri(imagePath, UriKind.Absolute));
+            //bitMapImage.Freeze();
+            StatusImage = bitMapImage;
         }
 
         private void ProcessPathToFileChange()
@@ -255,6 +266,36 @@ namespace Xenios.UI.ViewModel
 
                 _isDataUpToDate = value;
                 RaisePropertyChanged(IsDataUpToDatePropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="StatusImage" /> property's name.
+        /// </summary>
+        public const string StatusImagePropertyName = "StatusImage";
+
+        private BitmapImage _statusImage = null;
+
+        /// <summary>
+        /// Sets and gets the StatusImage property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public BitmapImage StatusImage
+        {
+            get
+            {
+                return _statusImage;
+            }
+
+            set
+            {
+                if (_statusImage == value)
+                {
+                    return;
+                }
+
+                _statusImage = value;
+                RaisePropertyChanged(StatusImagePropertyName);
             }
         }
 
