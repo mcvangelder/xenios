@@ -72,6 +72,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Business.Test\InsurancePolicyDataServiceTest.cs" />
+    <Compile Include="Domain.Test\ModelDefaultsTest.cs" />
     <Compile Include="Helpers\InsurancePolicyHelper.cs" />
     <Compile Include="Mocks\MockApplicationService.cs" />
     <Compile Include="Mocks\MockDataService.cs" />

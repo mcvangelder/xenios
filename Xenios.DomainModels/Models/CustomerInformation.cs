@@ -8,6 +8,11 @@ namespace Xenios.Domain.Models
 {
     public class CustomerInformation
     {
+        public CustomerInformation()
+        {
+            Id = Guid.NewGuid();
+        }
+
         public string FirstName { get; set; }
 
         public string LastName { get; set; }

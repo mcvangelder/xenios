@@ -8,9 +8,10 @@ namespace Xenios.Domain.Enums
 {
    public enum CreditCardTypes : byte
     {
-        MasterCard = 0,
-        Visa = 1,
-        DiscoverCard = 2,
-        Amex = 3,
+        Unspecified = 0,
+        MasterCard = 1,
+        Visa = 2,
+        DiscoverCard = 3,
+        Amex = 4,
     }
 }
