@@ -42,9 +42,12 @@
 			<Image Grid.Column="0" HorizontalAlignment="Left" Source="../Resources/Swords_And_Shield_clip_art_medium.png"/>
 			<TextBlock Grid.Column="1" Margin="5,15" FontSize="30"><Run Text="Xenios Insurance Input Form"/></TextBlock>
 			<StackPanel Grid.Column="2" Orientation="Horizontal" Background="White" HorizontalAlignment="Right" Height="25" VerticalAlignment="Bottom">
-				<Button Margin="2" IsEnabled="{Binding IsEnabled}" Command="{Binding RefreshPolicyListCommand}" Content="Button" Style="{DynamicResource RefreshButton}"/>
-                <Image Source="../Resources/search.png" Margin="5,0,0,0"/>
-				<TextBox Height="22" TextWrapping="NoWrap" IsEnabled="{Binding IsSearchEnabled}" Text="{Binding SearchText, Mode=OneWayToSource}"  Width="200" HorizontalAlignment="Right"/>
+				
+				<Button Content="Button" Style="{DynamicResource SaveButton}" ToolTip="Save" Command="{Binding SavePoliciesCommand}"/>
+				
+				<Button Margin="2" IsEnabled="{Binding IsEnabled}" Command="{Binding RefreshPolicyListCommand}" Content="Button" Style="{DynamicResource RefreshButton}" ToolTip="Refresh"/>
+				<Image Source="../Resources/search.png" Margin="5,0,0,0" ToolTip="Search"/>
+				<TextBox Height="22" TextWrapping="NoWrap" IsEnabled="{Binding IsEnabled}" Text="{Binding SearchText, Mode=OneWayToSource}"  Width="200" HorizontalAlignment="Right"/>
 			</StackPanel>
 		</Grid>
 		<DataGrid ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" MinWidth="800" MinHeight="100" Grid.Row="2" VerticalAlignment="Top" IsEnabled="{Binding IsEnabled}" ItemsSource="{Binding InsurancePolicies}" ColumnWidth="*" AutoGenerateColumns="False" AlternatingRowBackground="#FFFABBBB">
@@ -77,12 +80,12 @@
                 <DataGridTemplateColumn CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Coverage State Date" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock HorizontalAlignment="Center" Text="{Binding CoverageBeginDateTime, Mode=OneWay, StringFormat='MM/dd/yy'}"/>
+                            <TextBlock HorizontalAlignment="Center" Text="{Binding CoverageBeginDateTime, StringFormat='MM/dd/yy'}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <DatePicker HorizontalAlignment="Center" SelectedDate="{Binding CoverageBeginDateTime, Mode=TwoWay}"/>
+                            <DatePicker HorizontalAlignment="Center" DisplayDateStart="{Binding CoverageBeginDateTime, Mode=OneWay}" SelectedDate="{Binding CoverageBeginDateTime, Mode=TwoWay}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
@@ -97,7 +100,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <DatePicker HorizontalAlignment="Center" SelectedDate="{Binding PaymentInformation.ExpirationDate, Mode=TwoWay}"/>
+                            <DatePicker HorizontalAlignment="Center" DisplayDateStart="{Binding PaymentInformation.ExpirationDate}" SelectedDate="{Binding PaymentInformation.ExpirationDate, Mode=TwoWay}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
@@ -131,7 +134,7 @@
 		<StatusBar Grid.Row="3" HorizontalAlignment="Stretch" Height="20" Margin="0,5,0,0" VerticalAlignment="Center" >
 			<StatusBarItem Visibility="{Binding StatusBarItemVisibility}" HorizontalAlignment="Left" VerticalAlignment="Top">
 				<StackPanel>
-					<TextBlock x:Name="textBlock" Text="{Binding IsDataUpToDate, StringFormat='Is Latest: {0}', Mode=OneWay}"/>
+					<Image Source="{Binding StatusImage, Mode=OneWay}"/>
 				</StackPanel>
 			</StatusBarItem>
 			<StatusBarItem Visibility="{Binding StatusBarItemVisibility}" HorizontalAlignment="Right" VerticalAlignment="Top">

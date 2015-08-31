@@ -7,6 +7,7 @@ using Xenios.UI.Services;
 using System.Linq;
 using Xenios.Domain.Models;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace Xenios.UI.ViewModel
 {
@@ -265,7 +266,7 @@ namespace Xenios.UI.ViewModel
         private bool _isEnabled = false;
 
         /// <summary>
-        /// Sets and gets the IsSearchEnabled property.
+        /// Sets and gets the IsEnabled property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
         public bool IsEnabled
