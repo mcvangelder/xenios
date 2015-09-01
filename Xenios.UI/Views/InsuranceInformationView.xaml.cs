@@ -47,7 +47,10 @@ namespace Xenios.UI.Views
         {
             MessageBox.Show(alertText, "Alert!", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
-
-
+        
+        public void ExecuteOnUI(System.Action action)
+        {
+            Dispatcher.Invoke(action);
+        }
     }
 }

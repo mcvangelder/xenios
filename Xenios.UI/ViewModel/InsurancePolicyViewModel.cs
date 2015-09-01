@@ -62,25 +62,29 @@ namespace Xenios.UI.ViewModel
 
         private void SetStatusImage()
         {
-            // This block throws exception in unit test. Unable to find required Reference to
-            // eliminate the exception. The issue is scheme: "pack://" is not recognized outside of the
-            // WPF project.
-            try
+            ApplicationService.ExecuteOnUI(() =>
             {
-                BitmapImage bitMapImage = null;
+                // This block throws exception in unit test. Unable to find required Reference to
+                // eliminate the exception. The issue is scheme: "pack://" is not recognized outside of the
+                // WPF project.
+                try
+                {
+                    BitmapImage bitMapImage = null;
 
-                if (_isDataUpToDate == true)
-                {
-                    string imagePath = "pack://application:,,,/Xenios.UI;component/Resources/status_Green_Icon_32.png";
-                    bitMapImage = new BitmapImage(new Uri(imagePath, UriKind.Absolute));
+                    if (_isDataUpToDate == true)
+                    {
+                        string imagePath = "pack://application:,,,/Xenios.UI;component/Resources/status_Green_Icon_32.png";
+                        bitMapImage = new BitmapImage(new Uri(imagePath, UriKind.Absolute));
+                    }
+                    else if (_isDataUpToDate == false)
+                    {
+                        string imagePath = "pack://application:,,,/Xenios.UI;component/Resources/status_warning_Icon_32.png";
+                        bitMapImage = new BitmapImage(new Uri(imagePath, UriKind.Absolute));
+                    }
+                    StatusImage = bitMapImage;
                 }
-                else if (_isDataUpToDate == false)
-                {
-                    string imagePath = "pack://application:,,,/Xenios.UI;component/Resources/status_warning_Icon_32.png";
-                    bitMapImage = new BitmapImage(new Uri(imagePath, UriKind.Absolute));
-                }
-                StatusImage = bitMapImage;
-            } catch (UriFormatException) {}
+                catch (UriFormatException) { }
+            });
         }
 
         private void ProcessPathToFileChange()

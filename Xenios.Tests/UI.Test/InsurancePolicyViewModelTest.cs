@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using System.Windows.Media.Imaging;
+using Xenios.UI.Services;
 
 namespace Xenios.UI.Test
 {
@@ -30,12 +32,13 @@ namespace Xenios.UI.Test
         {
             var isNotified = false;
 
-            _viewModel.InsurancePolicies.CollectionChanged += (sender, args) => {
+            _viewModel.InsurancePolicies.CollectionChanged += (sender, args) =>
+            {
                 isNotified = true;
             };
 
             _viewModel.PathToFile = mockFilePath;
-            
+
             var isUpdated = _viewModel.InsurancePolicies.Count > 0;
 
             Assert.AreEqual(_viewModel.PathToFile, _dataService.SourceFile);
@@ -119,7 +122,7 @@ namespace Xenios.UI.Test
         {
             _viewModel.PathToFile = mockFilePath;
             var previousLastReadDateTime = _viewModel.LastReadDateTime;
-            
+
             _viewModel.SearchText = "ignored";
             var previousSearchResults = _viewModel.InsurancePolicies.ToList();
 
@@ -150,7 +153,7 @@ namespace Xenios.UI.Test
 
             _applicationService.OnExit += () => { isNotifed = true; };
             _viewModel.ExitApplicationCommand.Execute(null);
-            
+
             Assert.IsTrue(isNotifed);
         }
 
@@ -229,7 +232,7 @@ namespace Xenios.UI.Test
             _viewModel.PathToFile = mockFilePath;
             _viewModel.IsDataUpToDate = false;
             _applicationService.OnAlert += () => { isAlerted = true; };
-            _dataService.OnSave += (policies) => { Assert.Fail("Save was called!.");};
+            _dataService.OnSave += (policies) => { Assert.Fail("Save was called!."); };
 
             _viewModel.SavePoliciesCommand.Execute(null);
 
@@ -248,6 +251,18 @@ namespace Xenios.UI.Test
         {
             var insuranceTypes = _viewModel.InsuranceTypesList;
             Assert.IsTrue(insuranceTypes.Count > 0);
+        }
+
+        [TestMethod]
+        public void Should_request_status_image_binding_be_run_on_ui_thread()
+        {
+            var isNotified = false;
+            _applicationService.OnExecuteOnUI += () => { isNotified = false; };
+            var img = new BitmapImage();
+            _viewModel.StatusImage = img;
+
+            Assert.IsTrue(isNotified);
+            
         }
     }
 }
