@@ -112,18 +112,18 @@ namespace Xenios.UI.ViewModel
 
         private void LoadInsurancePolicies()
         {
-            ClearInsurancePolicies();
             List<InsurancePolicy> policies = null;
 
             if (String.IsNullOrEmpty(_searchText))
             {
-                policies = _dataService.GetAllInsurancePolicies();
+                policies = _dataService.RefreshPolicies(InsurancePolicies.ToList());
             }
             else
             {
                 policies = _dataService.FindInsurancePoliciesByCustomerName(_searchText);
             }
 
+            ClearInsurancePolicies();
             if (policies != null)
             {
                 policies.ForEach(item => InsurancePolicies.Add(item));

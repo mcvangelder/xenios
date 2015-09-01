@@ -69,5 +69,10 @@ namespace Xenios.UI.Services
             if (PoliciesChanged != null)
                 PoliciesChanged();
         }
+
+        public List<Domain.Models.InsurancePolicy> RefreshPolicies(List<Domain.Models.InsurancePolicy> currentPolicies)
+        {
+           return InsurancePolicyDataService.RefreshPolicies(currentPolicies);
+        }
     }
 }

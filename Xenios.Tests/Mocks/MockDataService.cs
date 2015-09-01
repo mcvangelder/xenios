@@ -18,6 +18,7 @@ namespace Xenios.Mocks
         public event PoliciesChangedEvent PoliciesChanged;
         public event OnSaveEvent OnSave;
         public event OnCalledEvent OnGetAllInsurancePolicies;
+        public event OnCalledEvent OnRefreshPolicies;
   
         public MockDataService()
         {
@@ -47,6 +48,15 @@ namespace Xenios.Mocks
         {
             if (OnSave != null)
                 OnSave(policies);
+        }
+
+
+        public List<InsurancePolicy> RefreshPolicies(List<InsurancePolicy> currentPolicies)
+        {
+            if (OnRefreshPolicies != null)
+                OnRefreshPolicies();
+
+            return currentPolicies.Union(_insuranceInfos).ToList();
         }
     }
 }

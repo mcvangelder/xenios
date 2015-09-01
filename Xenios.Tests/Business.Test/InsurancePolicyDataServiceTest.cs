@@ -36,11 +36,13 @@ namespace Xenios.Business.Test
         public void Should_get_all_insurance_informations()
         {
             CreateRepository();
-            InsurancePolicyDataService service =
-                            new InsurancePolicyDataService(defaultFileName);
+            using (InsurancePolicyDataService service =
+                            new InsurancePolicyDataService(defaultFileName))
+            {
 
-            var allInfos = service.GetAllInsurancePolicies();
-            Assert.IsTrue(allInfos.Count == defaultPolicyCount);
+                var allInfos = service.GetAllInsurancePolicies();
+                Assert.IsTrue(allInfos.Count == defaultPolicyCount);
+            }
         }
 
         [TestMethod]
@@ -49,7 +51,7 @@ namespace Xenios.Business.Test
             CreateRepository(initialRecordCount: 0);
 
             var isNotifiedEvent = new AutoResetEvent(false);
-            
+
             using (var service = new InsurancePolicyDataService(defaultFileName))
             {
                 service.NotifyInsurancePoliciesUpdated += () =>
@@ -93,9 +95,8 @@ namespace Xenios.Business.Test
             var expectedCustomer = expectedInfo.Customer;
             var expectedFirstName = expectedCustomer.FirstName;
 
-            Xenios.Test.Helpers.InsurancePolicyHelper.
-                AssertPolicyCanBeFoundByCustomerName(
-                    new List<InsurancePolicy> {expectedInfo}, expectedFirstName, defaultFileName);
+            AssertPolicyCanBeFoundByCustomerName(
+                    new List<InsurancePolicy> { expectedInfo }, expectedFirstName);
         }
 
         [TestMethod]
@@ -108,9 +109,8 @@ namespace Xenios.Business.Test
             var expectedCustomer = expectedInfo.Customer;
             var expectedLastName = expectedCustomer.LastName;
 
-            Xenios.Test.Helpers.InsurancePolicyHelper.
-                AssertPolicyCanBeFoundByCustomerName(
-                    new List<InsurancePolicy>() { expectedInfo }, expectedLastName, defaultFileName);
+            AssertPolicyCanBeFoundByCustomerName(
+                    new List<InsurancePolicy>() { expectedInfo }, expectedLastName);
         }
 
         [TestMethod]
@@ -128,9 +128,33 @@ namespace Xenios.Business.Test
 
             CreateRepository(policies: randomPolicies);
 
-            Xenios.Test.Helpers.InsurancePolicyHelper.
-                AssertPolicyCanBeFoundByCustomerName(
-                    randomPolicies, expectedPartial, defaultFileName);
+            AssertPolicyCanBeFoundByCustomerName(
+                randomPolicies, expectedPartial);
+        }
+
+        private static void AssertPolicyCanBeFoundByCustomerName(List<InsurancePolicy> expectedPolicies, string customerName)
+        {
+            using (var service = new InsurancePolicyDataService(defaultFileName))
+            {
+                var actualPolicies = service.FindInsurancePoliciesByCustomerName(customerName);
+                Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(expectedPolicies, actualPolicies);
+            }
+        }
+
+        [TestMethod]
+        public void Should_merge_existing_records_and_source_records_during_refresh()
+        {
+            int recordCount = 5;
+            CreateRepository(initialRecordCount: recordCount);
+            var existingRecords = Xenios.Test.Helpers.InsurancePolicyHelper.CreateInsurancePolicies(recordCount);
+
+            using(var service = new InsurancePolicyDataService(defaultFileName))
+            {
+                var sourceRecords = service.GetAllInsurancePolicies();
+                var mergedRecords = service.RefreshPolicies(existingRecords);
+
+                Assert.AreEqual(recordCount * 2, mergedRecords.Count);
+            }
         }
     }
 }

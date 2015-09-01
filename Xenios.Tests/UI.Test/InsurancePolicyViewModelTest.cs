@@ -107,13 +107,21 @@ namespace Xenios.UI.Test
         [TestMethod]
         public void Should_refresh_data_when_refresh_command_executed()
         {
+            var isNotified = false;
+
             _viewModel.PathToFile = mockFilePath;
+
+            // register event handler here to prevent false positive from setting the PathToFile
+            // which does an initial load of the InsurancePolicies
+            _dataService.OnRefreshPolicies += () => { isNotified = true; };
 
             var previousLastReadDateTime = _viewModel.LastReadDateTime;
             System.Threading.Thread.Sleep(50); // prevent false negatives
+            
             _viewModel.RefreshPolicyListCommand.Execute(null);
             var currentLastReadDateTime = _viewModel.LastReadDateTime;
 
+            Assert.IsTrue(isNotified);
             Assert.AreNotEqual(previousLastReadDateTime, currentLastReadDateTime);
         }
 

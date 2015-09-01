@@ -43,6 +43,7 @@
     <Compile Include="InsurancePolicyDataService.cs" />
     <Compile Include="PolicyEqualityComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\CollectionHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xenios.DataAccess\Xenios.DataAccess.csproj">

@@ -19,6 +19,7 @@ namespace Xenios.Mocks
         public event OnCalledEvent OnGetAllInsurancePolicies;
         public event OnCalledEvent OnFindInsurancePoliciesByCustomerName;
         public event OnCalledEvent OnDispose;
+        public event OnCalledEvent OnRefreshInsurancePolicies;
 
         public override void Save(List<Domain.Models.InsurancePolicy> policies)
         {
@@ -53,6 +54,14 @@ namespace Xenios.Mocks
         internal void RaisePoliciesChanged()
         {
             RaiseNotifyInsurancePoliciesUpdated();
+        }
+
+        public override List<Domain.Models.InsurancePolicy> RefreshPolicies(List<Domain.Models.InsurancePolicy> existingRecords)
+        {
+            if (OnRefreshInsurancePolicies != null)
+                OnRefreshInsurancePolicies();
+
+            return existingRecords;
         }
     }
 }

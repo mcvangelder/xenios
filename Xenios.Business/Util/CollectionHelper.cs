@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Xenios.Business;
 
-namespace Xenios.UI.Utilities
+namespace Xenios.Business.Util
 {
     public class CollectionHelper
     {

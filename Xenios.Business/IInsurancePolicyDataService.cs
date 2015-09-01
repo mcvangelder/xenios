@@ -22,6 +22,7 @@ namespace Xenios.Business
         public abstract List<Domain.Models.InsurancePolicy> GetAllInsurancePolicies();
 
         public abstract List<Domain.Models.InsurancePolicy> FindInsurancePoliciesByCustomerName(string searchValue);
+        public abstract List<Domain.Models.InsurancePolicy> RefreshPolicies(List<Domain.Models.InsurancePolicy> existingRecords);
 
         protected void RaiseNotifyInsurancePoliciesUpdated()
         {

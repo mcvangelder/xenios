@@ -63,5 +63,10 @@ namespace Xenios.Business
         {
             Dispose(true);
         }
+
+        public override List<InsurancePolicy> RefreshPolicies(List<InsurancePolicy> existingRecords)
+        {
+            return Util.CollectionHelper.Merge(existingRecords, _policiesRepository.GetAll());
+        }
     }
 }

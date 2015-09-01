@@ -19,5 +19,7 @@ namespace Xenios.UI.Services
         List<InsurancePolicy> FindInsurancePoliciesByCustomerName(string searchValue);
 
         void Save(List<InsurancePolicy> policies);
+
+        List<Domain.Models.InsurancePolicy> RefreshPolicies(List<Domain.Models.InsurancePolicy> currentPolicies);
     }
 }
