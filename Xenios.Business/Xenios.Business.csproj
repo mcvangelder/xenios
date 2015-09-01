@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="IInsurancePolicyDataService.cs" />
     <Compile Include="InsurancePolicyDataService.cs" />
+    <Compile Include="PolicyEqualityComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
