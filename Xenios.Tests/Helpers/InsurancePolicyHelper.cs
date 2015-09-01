@@ -99,8 +99,8 @@ namespace Xenios.Test.Helpers
             for (int i = 0; i < expectedPoliciesCount; i++)
             {
                 var expectedPolicy = expectedPolicies[0];
-                var searchPolicy = actualPolicies[0];
-                Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(expectedPolicy, searchPolicy);
+                var actualPolicy = actualPolicies[0];
+                Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(expectedPolicy, actualPolicy);
             }
         }
     }
