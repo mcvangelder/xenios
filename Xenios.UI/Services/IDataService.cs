@@ -7,7 +7,7 @@ using Xenios.Domain.Models;
 
 namespace Xenios.UI.Services
 {
-    public delegate void PoliciesChangedEvent(List<InsurancePolicy> newPolicyList);
+    public delegate void PoliciesChangedEvent();
     public interface IDataService
     {
         event PoliciesChangedEvent PoliciesChanged;

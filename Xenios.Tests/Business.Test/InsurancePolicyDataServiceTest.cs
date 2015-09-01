@@ -49,13 +49,11 @@ namespace Xenios.Business.Test
             CreateRepository(initialRecordCount: 0);
 
             var isNotifiedEvent = new AutoResetEvent(false);
-            var newInfosCount = 0;
-
+            
             using (var service = new InsurancePolicyDataService(defaultFileName))
             {
-                service.NotifyInsurancePoliciesUpdated += (infos) =>
+                service.NotifyInsurancePoliciesUpdated += () =>
                 {
-                    newInfosCount = infos.Count;
                     isNotifiedEvent.Set();
                 };
 
@@ -65,8 +63,8 @@ namespace Xenios.Business.Test
                 var repo = new DataAccess.InsurancePolicyRepository(defaultFileName);
                 repo.SaveAll(newInformation);
 
-                isNotifiedEvent.WaitOne(TimeSpan.FromSeconds(1));
-                Assert.AreEqual(1, newInfosCount);
+                bool isNotified = isNotifiedEvent.WaitOne(TimeSpan.FromSeconds(1));
+                Assert.IsTrue(isNotified);
             }
         }
 

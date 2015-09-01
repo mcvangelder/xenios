@@ -107,6 +107,7 @@ namespace Xenios.UI.Test
             _viewModel.PathToFile = mockFilePath;
 
             var previousLastReadDateTime = _viewModel.LastReadDateTime;
+            System.Threading.Thread.Sleep(50); // prevent false negatives
             _viewModel.RefreshPolicyListCommand.Execute(null);
             var currentLastReadDateTime = _viewModel.LastReadDateTime;
 

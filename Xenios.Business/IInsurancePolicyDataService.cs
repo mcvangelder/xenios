@@ -23,11 +23,11 @@ namespace Xenios.Business
 
         public abstract List<Domain.Models.InsurancePolicy> FindInsurancePoliciesByCustomerName(string searchValue);
 
-        protected void RaiseNotifyInsurancePoliciesUpdated(List<Domain.Models.InsurancePolicy> policies)
+        protected void RaiseNotifyInsurancePoliciesUpdated()
         {
             if (NotifyInsurancePoliciesUpdated != null)
             {
-                NotifyInsurancePoliciesUpdated(policies);
+                NotifyInsurancePoliciesUpdated();
             }
         }
     }

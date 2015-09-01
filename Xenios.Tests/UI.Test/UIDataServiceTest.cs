@@ -76,7 +76,7 @@ namespace Xenios.UI.Test
         {
             var isNotified = false;
 
-            _dataService.PoliciesChanged += (policies) => { isNotified = true; };
+            _dataService.PoliciesChanged += () => { isNotified = true; };
             _mockBusinessService.RaisePoliciesChanged();
 
             Assert.IsTrue(isNotified);

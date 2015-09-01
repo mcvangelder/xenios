@@ -62,10 +62,25 @@ namespace Xenios.UI.ViewModel
 
         private void SetStatusImage()
         {
-            string imagePath = "pack://application:,,,/Xenios.UI;component/Resources/status_Green_Icon_32.png";
-            var bitMapImage = new BitmapImage(new Uri(imagePath, UriKind.Absolute));
-            //bitMapImage.Freeze();
-            StatusImage = bitMapImage;
+            // This block throws exception in unit test. Unable to find required Reference to
+            // eliminate the exception. The issue is scheme: "pack://" is not recognized outside of the
+            // WPF project.
+            try
+            {
+                BitmapImage bitMapImage = null;
+
+                if (_isDataUpToDate == true)
+                {
+                    string imagePath = "pack://application:,,,/Xenios.UI;component/Resources/status_Green_Icon_32.png";
+                    bitMapImage = new BitmapImage(new Uri(imagePath, UriKind.Absolute));
+                }
+                else if (_isDataUpToDate == false)
+                {
+                    string imagePath = "pack://application:,,,/Xenios.UI;component/Resources/status_warning_Icon_32.png";
+                    bitMapImage = new BitmapImage(new Uri(imagePath, UriKind.Absolute));
+                }
+                StatusImage = bitMapImage;
+            } catch (UriFormatException) {}
         }
 
         private void ProcessPathToFileChange()
@@ -86,7 +101,7 @@ namespace Xenios.UI.ViewModel
             _dataService.PoliciesChanged += _dataService_PoliciesChanged;
         }
 
-        void _dataService_PoliciesChanged(List<Domain.Models.InsurancePolicy> newPolicyList)
+        void _dataService_PoliciesChanged()
         {
             IsDataUpToDate = false;
         }

@@ -52,7 +52,7 @@ namespace Xenios.Mocks
 
         internal void RaisePoliciesChanged()
         {
-            RaiseNotifyInsurancePoliciesUpdated(new List<Domain.Models.InsurancePolicy>());
+            RaiseNotifyInsurancePoliciesUpdated();
         }
     }
 }

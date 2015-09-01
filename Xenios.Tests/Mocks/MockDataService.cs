@@ -40,7 +40,7 @@ namespace Xenios.Mocks
         internal void RaisePoliciesChanged()
         {
             if (PoliciesChanged != null)
-                PoliciesChanged(GetAllInsurancePolicies());
+                PoliciesChanged();
         }
 
         public void Save(List<InsurancePolicy> policies)

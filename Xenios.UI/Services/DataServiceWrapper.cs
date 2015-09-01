@@ -64,10 +64,10 @@ namespace Xenios.UI.Services
             InsurancePolicyDataService = null;
         }
 
-        void RaisePoliciesChanged(List<Domain.Models.InsurancePolicy> policies)
+        void RaisePoliciesChanged()
         {
             if (PoliciesChanged != null)
-                PoliciesChanged(policies);
+                PoliciesChanged();
         }
     }
 }

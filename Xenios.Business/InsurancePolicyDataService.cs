@@ -7,7 +7,7 @@ using Xenios.Domain.Models;
 
 namespace Xenios.Business
 {
-    public delegate void InsurancePoliciesUpdated(List<InsurancePolicy> reloadedInformations);
+    public delegate void InsurancePoliciesUpdated();
 
     public class InsurancePolicyDataService : AbsractInsurancePolicyDataService, IDisposable
     {
@@ -23,7 +23,7 @@ namespace Xenios.Business
         private void CreateinsurancePolicyNotificationService()
         {
             _repositoryUpdatedNotificationService = new DataAccess.RepositoryUpdatedNotificationService(_policiesRepository);
-            _repositoryUpdatedNotificationService.NotifyRepositoryUpdated += (repository) => { RaiseNotifyInsurancePoliciesUpdated(repository.GetAll()); };
+            _repositoryUpdatedNotificationService.NotifyRepositoryUpdated += (repository) => { RaiseNotifyInsurancePoliciesUpdated(); };
         }
 
         public override List<InsurancePolicy> GetAllInsurancePolicies()
