@@ -8,6 +8,8 @@ using System.Linq;
 using Xenios.Domain.Models;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using Xenios.UI.Utilities;
+
 
 namespace Xenios.UI.ViewModel
 {
@@ -23,7 +25,7 @@ namespace Xenios.UI.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class InsurancePolicyViewModel : ViewModelBase
+    public partial class InsurancePolicyViewModel : ViewModelBase
     {
         private IDataService _dataService;
 
@@ -39,89 +41,9 @@ namespace Xenios.UI.ViewModel
         private bool IsPathToFileSpecified { get { return !String.IsNullOrEmpty(PathToFile); } }
         public InsurancePolicyViewModel()
         {
-            RefreshPolicyListCommand = new RelayCommand(LoadInsurancePolicies, () => IsPathToFileSpecified);
-            SavePoliciesCommand = new RelayCommand(SavePolicies, () => IsPathToFileSpecified);
-            ExitApplicationCommand = new RelayCommand(ExitApplication);
-            CloseFileCommand = new RelayCommand(CloseFile, () => IsPathToFileSpecified);
-            OpenFileDialogCommand = new RelayCommand(OpenFileDialog);
-
-            PropertyChanged += InsurancePolicyViewModel_PropertyChanged;
-
-            try
-            {
-                // This block throws exception with in unit test. Unable to find required Reference to
-                // eliminate the exception. The issue is scheme: "pack://" is not recognized outside of the
-                // WPF project.
-                UpToDateStatusImage = LoadBitmapImage(upToDateStatusImagePath);
-                OutOfDateStatusImage = LoadBitmapImage(outOfDateStatusImagePath);
-            }
-            catch (UriFormatException) { }
+            InitializeViewModel();
         }
 
-        void InsurancePolicyViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            switch (e.PropertyName)
-            {
-                case PathToFilePropertyName:
-                    ProcessPathToFileChange();
-                    break;
-                case SearchTextPropertyName:
-                    LoadInsurancePolicies();
-                    break;
-                case IsDataUpToDatePropertyName:
-                    SetStatusImage();
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        private void SetStatusImage()
-        {
-                StatusImage = _isDataUpToDate.GetValueOrDefault(false) ? UpToDateStatusImage : OutOfDateStatusImage;
-        }
-
-        private static BitmapImage LoadBitmapImage(string imagePath)
-        {
-            var bitmapImage = new BitmapImage(new Uri(imagePath, UriKind.Absolute));
-            // Freezing bitmap allows this object to be shared accross threads regardless of which thread created the object
-            bitmapImage.Freeze();
-
-            return bitmapImage;
-        }
-
-        private void ProcessPathToFileChange()
-        {
-            _dataService.SourceFile = _pathToFile;
-            UpdateInsurancePolicyCollection(_pathToFile);
-            NotifyPathToFileDependentCommands();
-            IsEnabled = !String.IsNullOrWhiteSpace(_pathToFile);
-            StatusBarItemVisibility = IsEnabled ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        public void SetDataService(IDataService service)
-        {
-            if (_dataService == service)
-                return;
-
-            _dataService = service;
-            _dataService.PoliciesChanged += _dataService_PoliciesChanged;
-        }
-
-        void _dataService_PoliciesChanged()
-        {
-            IsDataUpToDate = false;
-        }
-
-        public RelayCommand RefreshPolicyListCommand { get; set; }
-
-        public RelayCommand SavePoliciesCommand { get; set; }
-
-        public RelayCommand ExitApplicationCommand { get; set; }
-
-        public RelayCommand CloseFileCommand { get; set; }
-
-        public RelayCommand OpenFileDialogCommand { get; set; }
 
         /// <summary>
         /// The <see cref="PathToFile" /> property's name.
@@ -152,20 +74,6 @@ namespace Xenios.UI.ViewModel
             }
         }
 
-        private void NotifyPathToFileDependentCommands()
-        {
-            SavePoliciesCommand.RaiseCanExecuteChanged();
-            CloseFileCommand.RaiseCanExecuteChanged();
-            RefreshPolicyListCommand.RaiseCanExecuteChanged();
-        }
-
-        private void UpdateInsurancePolicyCollection(string value)
-        {
-            if (String.IsNullOrEmpty(value))
-                ClearInsurancePolicies();
-            else
-                LoadInsurancePolicies();
-        }
 
         /// <summary>
         /// The <see cref="InsurancePolicies" /> property's name.
@@ -395,7 +303,8 @@ namespace Xenios.UI.ViewModel
             get
             {
                 if (_termTypes == null)
-                    _termTypes = CreateListFromEnums<Domain.Enums.TermUnits>();
+                    _termTypes = EnumHelper.
+                        GetAllAsCollection<ObservableCollection<Domain.Enums.TermUnits>,Domain.Enums.TermUnits>();
 
                 return _termTypes;
             }
@@ -425,7 +334,8 @@ namespace Xenios.UI.ViewModel
             get
             {
                 if (_insuranceTypes == null)
-                    _insuranceTypes = CreateListFromEnums<Domain.Enums.InsuranceTypes>();
+                    _insuranceTypes = EnumHelper.
+                                    GetAllAsCollection<ObservableCollection<Domain.Enums.InsuranceTypes>,Domain.Enums.InsuranceTypes>();
 
                 return _insuranceTypes;
             }
@@ -442,76 +352,6 @@ namespace Xenios.UI.ViewModel
             }
         }
 
-        private ICollection<T> CreateListFromEnums<T>()
-        {
-            var allEnums = Enum.GetValues(typeof(T));
-            var list = new ObservableCollection<T>();
-            for (int i = 0; i < allEnums.Length; i++)
-                list.Add((T)allEnums.GetValue(i));
-
-            return list;
-        }
-
-        private void ClearInsurancePolicies()
-        {
-            InsurancePolicies.Clear();
-        }
-
-        private void LoadInsurancePolicies()
-        {
-            ClearInsurancePolicies();
-            List<InsurancePolicy> policies = null;
-
-            if (String.IsNullOrEmpty(_searchText))
-            {
-                policies = _dataService.GetAllInsurancePolicies();
-            }
-            else
-            {
-                policies = _dataService.FindInsurancePoliciesByCustomerName(_searchText);
-            }
-
-            if (policies != null)
-            {
-                policies.ForEach(item => InsurancePolicies.Add(item));
-            }
-
-            LastReadDateTime = DateTime.Now;
-            IsDataUpToDate = true;
-        }
-
-        private void ExitApplication()
-        {
-            if (ApplicationService == null)
-                return;
-
-            ApplicationService.ExitApplication();
-        }
-
-        private void SavePolicies()
-        {
-            if (_isDataUpToDate.GetValueOrDefault(false))
-            {
-                _dataService.Save(_insurancePolicies.ToList());
-            }
-            else
-            {
-                ApplicationService.Alert("You must refresh before you can save.");
-            }
-        }
-
-        private void CloseFile()
-        {
-            PathToFile = String.Empty;
-        }
-
-        private void OpenFileDialog()
-        {
-            var chosenFile = ApplicationService.ChooseFile();
-            if (String.IsNullOrEmpty(chosenFile))
-                return;
-
-            PathToFile = chosenFile;
-        }
+  
     }
 }

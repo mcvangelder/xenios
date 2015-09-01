@@ -81,6 +81,9 @@
     <Compile Include="Services\IApplicationService.cs" />
     <Compile Include="Services\IDataService.cs" />
     <Compile Include="Services\XeniosServiceLocator.cs" />
+    <Compile Include="Utilities\EnumHelper.cs" />
+    <Compile Include="ViewModel\InsurancePolicyViewModel-Commands.cs" />
+    <Compile Include="ViewModel\InsurancePolicyViewModel-Operations.cs" />
     <Compile Include="ViewModel\InsurancePolicyViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs">
       <SubType>Code</SubType>
