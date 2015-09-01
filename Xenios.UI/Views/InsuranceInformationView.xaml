@@ -23,12 +23,12 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" Height="20">
 			<MenuItem Header="File">
-				<MenuItem Header="Open" InputGestureText="Ctrl-O" HorizontalAlignment="Left" Width="150" Command="{Binding OpenFileDialogCommand}" />
-				<MenuItem Header="Close" InputGestureText="Ctrl-F4" HorizontalAlignment="Left" Width="150" Command="{Binding CloseFileCommand}"/>
+				<MenuItem Header="Open" InputGestureText="Ctrl-O" HorizontalAlignment="Left" Width="200" Command="{Binding OpenFileDialogCommand}" />
+				<MenuItem Header="Close" InputGestureText="Ctrl-F4" HorizontalAlignment="Left" Width="200" Command="{Binding CloseFileCommand}"/>
 				<Separator/>
-				<MenuItem Header="Save" InputGestureText="Ctrl-S" HorizontalAlignment="Left" Width="150" Command="{Binding SavePoliciesCommand}"/>
+				<MenuItem Header="Save" InputGestureText="Ctrl-S" HorizontalAlignment="Left" Width="200" Command="{Binding SavePoliciesCommand}"/>
 				<Separator/>
-				<MenuItem Header="Quit" InputGestureText="Alt-F4" HorizontalAlignment="Left" Width="150" Command="{Binding ExitApplicationCommand}"/>
+				<MenuItem Header="Quit" InputGestureText="Alt-F4" HorizontalAlignment="Left" Width="200" Command="{Binding ExitApplicationCommand}"/>
 			</MenuItem>
 			<MenuItem Header="View">
 				<MenuItem Header="Refresh" InputGestureText="F5" HorizontalAlignment="Left" Width="150" Command="{Binding RefreshPolicyListCommand}" />
