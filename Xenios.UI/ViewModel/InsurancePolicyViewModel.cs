@@ -30,6 +30,12 @@ namespace Xenios.UI.ViewModel
         public IApplicationService ApplicationService { get; set; }
         public IDataService DataService { get { return _dataService; } }
 
+        public static BitmapImage UpToDateStatusImage;
+        public static BitmapImage OutOfDateStatusImage;
+
+        public const String upToDateStatusImagePath = "pack://application:,,,/Xenios.UI;component/Resources/status_Green_Icon_32.png";
+        public const String outOfDateStatusImagePath = "pack://application:,,,/Xenios.UI;component/Resources/status_warning_Icon_32.png";
+
         private bool IsPathToFileSpecified { get { return !String.IsNullOrEmpty(PathToFile); } }
         public InsurancePolicyViewModel()
         {
@@ -40,6 +46,16 @@ namespace Xenios.UI.ViewModel
             OpenFileDialogCommand = new RelayCommand(OpenFileDialog);
 
             PropertyChanged += InsurancePolicyViewModel_PropertyChanged;
+
+            try
+            {
+                // This block throws exception with in unit test. Unable to find required Reference to
+                // eliminate the exception. The issue is scheme: "pack://" is not recognized outside of the
+                // WPF project.
+                UpToDateStatusImage = LoadBitmapImage(upToDateStatusImagePath);
+                OutOfDateStatusImage = LoadBitmapImage(outOfDateStatusImagePath);
+            }
+            catch (UriFormatException) { }
         }
 
         void InsurancePolicyViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -62,29 +78,16 @@ namespace Xenios.UI.ViewModel
 
         private void SetStatusImage()
         {
-            ApplicationService.ExecuteOnUI(() =>
-            {
-                // This block throws exception in unit test. Unable to find required Reference to
-                // eliminate the exception. The issue is scheme: "pack://" is not recognized outside of the
-                // WPF project.
-                try
-                {
-                    BitmapImage bitMapImage = null;
+                StatusImage = _isDataUpToDate.GetValueOrDefault(false) ? UpToDateStatusImage : OutOfDateStatusImage;
+        }
 
-                    if (_isDataUpToDate == true)
-                    {
-                        string imagePath = "pack://application:,,,/Xenios.UI;component/Resources/status_Green_Icon_32.png";
-                        bitMapImage = new BitmapImage(new Uri(imagePath, UriKind.Absolute));
-                    }
-                    else if (_isDataUpToDate == false)
-                    {
-                        string imagePath = "pack://application:,,,/Xenios.UI;component/Resources/status_warning_Icon_32.png";
-                        bitMapImage = new BitmapImage(new Uri(imagePath, UriKind.Absolute));
-                    }
-                    StatusImage = bitMapImage;
-                }
-                catch (UriFormatException) { }
-            });
+        private static BitmapImage LoadBitmapImage(string imagePath)
+        {
+            var bitmapImage = new BitmapImage(new Uri(imagePath, UriKind.Absolute));
+            // Freezing bitmap allows this object to be shared accross threads regardless of which thread created the object
+            bitmapImage.Freeze();
+
+            return bitmapImage;
         }
 
         private void ProcessPathToFileChange()

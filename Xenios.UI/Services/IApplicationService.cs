@@ -13,7 +13,5 @@ namespace Xenios.UI.Services
         String ChooseFile();
 
         void Alert(string p);
-
-        void ExecuteOnUI(Action action);
     }
 }

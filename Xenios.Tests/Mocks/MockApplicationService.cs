@@ -13,7 +13,6 @@ namespace Xenios.Mocks
         public event OnCalledEvent OnExit;
         public event OnCalledEvent OnChooseFile;
         public event OnCalledEvent OnAlert;
-        public event OnCalledEvent OnExecuteOnUI;
 
         public void ExitApplication()
         {
@@ -37,12 +36,6 @@ namespace Xenios.Mocks
             {
                 OnAlert();
             }
-        }
-
-        public void ExecuteOnUI(Action action)
-        {
-            if (OnExecuteOnUI != null)
-                OnExecuteOnUI();
         }
     }
 }

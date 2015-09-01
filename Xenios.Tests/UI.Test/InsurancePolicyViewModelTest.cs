@@ -252,17 +252,5 @@ namespace Xenios.UI.Test
             var insuranceTypes = _viewModel.InsuranceTypesList;
             Assert.IsTrue(insuranceTypes.Count > 0);
         }
-
-        [TestMethod]
-        public void Should_request_status_image_binding_be_run_on_ui_thread()
-        {
-            var isNotified = false;
-            _applicationService.OnExecuteOnUI += () => { isNotified = false; };
-            var img = new BitmapImage();
-            _viewModel.StatusImage = img;
-
-            Assert.IsTrue(isNotified);
-            
-        }
     }
 }
