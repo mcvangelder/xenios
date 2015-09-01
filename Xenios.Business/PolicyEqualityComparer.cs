@@ -11,8 +11,6 @@ namespace Xenios.Business
 
         public bool Equals(Domain.Models.InsurancePolicy x, Domain.Models.InsurancePolicy y)
         {
-            System.Diagnostics.Debug.WriteLine("x: {0} y: {1}", x, y);
-
             if (x == null && y == null)
                 return true;
 
