@@ -165,8 +165,18 @@ namespace Xenios.UI.Test
         [TestMethod]
         public void Should_refersh_data_and_apply_current_search_text()
         {
+            var readyEvent = new ManualResetEvent(false);
+
+            _viewModel.PropertyChanged += (sender, arg) => {
+                if (arg.PropertyName == "LastReadDateTime")
+                    readyEvent.Set();
+            };
+            
             _viewModel.PathToFile = mockFilePath;
             var previousLastReadDateTime = _viewModel.LastReadDateTime;
+
+            var isReady = readyEvent.WaitOne(500);
+            Assert.IsTrue(isReady);
 
             _viewModel.SearchText = "ignored";
             var previousSearchResults = _viewModel.InsurancePolicies.ToList();
