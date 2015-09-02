@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using System.Windows.Media.Imaging;
 using Xenios.UI.Services;
+using System.Threading;
 
 namespace Xenios.UI.Test
 {
@@ -28,21 +29,50 @@ namespace Xenios.UI.Test
         }
 
         [TestMethod]
-        public void Should_open_file_and_load_insurance_informations()
+        public void Should_open_file_and_load_insurance_informations_and_run_on_ui()
         {
-            var isNotified = false;
+            var notifiyEvent = new ManualResetEvent(false);
+            var isUpdated = false;
 
             _viewModel.InsurancePolicies.CollectionChanged += (sender, args) =>
             {
-                isNotified = true;
+                notifiyEvent.Set();
+                isUpdated = _viewModel.InsurancePolicies.Count > 0;
             };
 
             _viewModel.PathToFile = mockFilePath;
 
-            var isUpdated = _viewModel.InsurancePolicies.Count > 0;
+            var isNotified = notifiyEvent.WaitOne(500);
 
             Assert.AreEqual(_viewModel.PathToFile, _dataService.SourceFile);
             Assert.IsTrue(isNotified && isUpdated);
+        }
+
+        [TestMethod]
+        public void Should_request_clear_and_load_policies_run_on_application_service_RunOnUI_method()
+        {
+            // this test over simplifies the actual calls made and only counts the number of times called
+
+            // Expected calls to UI:
+            //      LoadPolicies
+            //      Once for the group:
+            //          SavePoliciesCommand.RaiseCanExecuteChanged();
+            //          CloseFileCommand.RaiseCanExecuteChanged();
+            //          RefreshPolicyListCommand.RaiseCanExecuteChanged();
+            var expectedCount = 2;
+            
+            var readyEvent = new ManualResetEvent(false);
+            var runOnUICount = 0;
+            _applicationService.OnRunOnUI += () =>
+            {
+                runOnUICount++;
+                if (runOnUICount == expectedCount)
+                    readyEvent.Set();
+            };
+            _viewModel.PathToFile = mockFilePath;
+
+            var isNotified = readyEvent.WaitOne(100);
+            Assert.IsTrue(isNotified);
         }
 
         [TestMethod]
@@ -82,9 +112,16 @@ namespace Xenios.UI.Test
         [TestMethod]
         public void Should_update_last_read_datetime_after_loading_policies()
         {
+            var readyEvent = new ManualResetEvent(false);
+
             var lastReadDateTime = _viewModel.LastReadDateTime;
             _viewModel.PathToFile = mockFilePath;
-
+            _viewModel.PropertyChanged += (sender, arg) =>
+            {
+                if (arg.PropertyName == "LastReadDateTime")
+                    readyEvent.Set();
+            };
+            readyEvent.WaitOne(100);
             Assert.AreNotEqual(lastReadDateTime, _viewModel.LastReadDateTime);
         }
 
@@ -117,7 +154,7 @@ namespace Xenios.UI.Test
 
             var previousLastReadDateTime = _viewModel.LastReadDateTime;
             System.Threading.Thread.Sleep(50); // prevent false negatives
-            
+
             _viewModel.RefreshPolicyListCommand.Execute(null);
             var currentLastReadDateTime = _viewModel.LastReadDateTime;
 
@@ -203,9 +240,13 @@ namespace Xenios.UI.Test
         }
 
         [TestMethod]
-        public void Should_enable_when_PathToFile_is_set_non_empty()
+        public void Should_enable_when_PathToFile_is_set_non_empty_and_policies_have_been_loaded()
         {
+            var readyEvent = new ManualResetEvent(false);
+            _viewModel.PropertyChanged += (sender, arg) => { if (arg.PropertyName == "IsEnabled") readyEvent.Set(); };
             _viewModel.PathToFile = mockFilePath;
+
+            readyEvent.WaitOne(100);
             Assert.IsTrue(_viewModel.IsEnabled);
         }
 
@@ -236,12 +277,18 @@ namespace Xenios.UI.Test
         public void Should_alert_user_to_refresh_when_out_of_date_and_trying_to_save()
         {
             var isAlerted = false;
+            var readyEvent = new ManualResetEvent(false);
 
-            _viewModel.PathToFile = mockFilePath;
-            _viewModel.IsDataUpToDate = false;
+            _viewModel.SavePoliciesCommand.CanExecuteChanged += (sender, arg) => { readyEvent.Set(); };
             _applicationService.OnAlert += () => { isAlerted = true; };
             _dataService.OnSave += (policies) => { Assert.Fail("Save was called!."); };
 
+            _viewModel.PathToFile = mockFilePath;
+
+            var updateEventSet = readyEvent.WaitOne(100);
+            Assert.IsTrue(updateEventSet);
+
+            _viewModel.IsDataUpToDate = false;
             _viewModel.SavePoliciesCommand.Execute(null);
 
             Assert.IsTrue(isAlerted);
@@ -259,6 +306,23 @@ namespace Xenios.UI.Test
         {
             var insuranceTypes = _viewModel.InsuranceTypesList;
             Assert.IsTrue(insuranceTypes.Count > 0);
+        }
+
+        [TestMethod]
+        public void Should_notify_application_service_is_busy_when_PathToFile_set()
+        {
+            var readyEvent = new ManualResetEvent(false);
+
+            var isNotifiedCount = 0;
+            _applicationService.OnIsBusy += () =>
+            {
+                isNotifiedCount++;
+                if (isNotifiedCount == 2) readyEvent.Set();
+            };
+            _viewModel.PathToFile = mockFilePath;
+
+            var isNotified = readyEvent.WaitOne(100);
+            Assert.IsTrue(isNotified);
         }
     }
 }

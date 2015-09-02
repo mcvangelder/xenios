@@ -50,7 +50,7 @@
 				<TextBox Height="22" TextWrapping="NoWrap" IsEnabled="{Binding IsEnabled}" Text="{Binding SearchText, Mode=OneWayToSource}"  Width="200" HorizontalAlignment="Right"/>
 			</StackPanel>
 		</Grid>
-		<DataGrid ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" MinWidth="800" MinHeight="100" Grid.Row="2" VerticalAlignment="Top" IsEnabled="{Binding IsEnabled}" ItemsSource="{Binding InsurancePolicies}" ColumnWidth="*" AutoGenerateColumns="False" AlternatingRowBackground="#FFFABBBB">
+		<DataGrid FrozenColumnCount="2" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" MinWidth="800" MinHeight="100" Grid.Row="2" VerticalAlignment="Top" IsEnabled="{Binding IsEnabled}" ItemsSource="{Binding InsurancePolicies}" ColumnWidth="*" AutoGenerateColumns="False" AlternatingRowBackground="#FFFABBBB">
 			<DataGrid.Columns>
 				<DataGridTextColumn Binding="{Binding Customer.FirstName, Mode=TwoWay}" ClipboardContentBinding="{x:Null}" Header="First Name" SortDirection="Ascending" Width="Auto"/>
 				<DataGridTextColumn Binding="{Binding Customer.LastName}" ClipboardContentBinding="{x:Null}" Header="Last Name" SortDirection="Ascending" SortMemberPath="{Binding Mode=OneWay}" Width="Auto"/>
@@ -58,7 +58,8 @@
 				<DataGridTextColumn Binding="{Binding Customer.City}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="City" Width="Auto" />
 				<DataGridTextColumn Binding="{Binding Customer.State}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="State" Width="Auto"/>
 				<DataGridTextColumn Binding="{Binding Customer.PostalCode}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Postal Code" Width="Auto" />
-                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="Insurance Type" Width="Auto">
+                <DataGridTextColumn Binding="{Binding Customer.Country}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Country" Width="Auto"/>
+				<DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="Insurance Type" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding InsuranceType}"/>
@@ -91,16 +92,27 @@
                 </DataGridTemplateColumn>
 				<DataGridTextColumn Binding="{Binding PaymentInformation.CreditCardType}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Credit Card Type" Width="Auto"/>
 				<DataGridTextColumn Binding="{Binding PaymentInformation.CreditCardNumber}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Credit Card Number" Width="Auto" />
-				<DataGridTextColumn Binding="{Binding PaymentInformation.CreditCardVerificationNumber}" ClipboardContentBinding="{x:Null}" Header="CCV" Width="Auto"/>
-                <DataGridTemplateColumn CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Expiration Date" Width="Auto" >
+                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="CCV" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock HorizontalAlignment="Center" Text="{Binding PaymentInformation.ExpirationDate, Mode=OneWay, StringFormat='MM/dd/yy'}"/>
+                            <TextBlock Text="{Binding PaymentInformation.CreditCardVerificationNumber}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <DatePicker HorizontalAlignment="Center" DisplayDateStart="{Binding PaymentInformation.ExpirationDate}" SelectedDate="{Binding PaymentInformation.ExpirationDate, Mode=TwoWay}"/>
+                            <TextBox Text="{Binding PaymentInformation.CreditCardVerificationNumber}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+				<DataGridTemplateColumn CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Expiration Date" Width="Auto" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock HorizontalAlignment="Center" Text="{Binding PaymentInformation.ExpirationDate, StringFormat='MM/dd/yy'}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <DatePicker HorizontalAlignment="Center" DisplayDateStart="{Binding PaymentInformation.ExpirationDate, Mode=OneWay}" SelectedDate="{Binding PaymentInformation.ExpirationDate, Mode=TwoWay}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>

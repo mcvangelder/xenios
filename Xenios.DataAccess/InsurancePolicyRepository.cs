@@ -62,6 +62,7 @@ namespace Xenios.DataAccess
                         }
                     }
                 }
+
                 return allInsurancyPolicies;
             });
 

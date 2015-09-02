@@ -13,6 +13,8 @@ namespace Xenios.Mocks
         public event OnCalledEvent OnExit;
         public event OnCalledEvent OnChooseFile;
         public event OnCalledEvent OnAlert;
+        public event OnCalledEvent OnIsBusy;
+        public event OnCalledEvent OnRunOnUI;
 
         public void ExitApplication()
         {
@@ -36,6 +38,24 @@ namespace Xenios.Mocks
             {
                 OnAlert();
             }
+        }
+
+
+        public void IsBusy(bool isBusy)
+        {
+            if(OnIsBusy != null)
+            {
+                OnIsBusy();
+            }
+        }
+
+
+        public void RunOnUI(Action action)
+        {
+            if (OnRunOnUI != null)
+                OnRunOnUI();
+
+            action();
         }
     }
 }

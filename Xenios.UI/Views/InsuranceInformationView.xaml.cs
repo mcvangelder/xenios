@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Xenios.UI.Services;
 using Xenios.UI.ViewModel;
 
@@ -34,7 +36,7 @@ namespace Xenios.UI.Views
 
             var chosenFile = string.Empty;
 
-            if(result == true)
+            if (result == true)
             {
                 chosenFile = fileDiaglog.FileName;
             }
@@ -46,6 +48,17 @@ namespace Xenios.UI.Views
         public void Alert(string alertText)
         {
             MessageBox.Show(alertText, "Alert!", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+        }
+
+
+        public void IsBusy(bool isBusy)
+        {
+            RunOnUI(() => Window.GetWindow(this).Cursor = isBusy ? Cursors.Wait : Cursors.Arrow);
+        }
+
+        public void RunOnUI(Action action)
+        {
+            Dispatcher.BeginInvoke(action);
         }
     }
 }

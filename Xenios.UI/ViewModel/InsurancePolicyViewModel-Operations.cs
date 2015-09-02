@@ -67,13 +67,32 @@ namespace Xenios.UI.ViewModel
             return bitmapImage;
         }
 
-                private void ProcessPathToFileChange()
+        private void ProcessPathToFileChange()
         {
             _dataService.SourceFile = _pathToFile;
-            UpdateInsurancePolicyCollection(_pathToFile);
-            NotifyPathToFileDependentCommands();
-            IsEnabled = !String.IsNullOrWhiteSpace(_pathToFile);
-            StatusBarItemVisibility = IsEnabled ? Visibility.Visible : Visibility.Collapsed;
+            Task.Factory.StartNew(() =>
+            {
+                LoadInsurancePolicies();
+                NotifyPathToFileDependentCommands();
+                SetIsEnabled();
+                SetStatusBarVisibility();
+            });
+        }
+
+        private void SetStatusBarVisibility()
+        {
+            ApplicationService.RunOnUI(() =>
+            {
+                StatusBarItemVisibility = IsEnabled ? Visibility.Visible : Visibility.Collapsed;
+            });
+        }
+
+        private void SetIsEnabled()
+        {
+            ApplicationService.RunOnUI(() =>
+            {
+                IsEnabled = !String.IsNullOrWhiteSpace(_pathToFile);
+            });
         }
 
         public void SetDataService(IDataService service)
@@ -87,30 +106,40 @@ namespace Xenios.UI.ViewModel
 
         void _dataService_PoliciesChanged()
         {
-            IsDataUpToDate = false;
+            ApplicationService.RunOnUI(() => IsDataUpToDate = false);
         }
 
         private void NotifyPathToFileDependentCommands()
         {
-            SavePoliciesCommand.RaiseCanExecuteChanged();
-            CloseFileCommand.RaiseCanExecuteChanged();
-            RefreshPolicyListCommand.RaiseCanExecuteChanged();
-        }
-
-        private void UpdateInsurancePolicyCollection(string value)
-        {
-            if (String.IsNullOrEmpty(value))
-                ClearInsurancePolicies();
-            else
-                LoadInsurancePolicies();
-        }
-
-        private void ClearInsurancePolicies()
-        {
-            InsurancePolicies.Clear();
+            ApplicationService.RunOnUI(() =>
+            {
+                SavePoliciesCommand.RaiseCanExecuteChanged();
+                CloseFileCommand.RaiseCanExecuteChanged();
+                RefreshPolicyListCommand.RaiseCanExecuteChanged();
+            });
         }
 
         private void LoadInsurancePolicies()
+        {
+            List<InsurancePolicy> policies = null;
+            ApplicationService.IsBusy(true);
+            policies = GetPolicies();
+
+            ApplicationService.RunOnUI(() =>
+            {
+                InsurancePolicies.Clear();
+                if (policies != null)
+                {
+                    policies.ForEach(item => InsurancePolicies.Add(item));
+                }
+            });
+            LastReadDateTime = DateTime.Now;
+            IsDataUpToDate = true;
+
+            ApplicationService.IsBusy(false);
+        }
+
+        private List<InsurancePolicy> GetPolicies()
         {
             List<InsurancePolicy> policies = null;
 
@@ -123,14 +152,7 @@ namespace Xenios.UI.ViewModel
                 policies = _dataService.FindInsurancePoliciesByCustomerName(_searchText);
             }
 
-            ClearInsurancePolicies();
-            if (policies != null)
-            {
-                policies.ForEach(item => InsurancePolicies.Add(item));
-            }
-
-            LastReadDateTime = DateTime.Now;
-            IsDataUpToDate = true;
+            return policies;
         }
 
         private void ExitApplication()

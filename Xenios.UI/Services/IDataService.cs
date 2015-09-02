@@ -20,6 +20,6 @@ namespace Xenios.UI.Services
 
         void Save(List<InsurancePolicy> policies);
 
-        List<Domain.Models.InsurancePolicy> RefreshPolicies(List<Domain.Models.InsurancePolicy> currentPolicies);
+        List<InsurancePolicy> RefreshPolicies(List<InsurancePolicy> currentPolicies);
     }
 }
