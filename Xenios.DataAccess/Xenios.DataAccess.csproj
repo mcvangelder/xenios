@@ -43,7 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CountriesRepository.cs" />
     <Compile Include="InsurancePolicyRepository.cs" />
+    <Compile Include="IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryUpdatedNotificationService.cs" />
   </ItemGroup>

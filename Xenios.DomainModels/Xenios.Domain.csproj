@@ -42,6 +42,7 @@
     <Compile Include="Enums\CreditCardTypes.cs" />
     <Compile Include="Enums\InsuranceTypes.cs" />
     <Compile Include="Enums\TermUnits.cs" />
+    <Compile Include="Models\Country.cs" />
     <Compile Include="Models\PaymentInformation.cs" />
     <Compile Include="Models\CustomerInformation.cs" />
     <Compile Include="Models\InsurancePolicy.cs" />

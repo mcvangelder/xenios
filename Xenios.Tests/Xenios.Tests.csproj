@@ -73,12 +73,18 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Mocks\MockCountriesRepository.cs" />
     <Compile Include="Business.Test\InsurancePolicyDataServiceTest.cs" />
     <Compile Include="Business.Test\EqualityComparerTest.cs" />
     <Compile Include="Business.Test\UtilTest.cs" />
+
+    <Compile Include="Business.Test\CountriesServiceTest.cs" />
+    <Compile Include="DataAccess\CountriesRepositoryTest.cs" />
+
     <Compile Include="Domain.Test\ModelDefaultsTest.cs" />
     <Compile Include="Helpers\InsurancePolicyHelper.cs" />
     <Compile Include="Mocks\MockApplicationService.cs" />
+    <Compile Include="Mocks\MockCountriesService.cs" />
     <Compile Include="Mocks\MockDataService.cs" />
     <Compile Include="Mocks\MockInsurancePolicyDataService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

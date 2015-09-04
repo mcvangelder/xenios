@@ -60,7 +60,7 @@ namespace Xenios.UI.Test
             //          CloseFileCommand.RaiseCanExecuteChanged();
             //          RefreshPolicyListCommand.RaiseCanExecuteChanged();
             var expectedCount = 2;
-            
+
             var readyEvent = new ManualResetEvent(false);
             var runOnUICount = 0;
             _applicationService.OnRunOnUI += () =>
@@ -167,11 +167,12 @@ namespace Xenios.UI.Test
         {
             var readyEvent = new ManualResetEvent(false);
 
-            _viewModel.PropertyChanged += (sender, arg) => {
+            _viewModel.PropertyChanged += (sender, arg) =>
+            {
                 if (arg.PropertyName == "LastReadDateTime")
                     readyEvent.Set();
             };
-            
+
             _viewModel.PathToFile = mockFilePath;
             var previousLastReadDateTime = _viewModel.LastReadDateTime;
 
@@ -332,6 +333,17 @@ namespace Xenios.UI.Test
             _viewModel.PathToFile = mockFilePath;
 
             var isNotified = readyEvent.WaitOne(100);
+        }
+
+        [TestMethod]
+        public void Should_call_get_all_countries_on_countries_service()
+        {
+            var isNotified = false;
+            var mockCountriesService = new Mocks.MockCountriesService();
+            mockCountriesService.OnGetAllCountries += () => { isNotified = true; };
+            _viewModel.CountriesService = mockCountriesService;
+
+            _viewModel.GetAllCountries();
             Assert.IsTrue(isNotified);
         }
     }

@@ -53,6 +53,7 @@ namespace Xenios.UI.ViewModel
                 var instance = ServiceLocator.Current.GetInstance<InsurancePolicyViewModel>();
                 var service = _xeniosServiceLocator.InsurancePolicyDataService;
                 instance.SetDataService(service);
+                instance.CountriesService = _xeniosServiceLocator.CountriesService;
 
                 return instance;
             }

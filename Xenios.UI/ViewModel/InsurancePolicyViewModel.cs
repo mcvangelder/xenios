@@ -9,6 +9,7 @@ using Xenios.Domain.Models;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Xenios.UI.Utilities;
+using Xenios.Business;
 
 
 namespace Xenios.UI.ViewModel
@@ -29,6 +30,7 @@ namespace Xenios.UI.ViewModel
     {
         private IDataService _dataService;
 
+        public ICountriesService CountriesService { get; set; }
         public IApplicationService ApplicationService { get; set; }
         public IDataService DataService { get { return _dataService; } }
 

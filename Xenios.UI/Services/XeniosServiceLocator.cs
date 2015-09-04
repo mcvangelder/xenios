@@ -2,6 +2,8 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
+using Xenios.Business;
+using Xenios.DataAccess;
 
 namespace Xenios.UI.Services
 {
@@ -19,6 +21,9 @@ namespace Xenios.UI.Services
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
             SimpleIoc.Default.Register<DataServiceWrapper<Business.InsurancePolicyDataService>>();
+            SimpleIoc.Default.Register<CountriesService>(() =>
+                    new CountriesService(new CountriesRepository())
+                );
         }
 
         public IDataService InsurancePolicyDataService
@@ -29,6 +34,14 @@ namespace Xenios.UI.Services
             }
         }
         
+        public ICountriesService CountriesService
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<CountriesService>();
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

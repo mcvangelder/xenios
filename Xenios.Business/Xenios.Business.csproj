@@ -39,8 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CountriesService.cs" />
     <Compile Include="IInsurancePolicyDataService.cs" />
     <Compile Include="InsurancePolicyDataService.cs" />
+    <Compile Include="ICountriesService.cs" />
     <Compile Include="PolicyEqualityComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\CollectionHelper.cs" />

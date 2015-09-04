@@ -141,6 +141,10 @@
       <Project>{d173da56-c0c4-419f-a0b9-2920f0e10832}</Project>
       <Name>Xenios.Business</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Xenios.DataAccess\Xenios.DataAccess.csproj">
+      <Project>{4dde9d11-1eca-4517-b21a-b1714c85cae0}</Project>
+      <Name>Xenios.DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Xenios.DomainModels\Xenios.Domain.csproj">
       <Project>{2c057155-539f-4f76-93d3-f04dbf4a5306}</Project>
       <Name>Xenios.Domain</Name>

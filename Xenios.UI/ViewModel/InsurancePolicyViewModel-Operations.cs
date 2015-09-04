@@ -188,5 +188,10 @@ namespace Xenios.UI.ViewModel
 
             PathToFile = chosenFile;
         }
+
+        public List<Country> GetAllCountries()
+        {
+            return CountriesService.GetAllCountries();
+        }
     }
 }

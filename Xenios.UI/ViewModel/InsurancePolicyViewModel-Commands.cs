@@ -14,5 +14,6 @@ namespace Xenios.UI.ViewModel
         public RelayCommand ExitApplicationCommand { get; set; }
         public RelayCommand CloseFileCommand { get; set; }
         public RelayCommand OpenFileDialogCommand { get; set; }
+
     }
 }
