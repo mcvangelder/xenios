@@ -52,6 +52,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.1.1.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -91,8 +92,9 @@
     <Compile Include="DataAccess\RepositoryUpdatedTest.cs" />
     <Compile Include="UI.Test\InsurancePolicyViewModelTest.cs" />
     <Compile Include="UI.Test\UIDataServiceTest.cs" />
+    <Compile Include="UI.Test\CreditCardLengthValidationTest.cs" />
     <Compile Include="UI.Test\UtilitiesTest.cs" />
-    <Compile Include="UI.Test\ViewModelLocatorTest.cs" />
+    <Compile Include="ViewModelLocatorTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xenios.Business\Xenios.Business.csproj">
