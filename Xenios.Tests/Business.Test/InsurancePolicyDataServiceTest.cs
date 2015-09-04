@@ -65,7 +65,7 @@ namespace Xenios.Business.Test
                 var repo = new DataAccess.InsurancePolicyRepository(defaultFileName);
                 repo.SaveAll(newInformation);
 
-                bool isNotified = isNotifiedEvent.WaitOne(TimeSpan.FromSeconds(1));
+                bool isNotified = isNotifiedEvent.WaitOne(Constants.WaitTimeOut);
                 Assert.IsTrue(isNotified);
             }
         }

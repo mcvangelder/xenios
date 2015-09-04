@@ -42,7 +42,7 @@ namespace Xenios.UI.Test
 
             _viewModel.PathToFile = mockFilePath;
 
-            var isNotified = notifiyEvent.WaitOne(500);
+            var isNotified = notifiyEvent.WaitOne(Constants.WaitTimeOut);
 
             Assert.AreEqual(_viewModel.PathToFile, _dataService.SourceFile);
             Assert.IsTrue(isNotified && isUpdated);
@@ -71,7 +71,7 @@ namespace Xenios.UI.Test
             };
             _viewModel.PathToFile = mockFilePath;
 
-            var isNotified = readyEvent.WaitOne(100);
+            var isNotified = readyEvent.WaitOne(Constants.WaitTimeOut);
             Assert.IsTrue(isNotified);
         }
 
@@ -97,6 +97,8 @@ namespace Xenios.UI.Test
         public void Should_find_all_policies_when_search_string_is_empty()
         {
             var expectedPolicies = _dataService.GetAllInsurancePolicies();
+            
+            _viewModel.PathToFile = mockFilePath;
 
             // set to non empty string to simulate a pre-existing search
             _viewModel.SearchText = "make a non-empty search first";
@@ -121,7 +123,7 @@ namespace Xenios.UI.Test
                 if (arg.PropertyName == "LastReadDateTime")
                     readyEvent.Set();
             };
-            readyEvent.WaitOne(100);
+            readyEvent.WaitOne(Constants.WaitTimeOut);
             Assert.AreNotEqual(lastReadDateTime, _viewModel.LastReadDateTime);
         }
 
@@ -176,7 +178,7 @@ namespace Xenios.UI.Test
             _viewModel.PathToFile = mockFilePath;
             var previousLastReadDateTime = _viewModel.LastReadDateTime;
 
-            var isReady = readyEvent.WaitOne(500);
+            var isReady = readyEvent.WaitOne(Constants.WaitTimeOut);
             Assert.IsTrue(isReady);
 
             _viewModel.SearchText = "ignored";
@@ -257,7 +259,7 @@ namespace Xenios.UI.Test
             _viewModel.PropertyChanged += (sender, arg) => { if (arg.PropertyName == "IsEnabled") readyEvent.Set(); };
             _viewModel.PathToFile = mockFilePath;
 
-            readyEvent.WaitOne(100);
+            readyEvent.WaitOne(Constants.WaitTimeOut);
             Assert.IsTrue(_viewModel.IsEnabled);
         }
 
@@ -296,7 +298,7 @@ namespace Xenios.UI.Test
 
             _viewModel.PathToFile = mockFilePath;
 
-            var updateEventSet = readyEvent.WaitOne(100);
+            var updateEventSet = readyEvent.WaitOne(Constants.WaitTimeOut);
             Assert.IsTrue(updateEventSet);
 
             _viewModel.IsDataUpToDate = false;
@@ -332,7 +334,7 @@ namespace Xenios.UI.Test
             };
             _viewModel.PathToFile = mockFilePath;
 
-            var isNotified = readyEvent.WaitOne(100);
+            var isNotified = readyEvent.WaitOne(Constants.WaitTimeOut);
         }
 
         [TestMethod]
