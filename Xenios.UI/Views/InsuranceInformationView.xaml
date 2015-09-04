@@ -72,8 +72,8 @@
         </Grid>
         <DataGrid FrozenColumnCount="2" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" MinWidth="800" MinHeight="100" Grid.Row="2" VerticalAlignment="Top" IsEnabled="{Binding IsEnabled}" ItemsSource="{Binding InsurancePolicies}" ColumnWidth="*" AutoGenerateColumns="False" AlternatingRowBackground="#FFFABBBB">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Customer.FirstName, Mode=TwoWay}" ClipboardContentBinding="{x:Null}" Header="First Name" SortDirection="Ascending" Width="Auto"/>
-                <DataGridTextColumn Binding="{Binding Customer.LastName}" ClipboardContentBinding="{x:Null}" Header="Last Name" SortDirection="Ascending" SortMemberPath="{Binding Mode=OneWay}" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding Customer.FirstName}" ClipboardContentBinding="{x:Null}" Header="First Name" SortDirection="Ascending" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding Customer.LastName}" ClipboardContentBinding="{x:Null}" Header="Last Name" SortDirection="Ascending" Width="Auto"/>
                 <DataGridTextColumn Binding="{Binding Customer.AddressLine1}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Address" Width="Auto"/>
                 <DataGridTextColumn Binding="{Binding Customer.City}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="City" Width="Auto" />
                 <DataGridTextColumn Binding="{Binding Customer.State}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="State" Width="Auto"/>
