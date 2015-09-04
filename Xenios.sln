@@ -15,6 +15,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xenios.Tests", "Xenios.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xenios.UI", "Xenios.UI\Xenios.UI.csproj", "{A083D774-33A9-49CD-94D8-02D2A64218DF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleData", "SampleData", "{0C42FEE7-2586-4CE6-868C-82F3E63D47E2}"
+	ProjectSection(SolutionItems) = preProject
+		xenios.txt = xenios.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
