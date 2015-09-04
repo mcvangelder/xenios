@@ -354,6 +354,40 @@ namespace Xenios.UI.ViewModel
             }
         }
 
+        /// <summary>
+        /// The <see cref="Countries" /> property's name.
+        /// </summary>
+        public const string CountriesPropertyName = "Countries";
+
+        private List<CountryViewModel> _countries = null;
+
+        /// <summary>
+        /// Sets and gets the Countries property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public List<CountryViewModel> Countries
+        {
+            get
+            {
+                if (_countries == null)
+                {
+                    _countries = new List<CountryViewModel>();
+                    GetAllCountries().ForEach(i => _countries.Add(new CountryViewModel(i)));
+                }
+                return _countries;
+            }
+
+            set
+            {
+                if (_countries == value)
+                {
+                    return;
+                }
+
+                _countries = value;
+                RaisePropertyChanged(CountriesPropertyName);
+            }
+        }
   
     }
 }

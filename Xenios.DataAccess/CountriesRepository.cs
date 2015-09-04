@@ -11,9 +11,9 @@ namespace Xenios.DataAccess
     {
         private static List<Country> _countries = new List<Country>()
         {
-            new Country { Name = "Canada" },
-            new Country { Name = "Mexico" },
-            new Country { Name = "United States" }
+            new Country { Name = "Canada", ImageUri = "pack://application:,,,/Xenios.UI;component/Resources/canada-flag.png" },
+            new Country { Name = "Mexico", ImageUri = "pack://application:,,,/Xenios.UI;component/Resources/mexico-flag.png" },
+            new Country { Name = "United States", ImageUri = "pack://application:,,,/Xenios.UI;component/Resources/us-flag.png" }
         };
 
         public List<Country> GetAll()

@@ -8,7 +8,8 @@ namespace Xenios.Domain.Models
 {
     public class Country
     {
-
         public string Name { get; set; }
+
+        public string ImageUri { get; set; }
     }
 }

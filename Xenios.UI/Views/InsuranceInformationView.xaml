@@ -14,6 +14,26 @@
         DataContext="{Binding InsurancePolicy, Source={StaticResource Locator}}" 
         x:Name="policiesView"
      >
+    <UserControl.Resources>
+        <ControlTemplate x:Key="SimpleCountry">
+            <TextBlock Text="{Binding Name}"/>
+        </ControlTemplate>
+        <ControlTemplate x:Key="ExtendedCountry">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="{Binding Image}" Height="16" Width="16" />
+                <TextBlock Text="{Binding Name}" Padding="5,0,0,0" />
+            </StackPanel>
+        </ControlTemplate>
+        <DataTemplate x:Key="CountryTemplate">
+            <Control x:Name="theControl" Template="{StaticResource ExtendedCountry}"/>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, 
+                    AncestorType={x:Type ComboBoxItem}}, Path=IsSelected}" Value="{x:Null}">
+                    <Setter TargetName="theControl" Property="Template" Value="{StaticResource SimpleCountry}" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
@@ -22,44 +42,55 @@
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" Height="20">
-			<MenuItem Header="File">
-				<MenuItem Header="Open" InputGestureText="Ctrl-O" HorizontalAlignment="Left" Width="200" Command="{Binding OpenFileDialogCommand}" />
-				<MenuItem Header="Close" InputGestureText="Ctrl-F4" HorizontalAlignment="Left" Width="200" Command="{Binding CloseFileCommand}"/>
-				<Separator/>
-				<MenuItem Header="Save" InputGestureText="Ctrl-S" HorizontalAlignment="Left" Width="200" Command="{Binding SavePoliciesCommand}"/>
-				<Separator/>
-				<MenuItem Header="Quit" InputGestureText="Alt-F4" HorizontalAlignment="Left" Width="200" Command="{Binding ExitApplicationCommand}"/>
-			</MenuItem>
-			<MenuItem Header="View">
-				<MenuItem Header="Refresh" InputGestureText="F5" HorizontalAlignment="Left" Width="150" Command="{Binding RefreshPolicyListCommand}" />
-			</MenuItem>
-		</Menu>
-		<Grid Grid.Row="1" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Top">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="65"/>
-				<ColumnDefinition/>
-			</Grid.ColumnDefinitions>
-			<Image Grid.Column="0" HorizontalAlignment="Left" Source="../Resources/Swords_And_Shield_clip_art_medium.png"/>
-			<TextBlock Grid.Column="1" Margin="5,15" FontSize="30"><Run Text="Xenios Insurance Input Form"/></TextBlock>
-			<StackPanel Grid.Column="2" Orientation="Horizontal" Background="White" HorizontalAlignment="Right" Height="25" VerticalAlignment="Bottom">
-				
-				<Button Content="Button" Style="{DynamicResource SaveButton}" ToolTip="Save" Command="{Binding SavePoliciesCommand}"/>
-				
-				<Button Margin="2" IsEnabled="{Binding IsEnabled}" Command="{Binding RefreshPolicyListCommand}" Content="Button" Style="{DynamicResource RefreshButton}" ToolTip="Refresh"/>
-				<Image Source="../Resources/search.png" Margin="5,0,0,0" ToolTip="Search"/>
-				<TextBox Height="22" TextWrapping="NoWrap" IsEnabled="{Binding IsEnabled}" Text="{Binding SearchText, Mode=OneWayToSource}"  Width="200" HorizontalAlignment="Right"/>
-			</StackPanel>
-		</Grid>
-		<DataGrid FrozenColumnCount="2" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" MinWidth="800" MinHeight="100" Grid.Row="2" VerticalAlignment="Top" IsEnabled="{Binding IsEnabled}" ItemsSource="{Binding InsurancePolicies}" ColumnWidth="*" AutoGenerateColumns="False" AlternatingRowBackground="#FFFABBBB">
-			<DataGrid.Columns>
-				<DataGridTextColumn Binding="{Binding Customer.FirstName, Mode=TwoWay}" ClipboardContentBinding="{x:Null}" Header="First Name" SortDirection="Ascending" Width="Auto"/>
-				<DataGridTextColumn Binding="{Binding Customer.LastName}" ClipboardContentBinding="{x:Null}" Header="Last Name" SortDirection="Ascending" SortMemberPath="{Binding Mode=OneWay}" Width="Auto"/>
-				<DataGridTextColumn Binding="{Binding Customer.AddressLine1}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Address" Width="Auto"/>
-				<DataGridTextColumn Binding="{Binding Customer.City}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="City" Width="Auto" />
-				<DataGridTextColumn Binding="{Binding Customer.State}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="State" Width="Auto"/>
-				<DataGridTextColumn Binding="{Binding Customer.PostalCode}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Postal Code" Width="Auto" />
-                <DataGridTextColumn Binding="{Binding Customer.Country}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Country" Width="Auto"/>
-				<DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="Insurance Type" Width="Auto">
+            <MenuItem Header="File">
+                <MenuItem Header="Open" InputGestureText="Ctrl-O" HorizontalAlignment="Left" Width="200" Command="{Binding OpenFileDialogCommand}" />
+                <MenuItem Header="Close" InputGestureText="Ctrl-F4" HorizontalAlignment="Left" Width="200" Command="{Binding CloseFileCommand}"/>
+                <Separator/>
+                <MenuItem Header="Save" InputGestureText="Ctrl-S" HorizontalAlignment="Left" Width="200" Command="{Binding SavePoliciesCommand}"/>
+                <Separator/>
+                <MenuItem Header="Quit" InputGestureText="Alt-F4" HorizontalAlignment="Left" Width="200" Command="{Binding ExitApplicationCommand}"/>
+            </MenuItem>
+            <MenuItem Header="View">
+                <MenuItem Header="Refresh" InputGestureText="F5" HorizontalAlignment="Left" Width="150" Command="{Binding RefreshPolicyListCommand}" />
+            </MenuItem>
+        </Menu>
+        <Grid Grid.Row="1" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="65"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" HorizontalAlignment="Left" Source="../Resources/Swords_And_Shield_clip_art_medium.png"/>
+            <TextBlock Grid.Column="1" Margin="5,15" FontSize="30"><Run Text="Xenios Insurance Input Form"/></TextBlock>
+            <StackPanel Grid.Column="2" Orientation="Horizontal" Background="White" HorizontalAlignment="Right" Height="25" VerticalAlignment="Bottom">
+
+                <Button Content="Button" Style="{DynamicResource SaveButton}" ToolTip="Save" Command="{Binding SavePoliciesCommand}"/>
+
+                <Button Margin="2" IsEnabled="{Binding IsEnabled}" Command="{Binding RefreshPolicyListCommand}" Content="Button" Style="{DynamicResource RefreshButton}" ToolTip="Refresh"/>
+                <Image Source="../Resources/search.png" Margin="5,0,0,0" ToolTip="Search"/>
+                <TextBox Height="22" TextWrapping="NoWrap" IsEnabled="{Binding IsEnabled}" Text="{Binding SearchText, Mode=OneWayToSource}"  Width="200" HorizontalAlignment="Right"/>
+            </StackPanel>
+        </Grid>
+        <DataGrid FrozenColumnCount="2" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" MinWidth="800" MinHeight="100" Grid.Row="2" VerticalAlignment="Top" IsEnabled="{Binding IsEnabled}" ItemsSource="{Binding InsurancePolicies}" ColumnWidth="*" AutoGenerateColumns="False" AlternatingRowBackground="#FFFABBBB">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Customer.FirstName, Mode=TwoWay}" ClipboardContentBinding="{x:Null}" Header="First Name" SortDirection="Ascending" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding Customer.LastName}" ClipboardContentBinding="{x:Null}" Header="Last Name" SortDirection="Ascending" SortMemberPath="{Binding Mode=OneWay}" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding Customer.AddressLine1}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Address" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding Customer.City}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="City" Width="Auto" />
+                <DataGridTextColumn Binding="{Binding Customer.State}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="State" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding Customer.PostalCode}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Postal Code" Width="Auto" />
+                <DataGridTemplateColumn CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Country" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Customer.Country}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox SelectedValue="{Binding Customer.Country}" SelectedValuePath="Name" ItemTemplate="{StaticResource CountryTemplate}" ItemsSource="{Binding ElementName=policiesView, Path=DataContext.Countries}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="Insurance Type" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding InsuranceType}"/>
@@ -90,8 +121,8 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
-				<DataGridTextColumn Binding="{Binding PaymentInformation.CreditCardType}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Credit Card Type" Width="Auto"/>
-				<DataGridTextColumn Binding="{Binding PaymentInformation.CreditCardNumber}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Credit Card Number" Width="Auto" />
+                <DataGridTextColumn Binding="{Binding PaymentInformation.CreditCardType}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Credit Card Type" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding PaymentInformation.CreditCardNumber}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Credit Card Number" Width="Auto" />
                 <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="CCV" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -104,7 +135,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
-				<DataGridTemplateColumn CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Expiration Date" Width="Auto" >
+                <DataGridTemplateColumn CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Expiration Date" Width="Auto" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock HorizontalAlignment="Center" Text="{Binding PaymentInformation.ExpirationDate, StringFormat='MM/dd/yy'}"/>
@@ -128,7 +159,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
-				<DataGridTextColumn Binding="{Binding TermLength}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Term Length" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding TermLength}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Term Length" Width="Auto"/>
                 <DataGridTemplateColumn CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Term Type" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -141,18 +172,18 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
-			</DataGrid.Columns>
-		</DataGrid>
-		<StatusBar Grid.Row="3" HorizontalAlignment="Stretch" Height="20" Margin="0,5,0,0" VerticalAlignment="Center" >
-			<StatusBarItem Visibility="{Binding StatusBarItemVisibility}" HorizontalAlignment="Left" VerticalAlignment="Top">
+            </DataGrid.Columns>
+        </DataGrid>
+        <StatusBar Grid.Row="3" HorizontalAlignment="Stretch" Height="20" Margin="0,5,0,0" VerticalAlignment="Center" >
+            <StatusBarItem Visibility="{Binding StatusBarItemVisibility}" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <StackPanel Orientation="Horizontal">
                     <Image Width="12" Height="12" Source="{Binding StatusImage, Mode=OneWay}"/>
                     <TextBlock Margin="5,0" Text="{Binding PathToFile, Mode=OneWay, StringFormat='File: {0}'}" HorizontalAlignment="Right"/>
                 </StackPanel>
-			</StatusBarItem>
-			<StatusBarItem Visibility="{Binding StatusBarItemVisibility}" HorizontalAlignment="Right" VerticalAlignment="Top">
-				<TextBlock Text="{Binding LastReadDateTime, Mode=OneWay, StringFormat='Last Read: {0}'}"  />
-			</StatusBarItem>
-		</StatusBar>
-	</Grid>
+            </StatusBarItem>
+            <StatusBarItem Visibility="{Binding StatusBarItemVisibility}" HorizontalAlignment="Right" VerticalAlignment="Top">
+                <TextBlock Text="{Binding LastReadDateTime, Mode=OneWay, StringFormat='Last Read: {0}'}"  />
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
 </UserControl>

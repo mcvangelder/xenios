@@ -123,7 +123,8 @@ namespace Xenios.UI.ViewModel
         {
             List<InsurancePolicy> policies = null;
             ApplicationService.IsBusy(true);
-            policies = GetPolicies();
+            if(!String.IsNullOrEmpty(_pathToFile))
+                policies = GetPolicies();
 
             ApplicationService.RunOnUI(() =>
             {
