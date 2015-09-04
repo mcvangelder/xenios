@@ -121,7 +121,25 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Binding="{Binding PaymentInformation.CreditCardType}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Credit Card Type" Width="Auto"/>
+                <DataGridTemplateColumn  CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Credit Card Type" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding PaymentInformation.CreditiCardNumber}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBox Text="{Binding PaymentInformation.CreditCardNumber}" />
+                                <Binding>
+                                    <Binding.ValidationRules>
+                                        <xi:CreditCardLengthValidationRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Binding="{Binding PaymentInformation.CreditCardNumber}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Credit Card Number" Width="Auto" />
                 <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="CCV" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
