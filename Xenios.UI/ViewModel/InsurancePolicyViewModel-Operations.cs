@@ -166,19 +166,29 @@ namespace Xenios.UI.ViewModel
 
         private void SavePolicies()
         {
+            TrySavePolicies();
+        }
+
+        private bool TrySavePolicies()
+        {
             if (_isDataUpToDate.GetValueOrDefault(false))
             {
                 _dataService.Save(_insurancePolicies.ToList());
+                return true;
             }
             else
             {
                 ApplicationService.Alert("You must refresh before you can save.");
+                return false;
             }
         }
 
         private void CloseFile()
         {
-            PathToFile = String.Empty;
+            if (TrySavePolicies())
+            {
+                PathToFile = String.Empty;
+            }
         }
 
         private void OpenFileDialog()
