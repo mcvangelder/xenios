@@ -7,7 +7,7 @@
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
         xmlns:System="clr-namespace:System;assembly=mscorlib"
-        xmlns:xi="clr-namespace:Xenios.UI.Infrastructure"
+        xmlns:vldtns="clr-namespace:Xenios.UI.Validations"
         xmlns:ViewModel="clr-namespace:Xenios.UI.ViewModel" 
         x:Class="Xenios.UI.Views.InsuranceInformationView"
         mc:Ignorable="d ignore"
@@ -149,9 +149,10 @@
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
                             <TextBox>
-                                <Binding Path="PaymentInformation.CreditCardNumber" UpdateSourceTrigger="LostFocus">
+                                <Binding Path="PaymentInformation.CreditCardNumber" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
-                                        <xi:CreditCardLengthValidationRule/>
+                                        <vldtns:NumericInputOnlyValidationRule/>
+                                        <vldtns:CreditCardLengthValidationRule/>
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox>

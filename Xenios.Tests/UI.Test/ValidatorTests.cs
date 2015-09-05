@@ -1,11 +1,11 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Xenios.UI.Infrastructure;
+using Xenios.UI.Validations;
 
 namespace Xenios.UI.Test
 {
     [TestClass]
-    public class CreditCardLengthValidationTest
+    public class ValidatorTests
     {
         [TestMethod]
         public void Should_validate_value_of_length_16()
@@ -18,5 +18,16 @@ namespace Xenios.UI.Test
             Assert.IsTrue(result.IsValid);
         }
 
+        [TestMethod]
+        public void Should_validate_only_numeric_values_permitted()
+        {
+            var value = "1234567890abcdef";
+
+            var validationRule = new NumericInputOnlyValidationRule();
+
+            var result = validationRule.Validate(value, null);
+
+            Assert.IsFalse(result.IsValid);
+        }
     }
 }

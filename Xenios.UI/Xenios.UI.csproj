@@ -76,13 +76,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Infrastructure\CreditCardLengthValidationRule.cs" />
+    <Compile Include="Validations\CreditCardLengthValidationRule.cs" />
     <Compile Include="Infrastructure\RelayCommandKeyBinding.cs" />
     <Compile Include="Services\DataServiceWrapper.cs" />
     <Compile Include="Services\IApplicationService.cs" />
     <Compile Include="Services\IDataService.cs" />
     <Compile Include="Services\XeniosServiceLocator.cs" />
     <Compile Include="Utilities\EnumHelper.cs" />
+    <Compile Include="Validations\NumericInputOnlyValidationRule.cs" />
     <Compile Include="ViewModel\CountryViewModel.cs" />
     <Compile Include="ViewModel\InsurancePolicyViewModel-Commands.cs" />
     <Compile Include="ViewModel\InsurancePolicyViewModel-Operations.cs" />

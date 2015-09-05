@@ -92,7 +92,7 @@
     <Compile Include="DataAccess\RepositoryUpdatedTest.cs" />
     <Compile Include="UI.Test\InsurancePolicyViewModelTest.cs" />
     <Compile Include="UI.Test\UIDataServiceTest.cs" />
-    <Compile Include="UI.Test\CreditCardLengthValidationTest.cs" />
+    <Compile Include="UI.Test\ValidatorTests.cs" />
     <Compile Include="UI.Test\UtilitiesTest.cs" />
     <Compile Include="ViewModelLocatorTest.cs" />
   </ItemGroup>

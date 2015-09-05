@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace Xenios.UI.Infrastructure
+namespace Xenios.UI.Validations
 {
     public class CreditCardLengthValidationRule : ValidationRule
     {
@@ -14,7 +14,7 @@ namespace Xenios.UI.Infrastructure
         {
             var value = enteredValue as String;
 
-            return new ValidationResult(value.Length == acceptedLength, "Invalid credit card number length");
+            return new ValidationResult(value.Length == acceptedLength, "Credit card number must be 16 digits.");
         }
     }
 }
