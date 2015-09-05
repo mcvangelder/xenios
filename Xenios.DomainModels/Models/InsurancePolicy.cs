@@ -14,6 +14,8 @@ namespace Xenios.Domain.Models
             Id = Guid.NewGuid();
             CoverageBeginDateTime = DateTime.Now;
             TermUnit = TermUnits.Months;
+            Customer = new CustomerInformation();
+            PaymentInformation = new PaymentInformation();
         }
 
         public Guid Id { get; set; }

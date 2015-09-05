@@ -14,7 +14,7 @@ namespace Xenios.UI.Infrastructure
         {
             var value = enteredValue as String;
 
-            return new ValidationResult(value.Length == acceptedLength, null);
+            return new ValidationResult(value.Length == acceptedLength, "Invalid credit card number length");
         }
     }
 }
