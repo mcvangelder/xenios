@@ -152,7 +152,7 @@
                                 <Binding Path="PaymentInformation.CreditCardNumber" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <vldtns:NumericInputOnlyValidationRule/>
-                                        <vldtns:CreditCardLengthValidationRule/>
+                                        <vldtns:ExactLengthValidationRule Length="16"/>
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox>
@@ -167,7 +167,14 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding PaymentInformation.CreditCardVerificationNumber}"/>
+                            <TextBox>
+                                <Binding Path="PaymentInformation.CreditCardVerificationNumber" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <vldtns:NumericInputOnlyValidationRule/>
+                                        <vldtns:ExactLengthValidationRule Length="3"/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>

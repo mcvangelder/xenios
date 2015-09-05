@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Xenios.UI.Validations
 {
-    public class CreditCardLengthValidationRule : ValidationRule
+    public class ExactLengthValidationRule : ValidationRule
     {
-        private const int acceptedLength = 16;
+        public int Length { get; set; }
+        
         public override ValidationResult Validate(object enteredValue, System.Globalization.CultureInfo cultureInfo)
         {
             var value = enteredValue as String;
 
-            return new ValidationResult(value.Length == acceptedLength, "Credit card number must be 16 digits.");
+            return new ValidationResult(value.Length == Length, String.Format("Must be exactly {0} characters long.", Length));
         }
     }
 }

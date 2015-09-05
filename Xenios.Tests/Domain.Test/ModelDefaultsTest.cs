@@ -12,10 +12,10 @@ namespace Xenios.Domain.Test
             var insurancePolicy = new Domain.Models.InsurancePolicy();
 
             Assert.AreNotEqual(DateTime.MinValue, insurancePolicy.CoverageBeginDateTime);
-            Assert.IsNull(insurancePolicy.Customer);
+            Assert.IsNotNull(insurancePolicy.Customer);
             Assert.AreNotEqual(Guid.Empty, insurancePolicy.Id);
             Assert.AreEqual(Domain.Enums.InsuranceTypes.Unspecified, insurancePolicy.InsuranceType);
-            Assert.IsNull(insurancePolicy.PaymentInformation);
+            Assert.IsNotNull(insurancePolicy.PaymentInformation);
             Assert.AreEqual(0, insurancePolicy.Price);
             Assert.AreEqual(0, insurancePolicy.TermLength);
             Assert.AreEqual(Domain.Enums.TermUnits.Months, insurancePolicy.TermUnit);
