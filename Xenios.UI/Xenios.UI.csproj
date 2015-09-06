@@ -89,6 +89,7 @@
     <Compile Include="ViewModel\InsurancePolicyViewModel-Commands.cs" />
     <Compile Include="ViewModel\InsurancePolicyViewModel-Operations.cs" />
     <Compile Include="ViewModel\InsurancePolicyViewModel.cs" />
+    <Compile Include="ViewModel\PolicyDataGridViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs">
       <SubType>Code</SubType>
     </Compile>

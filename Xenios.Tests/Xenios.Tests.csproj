@@ -91,6 +91,7 @@
     <Compile Include="DataAccess\DataPersistenceTest.cs" />
     <Compile Include="DataAccess\RepositoryUpdatedTest.cs" />
     <Compile Include="UI.Test\InsurancePolicyViewModelTest.cs" />
+    <Compile Include="UI.Test\PoliciesDataGridViewModelTests.cs" />
     <Compile Include="UI.Test\UIDataServiceTest.cs" />
     <Compile Include="UI.Test\ValidatorTests.cs" />
     <Compile Include="UI.Test\UtilitiesTest.cs" />

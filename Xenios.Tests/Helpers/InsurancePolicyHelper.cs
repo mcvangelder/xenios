@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xenios.Business;
 using Xenios.Domain.Models;
+using Xenios.UI.ViewModel;
 
 namespace Xenios.Test.Helpers
 {
@@ -91,6 +92,27 @@ namespace Xenios.Test.Helpers
                 var actualPolicy = actualPolicies[0];
                 Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(expectedPolicy, actualPolicy);
             }
+        }
+
+
+        public static void AssertAreEqual(Domain.Models.InsurancePolicy policy, PolicyDataGridViewModel dataGridViewModel)
+        {
+            Assert.AreEqual(policy.CoverageBeginDateTime, dataGridViewModel.CoverageBeginDateTime);
+            Assert.AreEqual(policy.Customer.AddressLine1, dataGridViewModel.CustomerAddressLine1);
+            Assert.AreEqual(policy.Customer.City, dataGridViewModel.CustomerCity);
+            Assert.AreEqual(policy.Customer.Country, dataGridViewModel.CustomerCountry);
+            Assert.AreEqual(policy.Customer.FirstName, dataGridViewModel.CustomerFirstName);
+            Assert.AreEqual(policy.Customer.LastName, dataGridViewModel.CustomerLastName);
+            Assert.AreEqual(policy.Customer.PostalCode, dataGridViewModel.CustomerPostalCode);
+            Assert.AreEqual(policy.Customer.State, dataGridViewModel.CustomerState);
+            Assert.AreEqual(policy.InsuranceType, dataGridViewModel.InsuranceType);
+            Assert.AreEqual(policy.PaymentInformation.CreditCardNumber, dataGridViewModel.PaymentInformationCreditCardNumber);
+            Assert.AreEqual(policy.PaymentInformation.CreditCardType, dataGridViewModel.PaymentInformationCreditCardType);
+            Assert.AreEqual(policy.PaymentInformation.CreditCardVerificationNumber, dataGridViewModel.PaymentInformationCreditCardVerificationNumber);
+            Assert.AreEqual(policy.PaymentInformation.ExpirationDate, dataGridViewModel.PaymentInformationExpirationDate);
+            Assert.AreEqual(policy.Price, dataGridViewModel.Price);
+            Assert.AreEqual(policy.TermLength, dataGridViewModel.TermLength);
+            Assert.AreEqual(policy.TermUnit, dataGridViewModel.TermUnit);
         }
     }
 }

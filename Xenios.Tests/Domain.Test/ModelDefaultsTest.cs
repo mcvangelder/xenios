@@ -7,21 +7,6 @@ namespace Xenios.Domain.Test
     public class ModelDefaultTests
     {
         [TestMethod]
-        public void Should_create_insurance_policy_with_defaults()
-        {
-            var insurancePolicy = new Domain.Models.InsurancePolicy();
-
-            Assert.AreNotEqual(DateTime.MinValue, insurancePolicy.CoverageBeginDateTime);
-            Assert.IsNotNull(insurancePolicy.Customer);
-            Assert.AreNotEqual(Guid.Empty, insurancePolicy.Id);
-            Assert.AreEqual(Domain.Enums.InsuranceTypes.Unspecified, insurancePolicy.InsuranceType);
-            Assert.IsNotNull(insurancePolicy.PaymentInformation);
-            Assert.AreEqual(0, insurancePolicy.Price);
-            Assert.AreEqual(0, insurancePolicy.TermLength);
-            Assert.AreEqual(Domain.Enums.TermUnits.Months, insurancePolicy.TermUnit);
-        }
-
-        [TestMethod]
         public void Should_create_customer_with_defaults()
         {
             var customer = new Domain.Models.CustomerInformation();

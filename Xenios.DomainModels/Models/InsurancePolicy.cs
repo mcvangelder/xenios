@@ -9,15 +9,6 @@ namespace Xenios.Domain.Models
 {
     public class InsurancePolicy
     {
-        public InsurancePolicy()
-        {
-            Id = Guid.NewGuid();
-            CoverageBeginDateTime = DateTime.Now;
-            TermUnit = TermUnits.Months;
-            Customer = new CustomerInformation();
-            PaymentInformation = new PaymentInformation();
-        }
-
         public Guid Id { get; set; }
 
         public InsuranceTypes InsuranceType { get; set; }
