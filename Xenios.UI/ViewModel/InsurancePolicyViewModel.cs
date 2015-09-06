@@ -82,19 +82,16 @@ namespace Xenios.UI.ViewModel
         /// </summary>
         public const string InsurancePoliciesPropertyName = "InsurancePolicies";
 
-        private ObservableCollection<Domain.Models.InsurancePolicy> _insurancePolicies = new ObservableCollection<Domain.Models.InsurancePolicy>();
+        private ObservableCollection<PolicyDataGridViewModel> _insurancePolicies = new ObservableCollection<PolicyDataGridViewModel>();
 
         /// <summary>
         /// Sets and gets the InsurancePolicies property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public ObservableCollection<Domain.Models.InsurancePolicy> InsurancePolicies
+        public ObservableCollection<PolicyDataGridViewModel> InsurancePolicies
         {
             get
             {
-                if (IsInDesignModeStatic)
-                    PathToFile = @"c:\temp\xenios.txt";
-
                 return _insurancePolicies;
             }
 

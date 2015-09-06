@@ -12,7 +12,6 @@ namespace Xenios.UI.Test
     [TestClass]
     public class PoliciesDataGridViewModelTests
     {
-     
         [TestMethod]
         public void Should_flatten_InsurancePolicy_domain_object_for_datagrid()
         {
@@ -20,7 +19,6 @@ namespace Xenios.UI.Test
             var dataGridViewModel = new PolicyDataGridViewModel(policy);
             Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(policy, dataGridViewModel);
         }
-
 
         [TestMethod]
         public void Should_create_InsurancePolicy_domain_object_graph_when_creating_PolicyDataGridViewModel_with_default_constructor()

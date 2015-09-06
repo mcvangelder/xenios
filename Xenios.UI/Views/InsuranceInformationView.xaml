@@ -80,21 +80,21 @@
         </Grid>
         <DataGrid FrozenColumnCount="2" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" MinWidth="800" MinHeight="100" Grid.Row="2" VerticalAlignment="Top" IsEnabled="{Binding IsEnabled}" ItemsSource="{Binding InsurancePolicies}" ColumnWidth="*" AutoGenerateColumns="False" AlternatingRowBackground="#FFFABBBB">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Customer.FirstName}" ClipboardContentBinding="{x:Null}" Header="First Name" SortDirection="Ascending" Width="Auto"/>
-                <DataGridTextColumn Binding="{Binding Customer.LastName}" ClipboardContentBinding="{x:Null}" Header="Last Name" SortDirection="Ascending" Width="Auto"/>
-                <DataGridTextColumn Binding="{Binding Customer.AddressLine1}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Address" Width="Auto"/>
-                <DataGridTextColumn Binding="{Binding Customer.City}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="City" Width="Auto" />
-                <DataGridTextColumn Binding="{Binding Customer.State}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="State" Width="Auto"/>
-                <DataGridTextColumn Binding="{Binding Customer.PostalCode}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Postal Code" Width="Auto" />
+                <DataGridTextColumn Binding="{Binding CustomerFirstName}" ClipboardContentBinding="{x:Null}" Header="First Name" SortDirection="Ascending" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding CustomerLastName}" ClipboardContentBinding="{x:Null}" Header="Last Name" SortDirection="Ascending" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding CustomerAddressLine1}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Address" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding CustomerCity}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="City" Width="Auto" />
+                <DataGridTextColumn Binding="{Binding CustomerState}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="State" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding CustomerPostalCode}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Postal Code" Width="Auto" />
                 <DataGridTemplateColumn CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Country" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Customer.Country}"/>
+                            <TextBlock Text="{Binding CustomerCountry}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <ComboBox SelectedValue="{Binding Customer.Country}" SelectedValuePath="Name" ItemTemplate="{StaticResource CountryTemplate}" ItemsSource="{Binding ElementName=policiesView, Path=DataContext.Countries}" />
+                            <ComboBox SelectedValue="{Binding CustomerCountry}" SelectedValuePath="Name" ItemTemplate="{StaticResource CountryTemplate}" ItemsSource="{Binding ElementName=policiesView, Path=DataContext.Countries}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
@@ -106,13 +106,6 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <!--<ListBox ItemsSource="{Binding ElementName=policiesView, Path=DataContext.InsuranceTypesList}">
-                                <ListBox.ItemTemplate>
-                                    <HierarchicalDataTemplate>
-                                        <CheckBox IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected, Mode=TwoWay}" Content="{Binding InsuranceType, StringFormat=' {0'}"/>
-                                    </HierarchicalDataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>-->
                             <TextBox Text="{Binding InsuranceType}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
@@ -132,7 +125,7 @@
                 <DataGridTemplateColumn  CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Credit Card Type" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding PaymentInformation.CreditCardType}" />
+                            <TextBlock Text="{Binding PaymentInformationCreditCardType}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
@@ -144,13 +137,13 @@
                 <DataGridTemplateColumn Header="Credit Card Number" CanUserSort="False" ClipboardContentBinding="{x:Null}" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding PaymentInformation.CreditCardNumber}"/>
+                            <TextBlock Text="{Binding PaymentInformationCreditCardNumber}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
                             <TextBox>
-                                <Binding Path="PaymentInformation.CreditCardNumber" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="PaymentInformationCreditCardNumber" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <vldtns:NumericInputOnlyValidationRule/>
                                         <vldtns:ExactLengthValidationRule Length="16"/>
@@ -163,13 +156,13 @@
                 <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="CCV" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding PaymentInformation.CreditCardVerificationNumber}"/>
+                            <TextBlock Text="{Binding PaymentInformationCreditCardVerificationNumber}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
                             <TextBox>
-                                <Binding Path="PaymentInformation.CreditCardVerificationNumber" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="PaymentInformationCreditCardVerificationNumber" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <vldtns:NumericInputOnlyValidationRule/>
                                         <vldtns:ExactLengthValidationRule Length="3"/>
@@ -182,12 +175,12 @@
                 <DataGridTemplateColumn CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Expiration Date" Width="Auto" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock HorizontalAlignment="Center" Text="{Binding PaymentInformation.ExpirationDate, StringFormat='MM/dd/yy'}"/>
+                            <TextBlock HorizontalAlignment="Center" Text="{Binding PaymentInformationExpirationDate, StringFormat='MM/dd/yy'}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <DatePicker HorizontalAlignment="Center" DisplayDateStart="{Binding PaymentInformation.ExpirationDate, Mode=OneWay}" SelectedDate="{Binding PaymentInformation.ExpirationDate, Mode=TwoWay}"/>
+                            <DatePicker HorizontalAlignment="Center" DisplayDateStart="{Binding PaymentInformationExpirationDate, Mode=OneWay}" SelectedDate="{Binding PaymentInformation.ExpirationDate, Mode=TwoWay}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>

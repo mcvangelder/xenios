@@ -183,10 +183,10 @@ namespace Xenios.UI.Test
             Assert.IsTrue(isReady);
 
             _viewModel.SearchText = "ignored";
-            var previousSearchResults = _viewModel.InsurancePolicies.ToList();
+            var previousSearchResults = _viewModel.InsurancePolicies.Select(s => s.InsurancePolicy).ToList();
 
             _viewModel.RefreshPolicyListCommand.Execute(null);
-            var currentSearchResults = _viewModel.InsurancePolicies.ToList();
+            var currentSearchResults = _viewModel.InsurancePolicies.Select(s => s.InsurancePolicy).ToList();
 
             // The mock data service always returns one record, test this assumption holds true
             Assert.AreEqual(1, previousSearchResults.Count);

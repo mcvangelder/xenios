@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ using Xenios.Domain.Models;
 
 namespace Xenios.UI.ViewModel
 {
-    public class PolicyDataGridViewModel
+    public class PolicyDataGridViewModel : ViewModelBase
     {
         private Domain.Models.InsurancePolicy _policy;
         public Domain.Models.InsurancePolicy InsurancePolicy { get { return _policy; } }
@@ -28,36 +29,355 @@ namespace Xenios.UI.ViewModel
             _policy.PaymentInformation = new PaymentInformation();
         }
 
-        public DateTime CoverageBeginDateTime { get { return _policy.CoverageBeginDateTime; } set { _policy.CoverageBeginDateTime = value; } }
+        /// <summary>
+        /// The <see cref="CoverageBeginDateTime" /> property's name.
+        /// </summary>
+        public const string CoverageBeginDateTimePropertyName = "CoverageBeginDateTime";
 
-        public String CustomerAddressLine1 { get { return _policy.Customer.AddressLine1; } set { _policy.Customer.AddressLine1 = value; } }
+        /// <summary>
+        /// Sets and gets the CoverageBeginDateTime property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public DateTime CoverageBeginDateTime
+        {
+            get { return _policy.CoverageBeginDateTime; }
+            set
+            {
+                if (_policy.CoverageBeginDateTime == value) return;
 
-        public String CustomerCity { get { return _policy.Customer.City; } set { _policy.Customer.City = value; } }
+                _policy.CoverageBeginDateTime = value;
+                RaisePropertyChanged(CoverageBeginDateTimePropertyName); ;
+            }
+        }
 
-        public String CustomerCountry { get { return _policy.Customer.Country; } set { _policy.Customer.Country = value; } }
+        /// <summary>
+        /// The <see cref="CustomerAddressLine1" /> property's name.
+        /// </summary>
+        public const string CustomerAddressLine1PropertyName = "CustomerAddressLine1";
 
-        public String CustomerFirstName { get { return _policy.Customer.FirstName; } set { _policy.Customer.FirstName = value; } }
+        /// <summary>
+        /// Sets and gets the CustomerAddressLine1 property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public String CustomerAddressLine1
+        {
+            get { return _policy.Customer.AddressLine1; }
+            set
+            {
+                if (_policy.Customer.AddressLine1 == value)
+                    return;
 
-        public String CustomerLastName { get { return _policy.Customer.LastName; } set { _policy.Customer.LastName = value; } }
+                _policy.Customer.AddressLine1 = value;
+                RaisePropertyChanged(CustomerAddressLine1PropertyName);
+            }
+        }
 
-        public String CustomerPostalCode { get { return _policy.Customer.PostalCode; } set { _policy.Customer.PostalCode = value; } }
+        /// <summary>
+        /// The <see cref="CustomerCity" /> property's name.
+        /// </summary>
+        public const string CustomerCityPropertyName = "CustomerCity";
 
-        public String CustomerState { get { return _policy.Customer.State; } set { _policy.Customer.State = value; } }
+        /// <summary>
+        /// Sets and gets the CustomerCity property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public String CustomerCity
+        {
+            get { return _policy.Customer.City; }
+            set
+            {
+                if (_policy.Customer.City == value)
+                    return;
 
-        public InsuranceTypes InsuranceType { get { return _policy.InsuranceType; } set { _policy.InsuranceType = value; } }
+                _policy.Customer.City = value;
+                RaisePropertyChanged(CustomerCityPropertyName);
+            }
+        }
 
-        public String PaymentInformationCreditCardNumber { get { return _policy.PaymentInformation.CreditCardNumber; } set { _policy.PaymentInformation.CreditCardNumber = value; } }
+        /// <summary>
+        /// The <see cref="CustomerCountry" /> property's name.
+        /// </summary>
+        public const string CustomerCountryPropertyName = "CustomerCountry";
 
-        public CreditCardTypes PaymentInformationCreditCardType { get { return _policy.PaymentInformation.CreditCardType; } set { _policy.PaymentInformation.CreditCardType = value; } }
+        /// <summary>
+        /// Sets and gets the CustomerCountry property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public String CustomerCountry
+        {
+            get { return _policy.Customer.Country; }
+            set
+            {
+                if (_policy.Customer.Country == value)
+                    return;
 
-        public String PaymentInformationCreditCardVerificationNumber { get { return _policy.PaymentInformation.CreditCardVerificationNumber; } set { _policy.PaymentInformation.CreditCardVerificationNumber = value; } }
+                _policy.Customer.Country = value;
+                RaisePropertyChanged(CustomerCountryPropertyName);
+            }
+        }
 
-        public DateTime PaymentInformationExpirationDate { get { return _policy.PaymentInformation.ExpirationDate; } set { _policy.PaymentInformation.ExpirationDate = value; } }
+        /// <summary>
+        /// The <see cref="CustomerFirstName" /> property's name.
+        /// </summary>
+        public const string CustomerFirstNamePropertyName = "CustomerFirstName";
 
-        public decimal Price { get { return _policy.Price; } set { _policy.Price = value; } }
+        /// <summary>
+        /// Sets and gets the CustomerFirstName property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public String CustomerFirstName
+        {
+            get { return _policy.Customer.FirstName; }
+            set
+            {
+                if (_policy.Customer.FirstName == value)
+                    return;
 
-        public int TermLength { get { return _policy.TermLength; } set { _policy.TermLength = value; } }
+                _policy.Customer.FirstName = value;
+                RaisePropertyChanged(CustomerFirstNamePropertyName);
+            }
+        }
 
-        public TermUnits TermUnit { get { return _policy.TermUnit; } set { _policy.TermUnit = value; } }
+        /// <summary>
+        /// The <see cref="CustomerLastName" /> property's name.
+        /// </summary>
+        public const string CustomerLastNamePropertyName = "CustomerLastName";
+
+        /// <summary>
+        /// Sets and gets the CustomerLastName property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public String CustomerLastName
+        {
+            get { return _policy.Customer.LastName; }
+            set
+            {
+                if (_policy.Customer.LastName == value)
+                    return;
+
+                _policy.Customer.LastName = value;
+                RaisePropertyChanged(CustomerLastNamePropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="CustomerPostalCode" /> property's name.
+        /// </summary>
+        public const string CustomerPostalCodePropertyName = "CustomerPostalCode";
+
+        /// <summary>
+        /// Sets and gets the CustomerPostalCode property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public String CustomerPostalCode
+        {
+            get { return _policy.Customer.PostalCode; }
+
+            set
+            {
+                if (_policy.Customer.PostalCode == value)
+                    return;
+
+                _policy.Customer.PostalCode = value;
+                RaisePropertyChanged(CustomerPostalCodePropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="CustomerState" /> property's name.
+        /// </summary>
+        public const string CustomerStatePropertyName = "CustomerState";
+
+        /// <summary>
+        /// Sets and gets the CustomerState property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public String CustomerState
+        {
+            get { return _policy.Customer.State; }
+            set
+            {
+                if (_policy.Customer.State == value)
+                    return;
+
+                _policy.Customer.State = value;
+                RaisePropertyChanged(CustomerStatePropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="InsuranceType" /> property's name.
+        /// </summary>
+        public const string InsuranceTypePropertyName = "InsuranceType";
+
+        /// <summary>
+        /// Sets and gets the InsuranceType property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public InsuranceTypes InsuranceType
+        {
+            get { return _policy.InsuranceType; }
+            set
+            {
+                if (_policy.InsuranceType == value)
+                    return;
+
+                _policy.InsuranceType = value;
+                RaisePropertyChanged(InsuranceTypePropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="PaymentInformationCreditCardNumber" /> property's name.
+        /// </summary>
+        public const string PaymentInformationCreditCardNumberPropertyName = "PaymentInformationCreditCardNumber";
+
+        /// <summary>
+        /// Sets and gets the PaymentInformationCreditCardNumber property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public String PaymentInformationCreditCardNumber
+        {
+            get { return _policy.PaymentInformation.CreditCardNumber; }
+            set
+            {
+                if (_policy.PaymentInformation.CreditCardNumber == value)
+                    return;
+
+                _policy.PaymentInformation.CreditCardNumber = value;
+                //RaisePropertyChanged(PaymentInformationCreditCardNumber);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="PaymentInformationCreditCardType" /> property's name.
+        /// </summary>
+        public const string PaymentInformationCreditCardTypePropertyName = "PaymentInformationCreditCardType";
+
+        /// <summary>
+        /// Sets and gets the PaymentInformationCreditCardType property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public CreditCardTypes PaymentInformationCreditCardType
+        {
+            get { return _policy.PaymentInformation.CreditCardType; }
+            set
+            {
+                if (_policy.PaymentInformation.CreditCardType == value)
+                    return;
+
+                _policy.PaymentInformation.CreditCardType = value;
+                RaisePropertyChanged(PaymentInformationCreditCardTypePropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="PaymentInformationCreditCardVerificationNumber" /> property's name.
+        /// </summary>
+        public const string PaymentInformationCreditCardVerificationNumberPropertyName = "PaymentInformationCreditCardVerificationNumber";
+
+        /// <summary>
+        /// Sets and gets the PaymentInformationCreditCardVerificationNumber property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public String PaymentInformationCreditCardVerificationNumber
+        {
+            get { return _policy.PaymentInformation.CreditCardVerificationNumber; }
+            set
+            {
+                if (_policy.PaymentInformation.CreditCardVerificationNumber == value)
+                    return;
+
+                _policy.PaymentInformation.CreditCardVerificationNumber = value;
+                RaisePropertyChanged(PaymentInformationCreditCardVerificationNumberPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="PaymentInformationExpirationDate" /> property's name.
+        /// </summary>
+        public const string PaymentInformationExpirationDatePropertyName = "PaymentInformationExpirationDate";
+
+        /// <summary>
+        /// Sets and gets the PaymentInformationExpirationDate property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public DateTime PaymentInformationExpirationDate
+        {
+            get { return _policy.PaymentInformation.ExpirationDate; }
+            set
+            {
+                if (_policy.PaymentInformation.ExpirationDate == value)
+                    return;
+
+                _policy.PaymentInformation.ExpirationDate = value;
+                RaisePropertyChanged(PaymentInformationExpirationDatePropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="Price" /> property's name.
+        /// </summary>
+        public const string PricePropertyName = "Price";
+
+        /// <summary>
+        /// Sets and gets the Price property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public decimal Price
+        {
+            get { return _policy.Price; }
+            set
+            {
+                if (_policy.Price == value)
+                    return;
+                _policy.Price = value;
+                RaisePropertyChanged(PricePropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="TermLength" /> property's name.
+        /// </summary>
+        public const string TermLengthPropertyName = "TermLength";
+
+        /// <summary>
+        /// Sets and gets the TermLength property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public int TermLength
+        {
+            get { return _policy.TermLength; }
+            set
+            {
+                if (_policy.TermLength == value)
+                    return;
+
+                _policy.TermLength = value;
+                RaisePropertyChanged(TermLengthPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="TermUnit" /> property's name.
+        /// </summary>
+        public const string TermUnitPropertyName = "TermUnit";
+
+        /// <summary>
+        /// Sets and gets the TermUnit property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public TermUnits TermUnit
+        {
+            get { return _policy.TermUnit; }
+            set
+            {
+                if (_policy.TermUnit == value)
+                    return;
+
+                _policy.TermUnit = value;
+                RaisePropertyChanged(TermUnitPropertyName);
+            }
+        }
     }
 }

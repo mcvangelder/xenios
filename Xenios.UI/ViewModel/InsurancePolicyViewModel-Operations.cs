@@ -138,7 +138,7 @@ namespace Xenios.UI.ViewModel
                 InsurancePolicies.Clear();
                 if (policies != null)
                 {
-                    policies.ForEach(item => InsurancePolicies.Add(item));
+                    policies.ForEach(item => InsurancePolicies.Add(new PolicyDataGridViewModel(item)));
                 }
             });
             LastReadDateTime = DateTime.Now;
@@ -153,7 +153,7 @@ namespace Xenios.UI.ViewModel
 
             if (String.IsNullOrEmpty(_searchText))
             {
-                policies = PolicyDataService.RefreshPolicies(InsurancePolicies.ToList());
+                policies = PolicyDataService.RefreshPolicies(InsurancePolicies.Select(s => s.InsurancePolicy).ToList());
             }
             else
             {
@@ -181,7 +181,7 @@ namespace Xenios.UI.ViewModel
         {
             if (_isDataUpToDate.GetValueOrDefault(false))
             {
-                PolicyDataService.Save(_insurancePolicies.ToList());
+                PolicyDataService.Save(_insurancePolicies.Select(s=> s.InsurancePolicy).ToList());
                 return true;
             }
             else
