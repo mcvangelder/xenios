@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using Xenios.Business;
 using Xenios.Domain.Models;
 using Xenios.UI.Services;
 
@@ -14,8 +15,11 @@ namespace Xenios.UI.ViewModel
 {
     public partial class InsurancePolicyViewModel
     {
-        private void InitializeViewModel()
+        private void InitializeViewModel(IPolicyDataService policyDataService, ICountriesService countriesService)
         {
+            PolicyDataService = policyDataService;
+            CountriesService = countriesService;
+
             RefreshPolicyListCommand = new RelayCommand(LoadInsurancePolicies, () => IsPathToFileSpecified);
             SavePoliciesCommand = new RelayCommand(SavePolicies, () => IsPathToFileSpecified);
             ExitApplicationCommand = new RelayCommand(ExitApplication);
@@ -23,6 +27,7 @@ namespace Xenios.UI.ViewModel
             OpenFileDialogCommand = new RelayCommand(OpenFileDialog);
 
             PropertyChanged += InsurancePolicyViewModel_PropertyChanged;
+            PolicyDataService.PoliciesChanged += _dataService_PoliciesChanged;
 
             try
             {
@@ -69,7 +74,7 @@ namespace Xenios.UI.ViewModel
 
         private void ProcessPathToFileChange()
         {
-            _dataService.SourceFile = _pathToFile;
+            PolicyDataService.SourceFile = _pathToFile;
             Task.Factory.StartNew(() =>
             {
                 LoadInsurancePolicies();
@@ -93,15 +98,6 @@ namespace Xenios.UI.ViewModel
             {
                 IsEnabled = !String.IsNullOrWhiteSpace(_pathToFile);
             });
-        }
-
-        public void SetDataService(IDataService service)
-        {
-            if (_dataService == service)
-                return;
-
-            _dataService = service;
-            _dataService.PoliciesChanged += _dataService_PoliciesChanged;
         }
 
         void _dataService_PoliciesChanged()
@@ -146,11 +142,11 @@ namespace Xenios.UI.ViewModel
 
             if (String.IsNullOrEmpty(_searchText))
             {
-                policies = _dataService.RefreshPolicies(InsurancePolicies.ToList());
+                policies = PolicyDataService.RefreshPolicies(InsurancePolicies.ToList());
             }
             else
             {
-                policies = _dataService.FindInsurancePoliciesByCustomerName(_searchText);
+                policies = PolicyDataService.FindInsurancePoliciesByCustomerName(_searchText);
             }
 
             return policies;
@@ -173,7 +169,7 @@ namespace Xenios.UI.ViewModel
         {
             if (_isDataUpToDate.GetValueOrDefault(false))
             {
-                _dataService.Save(_insurancePolicies.ToList());
+                PolicyDataService.Save(_insurancePolicies.ToList());
                 return true;
             }
             else

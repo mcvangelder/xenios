@@ -10,7 +10,7 @@ namespace Xenios.Mocks
 {
     public delegate void OnSaveEvent(List<InsurancePolicy> policies);
 
-    internal class MockDataService : IDataService
+    internal class MockDataService : IPolicyDataService
     {
         private List<Domain.Models.InsurancePolicy> _insuranceInfos;
         public String SourceFile { get; set; }

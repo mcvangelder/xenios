@@ -12,7 +12,7 @@ namespace Xenios.UI.Test
             var locator = new ViewModel.ViewModelLocator();
             var viewModel = locator.InsurancePolicy;
 
-            Assert.IsNotNull(viewModel.DataService);
+            Assert.IsNotNull(viewModel.PolicyDataService);
         }
     }
 }

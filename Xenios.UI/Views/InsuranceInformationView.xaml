@@ -33,6 +33,7 @@
                 </DataTrigger>
             </DataTemplate.Triggers>
         </DataTemplate>
+ 
         <Style TargetType="{x:Type TextBox}">
             <Style.Triggers>
                 <Trigger Property="Validation.HasError" Value="True">

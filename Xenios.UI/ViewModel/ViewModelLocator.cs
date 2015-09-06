@@ -33,29 +33,17 @@ namespace Xenios.UI.ViewModel
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
-            ////if (ViewModelBase.IsInDesignModeStatic)
-            ////{
-            ////    // Create design time view services and models
-            ////    SimpleIoc.Default.Register<IDataService, DesignDataService>();
-            ////}
-            ////else
-            ////{
-            ////    // Create run time view services and models
-            ////    SimpleIoc.Default.Register<IDataService, DataService>();
-            ////}
-
-            SimpleIoc.Default.Register<InsurancePolicyViewModel>();
+            SimpleIoc.Default.Register<InsurancePolicyViewModel>(() => 
+                new InsurancePolicyViewModel(
+                            _xeniosServiceLocator.InsurancePolicyDataService,
+                            _xeniosServiceLocator.CountriesService)
+                );
         }
 
         public InsurancePolicyViewModel InsurancePolicy
         {
             get{
-                var instance = ServiceLocator.Current.GetInstance<InsurancePolicyViewModel>();
-                var service = _xeniosServiceLocator.InsurancePolicyDataService;
-                instance.SetDataService(service);
-                instance.CountriesService = _xeniosServiceLocator.CountriesService;
-
-                return instance;
+                return ServiceLocator.Current.GetInstance<InsurancePolicyViewModel>();
             }
         }
         

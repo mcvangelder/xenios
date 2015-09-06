@@ -20,17 +20,17 @@ namespace Xenios.UI.Services
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
-            SimpleIoc.Default.Register<DataServiceWrapper<Business.InsurancePolicyDataService>>();
+            SimpleIoc.Default.Register<PolicyDataServiceWrapper<Business.InsurancePolicyDataService>>();
             SimpleIoc.Default.Register<CountriesService>(() =>
                     new CountriesService(new CountriesRepository())
                 );
         }
 
-        public IDataService InsurancePolicyDataService
+        public IPolicyDataService InsurancePolicyDataService
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<DataServiceWrapper<Business.InsurancePolicyDataService>>();
+                return ServiceLocator.Current.GetInstance<PolicyDataServiceWrapper<Business.InsurancePolicyDataService>>();
             }
         }
         

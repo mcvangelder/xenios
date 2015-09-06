@@ -28,11 +28,10 @@ namespace Xenios.UI.ViewModel
     /// </summary>
     public partial class InsurancePolicyViewModel : ViewModelBase
     {
-        private IDataService _dataService;
 
-        public ICountriesService CountriesService { get; set; }
+        public ICountriesService CountriesService { get; private set; }
         public IApplicationService ApplicationService { get; set; }
-        public IDataService DataService { get { return _dataService; } }
+        public IPolicyDataService PolicyDataService { get; private set; }
 
         public static BitmapImage UpToDateStatusImage;
         public static BitmapImage OutOfDateStatusImage;
@@ -41,9 +40,9 @@ namespace Xenios.UI.ViewModel
         public const String outOfDateStatusImagePath = "pack://application:,,,/Xenios.UI;component/Resources/status_warning_Icon_32.png";
 
         private bool IsPathToFileSpecified { get { return !String.IsNullOrEmpty(PathToFile); } }
-        public InsurancePolicyViewModel()
+        public InsurancePolicyViewModel(IPolicyDataService policyDataService, ICountriesService countriesService)
         {
-            InitializeViewModel();
+            InitializeViewModel(policyDataService,countriesService);
         }
 
 

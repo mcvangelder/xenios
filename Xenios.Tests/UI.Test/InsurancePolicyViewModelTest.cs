@@ -13,6 +13,7 @@ namespace Xenios.UI.Test
         private Mocks.MockDataService _dataService;
         private ViewModel.InsurancePolicyViewModel _viewModel;
         private Mocks.MockApplicationService _applicationService;
+        private Mocks.MockCountriesService _mockCountriesService = new Mocks.MockCountriesService();
 
         private const string mockFilePath = @"\mockpath\mockfile";
 
@@ -20,12 +21,10 @@ namespace Xenios.UI.Test
         public void CreateViewModel()
         {
             _dataService = new Xenios.Mocks.MockDataService();
-            _viewModel = new ViewModel.InsurancePolicyViewModel();
-            _viewModel.SetDataService(_dataService);
+            _viewModel = new ViewModel.InsurancePolicyViewModel(_dataService, _mockCountriesService);
 
             _applicationService = new Mocks.MockApplicationService();
             _viewModel.ApplicationService = _applicationService;
-
         }
 
         [TestMethod]
@@ -335,15 +334,15 @@ namespace Xenios.UI.Test
             _viewModel.PathToFile = mockFilePath;
 
             var isNotified = readyEvent.WaitOne(Constants.WaitTimeOut);
+
+            Assert.IsTrue(isNotified);
         }
 
         [TestMethod]
         public void Should_call_get_all_countries_on_countries_service()
         {
             var isNotified = false;
-            var mockCountriesService = new Mocks.MockCountriesService();
-            mockCountriesService.OnGetAllCountries += () => { isNotified = true; };
-            _viewModel.CountriesService = mockCountriesService;
+            _mockCountriesService.OnGetAllCountries += () => { isNotified = true; };
 
             _viewModel.GetAllCountries();
             Assert.IsTrue(isNotified);
