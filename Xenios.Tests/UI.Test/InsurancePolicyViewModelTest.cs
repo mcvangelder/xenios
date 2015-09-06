@@ -13,7 +13,7 @@ namespace Xenios.UI.Test
         private Mocks.MockDataService _dataService;
         private ViewModel.InsurancePolicyViewModel _viewModel;
         private Mocks.MockApplicationService _applicationService;
-        private Mocks.MockCountriesService _mockCountriesService = new Mocks.MockCountriesService();
+        private Mocks.MockCountriesService _mockCountriesService;
 
         private const string mockFilePath = @"\mockpath\mockfile";
 
@@ -21,6 +21,8 @@ namespace Xenios.UI.Test
         public void CreateViewModel()
         {
             _dataService = new Xenios.Mocks.MockDataService();
+            _mockCountriesService = new Mocks.MockCountriesService();
+
             _viewModel = new ViewModel.InsurancePolicyViewModel(_dataService, _mockCountriesService);
 
             _applicationService = new Mocks.MockApplicationService();
@@ -192,15 +194,21 @@ namespace Xenios.UI.Test
         }
 
         [TestMethod]
-        public void Should_save_data_when_save_command_executed()
+        public void Should_save_data_when_save_command_executed_and_IsDataUpToDate_remains_true()
         {
-            var isNotified = false;
-            _dataService.OnSave += (policies) => { isNotified = true; };
-
+            var readyEvent = new ManualResetEvent(false);
+            _viewModel.PropertyChanged += (sender, arg) => { if (arg.PropertyName == "IsEnabled") readyEvent.Set(); };
             _viewModel.PathToFile = mockFilePath;
+            var isReady = readyEvent.WaitOne(Constants.WaitTimeOut);
+            Assert.IsTrue(isReady);
+
+            bool isSaved = false;
+
+            _dataService.OnSave += (policies) => { isSaved = true; };
             _viewModel.SavePoliciesCommand.Execute(null);
 
-            Assert.IsTrue(isNotified);
+            Assert.IsTrue(isSaved);
+            Assert.IsTrue(_viewModel.IsDataUpToDate.GetValueOrDefault(false));
         }
 
         [TestMethod]

@@ -51,11 +51,22 @@ namespace Xenios.UI.ViewModel
                     LoadInsurancePolicies();
                     break;
                 case IsDataUpToDatePropertyName:
-                    SetStatusImage();
+                    ProcessIsDataUpToDateChange();
                     break;
                 default:
                     break;
             }
+        }
+
+        private void ProcessIsDataUpToDateChange()
+        {
+            if (_isSaving)
+            {
+                _isSaving = false;
+                _isDataUpToDate = true;
+            }
+            else    
+                SetStatusImage();
         }
 
         private void SetStatusImage()
@@ -119,7 +130,7 @@ namespace Xenios.UI.ViewModel
         {
             List<InsurancePolicy> policies = null;
             ApplicationService.IsBusy(true);
-            if(!String.IsNullOrEmpty(_pathToFile))
+            if (!String.IsNullOrEmpty(_pathToFile))
                 policies = GetPolicies();
 
             ApplicationService.RunOnUI(() =>
@@ -162,6 +173,7 @@ namespace Xenios.UI.ViewModel
 
         private void SavePolicies()
         {
+            _isSaving = true;
             TrySavePolicies();
         }
 
