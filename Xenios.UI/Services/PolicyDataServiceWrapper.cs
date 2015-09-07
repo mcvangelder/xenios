@@ -23,11 +23,6 @@ namespace Xenios.UI.Services
             return InsurancePolicyDataService.GetAllInsurancePolicies();
         }
 
-        public List<Domain.Models.InsurancePolicy> FindInsurancePoliciesByCustomerName(string searchValue)
-        {
-            return InsurancePolicyDataService.FindInsurancePoliciesByCustomerName(searchValue);
-        }
-
         private String _sourceFile;
         public string SourceFile
         {

@@ -86,62 +86,6 @@ namespace Xenios.Business.Test
         }
 
         [TestMethod]
-        public void Should_find_policy_having_customer_with_first_name()
-        {
-            var expectedCount = 1;
-            CreateRepository(initialRecordCount: expectedCount);
-
-            var expectedInfo = _repository.GetAll().First();
-            var expectedCustomer = expectedInfo.Customer;
-            var expectedFirstName = expectedCustomer.FirstName;
-
-            AssertPolicyCanBeFoundByCustomerName(
-                    new List<InsurancePolicy> { expectedInfo }, expectedFirstName);
-        }
-
-        [TestMethod]
-        public void Should_find_policy_having_customer_with_last_name()
-        {
-            var expectedCount = 1;
-            CreateRepository(initialRecordCount: expectedCount);
-
-            var expectedInfo = _repository.GetAll().First();
-            var expectedCustomer = expectedInfo.Customer;
-            var expectedLastName = expectedCustomer.LastName;
-
-            AssertPolicyCanBeFoundByCustomerName(
-                    new List<InsurancePolicy>() { expectedInfo }, expectedLastName);
-        }
-
-        [TestMethod]
-        public void Should_find_policy_having_customer_containing_first_or_last_name()
-        {
-            var expectedName = "expected_name";
-            var expectedPartial = "expected";
-
-            var randomPolicies = Xenios.Test.Helpers.InsurancePolicyHelper.CreateInsurancePolicies(2);
-            var expectedInfoByFirstName = randomPolicies.First();
-            var expectedInfoByLastName = randomPolicies.Last();
-
-            expectedInfoByFirstName.Customer.FirstName = expectedName;
-            expectedInfoByLastName.Customer.LastName = expectedName;
-
-            CreateRepository(policies: randomPolicies);
-
-            AssertPolicyCanBeFoundByCustomerName(
-                randomPolicies, expectedPartial);
-        }
-
-        private static void AssertPolicyCanBeFoundByCustomerName(List<InsurancePolicy> expectedPolicies, string customerName)
-        {
-            using (var service = new InsurancePolicyDataService(defaultFileName))
-            {
-                var actualPolicies = service.FindInsurancePoliciesByCustomerName(customerName);
-                Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(expectedPolicies, actualPolicies);
-            }
-        }
-
-        [TestMethod]
         public void Should_merge_existing_records_and_source_records_during_refresh()
         {
             int recordCount = 5;

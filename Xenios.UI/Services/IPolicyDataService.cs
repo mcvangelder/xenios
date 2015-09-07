@@ -16,8 +16,6 @@ namespace Xenios.UI.Services
 
         List<InsurancePolicy> GetAllInsurancePolicies();
 
-        List<InsurancePolicy> FindInsurancePoliciesByCustomerName(string searchValue);
-
         void Save(List<InsurancePolicy> policies);
 
         List<InsurancePolicy> RefreshPolicies(List<InsurancePolicy> currentPolicies);

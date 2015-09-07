@@ -94,24 +94,6 @@ namespace Xenios.UI.Test
         }
 
         [TestMethod]
-        public void Should_search_insurance_informations_by_customer_name()
-        {
-            SetPathToFile();
-
-            var expectedInfos = _dataService.FindInsurancePoliciesByCustomerName("ignored");
-            var expectedInfosCount = 1;
-            var expectedInfo = expectedInfos.First();
-
-            _viewModel.SearchText = "ignored";
-
-            var searchResultCount = _viewModel.InsurancePolicies.Count;
-            var searchResultInfo = _viewModel.InsurancePolicies.First();
-
-            Assert.AreEqual(expectedInfosCount, searchResultCount);
-            Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(expectedInfo, searchResultInfo);
-        }
-
-        [TestMethod]
         public void Should_find_all_policies_when_search_string_is_empty()
         {
             var expectedPolicies = _dataService.GetAllInsurancePolicies();
@@ -187,42 +169,42 @@ namespace Xenios.UI.Test
         }
 
         [TestMethod]
-        public void Should_refersh_data_and_apply_current_search_text()
+        public void Should_refresh_data_and_apply_current_search_text()
         {
-            var readyEvent = new ManualResetEvent(false);
-
-            _viewModel.PropertyChanged += (sender, arg) =>
-            {
-                if (arg.PropertyName == "LastReadDateTime")
-                    readyEvent.Set();
-            };
-
             SetPathToFile();
+            var searchText = "FilterValue";
 
-            var previousLastReadDateTime = _viewModel.LastReadDateTime;
+            _viewModel.InsurancePolicies[0].CustomerFirstName = searchText;
 
-            var isReady = readyEvent.WaitOne(Constants.WaitTimeOut);
-            Assert.IsTrue(isReady);
+            using (var searchTextEvent = new AutoResetEvent(false))
+            {
+                var isBusyCount = 0;
+                _applicationService.OnIsBusy += () =>
+                {
+                    isBusyCount++;
+                    if (isBusyCount == 2)
+                    {
+                        isBusyCount = 0; searchTextEvent.Set();
+                    }
+                };
 
-            _viewModel.SearchText = "ignored";
-            var previousSearchResults = _viewModel.InsurancePolicies.Select(s => s.InsurancePolicy).ToList();
+                _viewModel.SearchText = searchText;
+                searchTextEvent.WaitOne(Constants.WaitTimeOut);
 
-            _viewModel.RefreshPolicyListCommand.Execute(null);
-            var currentSearchResults = _viewModel.InsurancePolicies.Select(s => s.InsurancePolicy).ToList();
 
-            // The mock data service always returns one record, test this assumption holds true
-            Assert.AreEqual(1, previousSearchResults.Count);
-            Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(previousSearchResults, currentSearchResults);
+                var previousSearchResults = _viewModel.InsurancePolicies.Where(w => w.IsIncludedInFilter).Select(s => s.InsurancePolicy).ToList();
+
+                _viewModel.RefreshPolicyListCommand.Execute(null);
+                var currentSearchResults = _viewModel.InsurancePolicies.Where(w => w.IsIncludedInFilter).Select(s => s.InsurancePolicy).ToList();
+
+                Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(previousSearchResults, currentSearchResults);
+            }
         }
 
         [TestMethod]
         public void Should_save_data_when_save_command_executed_and_IsDataUpToDate_remains_true()
         {
-            var readyEvent = new ManualResetEvent(false);
-            _viewModel.PropertyChanged += (sender, arg) => { if (arg.PropertyName == "IsEnabled") readyEvent.Set(); };
-            _viewModel.PathToFile = mockFilePath;
-            var isReady = readyEvent.WaitOne(Constants.WaitTimeOut);
-            Assert.IsTrue(isReady);
+            SetPathToFile();
 
             bool isSaved = false;
 
@@ -381,14 +363,66 @@ namespace Xenios.UI.Test
         }
 
         [TestMethod]
-        public void Should_filter_by_customer_first_name()
+        public void Should_filter_by_customer_first_name_case_insensitive()
         {
-            SetPathToFile();
-            _viewModel.InsurancePolicies[0].CustomerFirstName = "FilterValue";
-            _viewModel.SearchText = "FilterValue";
+            var searchText = "FilterValue";
 
-            var includedInFilterCount = _viewModel.InsurancePolicies.Count(c => c.IsIncludedInFilter);
-            Assert.AreEqual(1, includedInFilterCount);
+            using (var finishedEvent = new ManualResetEvent(false))
+            {
+                var isBusyCount=0;
+               
+                SetPathToFile();
+                _applicationService.OnIsBusy += () => { isBusyCount++; if (isBusyCount == 2) finishedEvent.Set(); };
+
+                _viewModel.InsurancePolicies[0].CustomerFirstName = searchText;
+                _viewModel.SearchText = searchText.ToLower();
+                
+                finishedEvent.WaitOne();
+
+                var includedInFilterCount = _viewModel.InsurancePolicies.Count(c => c.IsIncludedInFilter);
+                Assert.AreEqual(1, includedInFilterCount);
+            }
+        }
+
+        [TestMethod]
+        public void Should_filter_by_customer_last_name_case_insensitive()
+        {
+            var searchText = "FilterValue";
+            using (var finishedEvent = new ManualResetEvent(false))
+            {
+                var isBusyCount = 0;
+
+                SetPathToFile();
+                _viewModel.InsurancePolicies[0].CustomerLastName = searchText;
+                _applicationService.OnIsBusy += () => { isBusyCount++; if (isBusyCount == 2) finishedEvent.Set(); };
+                _viewModel.SearchText = searchText.ToLower();
+
+                finishedEvent.WaitOne(Constants.WaitTimeOut);
+
+                var includedInFilterCount = _viewModel.InsurancePolicies.Count(c => c.IsIncludedInFilter);
+                Assert.AreEqual(1, includedInFilterCount);
+            }
+        }
+
+        [TestMethod]
+        public void Should_filter_by_customer_first_or_last_name_case_insensitive()
+        {
+            var searchText = "FilterValue";
+            using (var finishedEvent = new ManualResetEvent(false))
+            {
+                var isBusyCount = 0;
+
+                SetPathToFile();
+                _viewModel.InsurancePolicies[0].CustomerFirstName = searchText;
+                _viewModel.InsurancePolicies[1].CustomerLastName = searchText;
+                _applicationService.OnIsBusy += () => { isBusyCount++; if (isBusyCount == 2) finishedEvent.Set(); };
+                _viewModel.SearchText = searchText.ToLower();
+
+                finishedEvent.WaitOne(Constants.WaitTimeOut);
+
+                var includedInFilterCount = _viewModel.InsurancePolicies.Count(c => c.IsIncludedInFilter);
+                Assert.AreEqual(2, includedInFilterCount);
+            }
         }
     }
 }

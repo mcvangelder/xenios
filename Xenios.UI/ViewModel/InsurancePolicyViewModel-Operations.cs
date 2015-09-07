@@ -45,9 +45,9 @@ namespace Xenios.UI.ViewModel
 
         private void SetInsuranceTypesList()
         {
-           var allTypes = EnumHelper.GetAllAsCollection<List<Domain.Enums.InsuranceTypes>,Domain.Enums.InsuranceTypes>();
-           allTypes.Remove(Domain.Enums.InsuranceTypes.Unspecified);
-           InsuranceTypesList = allTypes;
+            var allTypes = EnumHelper.GetAllAsCollection<List<Domain.Enums.InsuranceTypes>, Domain.Enums.InsuranceTypes>();
+            allTypes.Remove(Domain.Enums.InsuranceTypes.Unspecified);
+            InsuranceTypesList = allTypes;
         }
 
         void InsurancePolicyViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -70,16 +70,26 @@ namespace Xenios.UI.ViewModel
 
         private void FilterPolicies()
         {
-            foreach(var policy in _insurancePolicies)
-            {
-                if(String.IsNullOrEmpty(_searchText))
+            Task t = Task.Factory.StartNew(() =>
                 {
-                    policy.IsIncludedInFilter = true;
-                    continue;
-                }
+                    ApplicationService.IsBusy(true);
+                    foreach (var policy in _insurancePolicies)
+                    {
+                        if (String.IsNullOrEmpty(_searchText))
+                        {
+                            policy.IsIncludedInFilter = true;
+                            continue;
+                        }
 
-                policy.IsIncludedInFilter = policy.CustomerFirstName.Contains(_searchText);
-            }
+                        var firstName = policy.CustomerFirstName ?? String.Empty;
+                        var lastName = policy.CustomerLastName ?? String.Empty;
+
+                        policy.IsIncludedInFilter =
+                            firstName.ToLower().Contains(_searchText.ToLower()) ||
+                            lastName.ToLower().Contains(_searchText.ToLower());
+                    }
+                    ApplicationService.IsBusy(false);
+                });
         }
 
         private void ProcessIsDataUpToDateChange()
@@ -89,7 +99,7 @@ namespace Xenios.UI.ViewModel
                 _isSaving = false;
                 _isDataUpToDate = true;
             }
-            else    
+            else
                 SetStatusImage();
         }
 
@@ -163,6 +173,7 @@ namespace Xenios.UI.ViewModel
                 if (policies != null)
                 {
                     policies.ForEach(item => InsurancePolicies.Add(new PolicyDataGridViewModel(item)));
+                    FilterPolicies();
                 }
             });
             LastReadDateTime = DateTime.Now;
@@ -173,18 +184,9 @@ namespace Xenios.UI.ViewModel
 
         private List<InsurancePolicy> GetPolicies()
         {
-            List<InsurancePolicy> policies = null;
-
-            if (String.IsNullOrEmpty(_searchText))
-            {
-                policies = PolicyDataService.RefreshPolicies(InsurancePolicies.Select(s => s.InsurancePolicy).ToList());
-            }
-            else
-            {
-                policies = PolicyDataService.FindInsurancePoliciesByCustomerName(_searchText);
-            }
-
-            return policies;
+            // Always do a refresh, as this will merge new entries not saved yet with the entries that
+            // are loaded
+            return PolicyDataService.RefreshPolicies(InsurancePolicies.Select(s => s.InsurancePolicy).ToList());
         }
 
         private void ExitApplication()
@@ -205,7 +207,7 @@ namespace Xenios.UI.ViewModel
         {
             if (_isDataUpToDate.GetValueOrDefault(false))
             {
-                PolicyDataService.Save(_insurancePolicies.Select(s=> s.InsurancePolicy).ToList());
+                PolicyDataService.Save(_insurancePolicies.Select(s => s.InsurancePolicy).ToList());
                 return true;
             }
             else

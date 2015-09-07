@@ -35,14 +35,6 @@ namespace Xenios.Mocks
             return new List<Domain.Models.InsurancePolicy>();
         }
 
-        public override List<Domain.Models.InsurancePolicy> FindInsurancePoliciesByCustomerName(string searchValue)
-        {
-            if (OnFindInsurancePoliciesByCustomerName != null)
-                OnFindInsurancePoliciesByCustomerName();
-
-            return new List<Domain.Models.InsurancePolicy>();
-        }
-
         public void Dispose()
         {
             if(OnDispose != null)

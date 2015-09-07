@@ -74,7 +74,7 @@
                 <Button Content="Button" Style="{DynamicResource SaveButton}" ToolTip="Save" Command="{Binding SavePoliciesCommand}"/>
                 <Button Margin="2" IsEnabled="{Binding IsEnabled}" Command="{Binding RefreshPolicyListCommand}" Content="Button" Style="{DynamicResource RefreshButton}" ToolTip="Refresh"/>
                 <Image Source="../Resources/search.png" Margin="5,0,0,0" ToolTip="Search"/>
-                <TextBox Height="22" TextWrapping="NoWrap" IsEnabled="{Binding IsEnabled}" Text="{Binding SearchText, Mode=OneWayToSource}"  Width="200" HorizontalAlignment="Right"/>
+                <TextBox Height="22" TextWrapping="NoWrap" IsEnabled="{Binding IsEnabled}" Text="{Binding SearchText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"  Width="200" HorizontalAlignment="Right"/>
             </StackPanel>
         </Grid>
         <DataGrid FrozenColumnCount="2" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" MinWidth="800" MinHeight="100" Grid.Row="2" VerticalAlignment="Top" IsEnabled="{Binding IsEnabled}" ItemsSource="{Binding InsurancePolicies}" ColumnWidth="*" AutoGenerateColumns="False" AlternatingRowBackground="#FFFABBBB">

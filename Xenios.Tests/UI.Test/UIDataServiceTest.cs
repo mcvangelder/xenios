@@ -42,16 +42,6 @@ namespace Xenios.UI.Test
         }
 
         [TestMethod]
-        public void Should_call_find_insurance_policies_by_customer_name_on_business_data_service()
-        {
-            bool isNotified = false;
-            _mockBusinessService.OnFindInsurancePoliciesByCustomerName += () => { isNotified = true; };
-
-            _dataServiceWrapper.FindInsurancePoliciesByCustomerName("ignored");
-            Assert.IsTrue(isNotified);
-        }
-
-        [TestMethod]
         public void Should_create_new_business_data_service_when_source_file_changes()
         {
             var previousBusinessService = _dataServiceWrapper.InsurancePolicyDataService;

@@ -31,15 +31,6 @@ namespace Xenios.Business
             return _policiesRepository.GetAll();
         }
 
-        public override List<InsurancePolicy> FindInsurancePoliciesByCustomerName(String customerName)
-        {
-            return _policiesRepository.GetAll().Where(
-                            policy =>
-                                policy.Customer.FirstName.ToLower().Contains(customerName.ToLower()) ||
-                                policy.Customer.LastName.ToLower().Contains(customerName.ToLower())
-                    ).ToList();
-        }
-
         public void Dispose()
         {
             Dispose(true);
