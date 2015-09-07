@@ -78,6 +78,11 @@
             </StackPanel>
         </Grid>
         <DataGrid FrozenColumnCount="2" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" MinWidth="800" MinHeight="100" Grid.Row="2" VerticalAlignment="Top" IsEnabled="{Binding IsEnabled}" ItemsSource="{Binding InsurancePolicies}" ColumnWidth="*" AutoGenerateColumns="False" AlternatingRowBackground="#FFFABBBB">
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}">
+                        <Setter Property="Visibility" Value="{Binding Path=IsIncludedInFilter, Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}"/>
+                </Style>
+            </DataGrid.RowStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding CustomerFirstName}" ClipboardContentBinding="{x:Null}" Header="First Name" SortDirection="Ascending" Width="Auto"/>
                 <DataGridTextColumn Binding="{Binding CustomerLastName}" ClipboardContentBinding="{x:Null}" Header="Last Name" SortDirection="Ascending" Width="Auto"/>

@@ -58,13 +58,27 @@ namespace Xenios.UI.ViewModel
                     ProcessPathToFileChange();
                     break;
                 case SearchTextPropertyName:
-                    LoadInsurancePolicies();
+                    FilterPolicies();
                     break;
                 case IsDataUpToDatePropertyName:
                     ProcessIsDataUpToDateChange();
                     break;
                 default:
                     break;
+            }
+        }
+
+        private void FilterPolicies()
+        {
+            foreach(var policy in _insurancePolicies)
+            {
+                if(String.IsNullOrEmpty(_searchText))
+                {
+                    policy.IsIncludedInFilter = true;
+                    continue;
+                }
+
+                policy.IsIncludedInFilter = policy.CustomerFirstName.Contains(_searchText);
             }
         }
 

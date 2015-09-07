@@ -435,5 +435,35 @@ namespace Xenios.UI.ViewModel
                 RaisePropertyChanged(TermUnitPropertyName);
             }
         }
+
+        /// <summary>
+        /// The <see cref="IsIncludedInFilter" /> property's name.
+        /// </summary>
+        public const string IsIncludedInFilterPropertyName = "IsIncludedInFilter";
+
+        private bool _isIncludedInFilter = true;
+
+        /// <summary>
+        /// Sets and gets the IsIncludedInFilter property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public bool IsIncludedInFilter
+        {
+            get
+            {
+                return _isIncludedInFilter;
+            }
+
+            set
+            {
+                if (_isIncludedInFilter == value)
+                {
+                    return;
+                }
+
+                _isIncludedInFilter = value;
+                RaisePropertyChanged(IsIncludedInFilterPropertyName);
+            }
+        }
     }
 }

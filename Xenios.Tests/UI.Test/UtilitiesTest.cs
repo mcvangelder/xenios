@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Xenios.UI.Utilities;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace Xenios.UI.Test
 {
@@ -19,7 +20,37 @@ namespace Xenios.UI.Test
             Assert.AreEqual(actualCount,collectionCount);
         }
 
+        [TestMethod]
+        public void Should_convert_true_to_Visible_Visibility()
+        {
+            var visiblity = new BooleanToVisibilityConverter().Convert(true,null,null, null);
 
+            Assert.AreEqual(Visibility.Visible, visiblity);
+        }
+
+        [TestMethod]
+        public void Should_convert_false_to_Collapsed_Visibility()
+        {
+            var visibility = new BooleanToVisibilityConverter().Convert(false, null, null, null);
+
+            Assert.AreEqual(Visibility.Collapsed, visibility);
+        }
+
+        [TestMethod]
+        public void Should_convert_Collapsed_Visibility_back_to_false()
+        {
+            var boolean = new BooleanToVisibilityConverter().ConvertBack(Visibility.Collapsed, null, null, null);
+
+            Assert.AreEqual(false, boolean);
+        }
+
+        [TestMethod]
+        public void Should_convert_Visible_Visibility_back_to_true()
+        {
+            var boolean = new BooleanToVisibilityConverter().ConvertBack(Visibility.Visible, null, null, null);
+
+            Assert.AreEqual(true, boolean);
+        }
 
     }
 }

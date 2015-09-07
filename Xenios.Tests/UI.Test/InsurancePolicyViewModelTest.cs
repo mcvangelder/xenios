@@ -6,6 +6,7 @@ using Xenios.UI.Services;
 using System.Threading;
 using Xenios.UI.Utilities;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace Xenios.UI.Test
 {
@@ -377,6 +378,17 @@ namespace Xenios.UI.Test
 
             var countries = _viewModel.Countries;
             Assert.IsTrue(isNotified);
+        }
+
+        [TestMethod]
+        public void Should_filter_by_customer_first_name()
+        {
+            SetPathToFile();
+            _viewModel.InsurancePolicies[0].CustomerFirstName = "FilterValue";
+            _viewModel.SearchText = "FilterValue";
+
+            var includedInFilterCount = _viewModel.InsurancePolicies.Count(c => c.IsIncludedInFilter);
+            Assert.AreEqual(1, includedInFilterCount);
         }
     }
 }

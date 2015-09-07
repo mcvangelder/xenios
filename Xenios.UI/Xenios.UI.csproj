@@ -80,6 +80,7 @@
     <Compile Include="Controls\MultiSelectComboBox.xaml.cs">
       <DependentUpon>MultiSelectComboBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\BooleanToVisiblityConverter.cs" />
     <Compile Include="Validations\ExactLengthValidationRule.cs" />
     <Compile Include="Infrastructure\RelayCommandKeyBinding.cs" />
     <Compile Include="Services\PolicyDataServiceWrapper.cs" />
