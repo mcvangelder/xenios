@@ -106,7 +106,7 @@ namespace Xenios.UI.Test
             // set to empty string to simulate clearing a search
             _viewModel.SearchText = String.Empty;
 
-            var searchResults = _viewModel.InsurancePolicies;
+            var searchResults = _viewModel.InsurancePolicies.Select(s => s.InsurancePolicy).ToList();
 
             Xenios.Test.Helpers.InsurancePolicyHelper.
                 AssertAreEqual(expectedPolicies, searchResults.ToList());
@@ -297,21 +297,22 @@ namespace Xenios.UI.Test
         public void Should_alert_user_to_refresh_when_out_of_date_and_trying_to_save()
         {
             var isAlerted = false;
-            var readyEvent = new ManualResetEvent(false);
+            using (var readyEvent = new ManualResetEvent(false))
+            {
+                _viewModel.SavePoliciesCommand.CanExecuteChanged += (sender, arg) => { readyEvent.Set(); };
+                _applicationService.OnAlert += () => { isAlerted = true; };
+                _dataService.OnSave += (policies) => { Assert.Fail("Save was called!."); };
 
-            _viewModel.SavePoliciesCommand.CanExecuteChanged += (sender, arg) => { readyEvent.Set(); };
-            _applicationService.OnAlert += () => { isAlerted = true; };
-            _dataService.OnSave += (policies) => { Assert.Fail("Save was called!."); };
+                _viewModel.PathToFile = mockFilePath;
 
-            _viewModel.PathToFile = mockFilePath;
+                var updateEventSet = readyEvent.WaitOne(Constants.WaitTimeOut);
+                Assert.IsTrue(updateEventSet);
 
-            var updateEventSet = readyEvent.WaitOne(Constants.WaitTimeOut);
-            Assert.IsTrue(updateEventSet);
+                _viewModel.IsDataUpToDate = false;
+                _viewModel.SavePoliciesCommand.Execute(null);
 
-            _viewModel.IsDataUpToDate = false;
-            _viewModel.SavePoliciesCommand.Execute(null);
-
-            Assert.IsTrue(isAlerted);
+                Assert.IsTrue(isAlerted);
+            }
         }
 
         [TestMethod]
@@ -331,19 +332,19 @@ namespace Xenios.UI.Test
         [TestMethod]
         public void Should_notify_application_service_is_busy_when_PathToFile_set()
         {
-            var readyEvent = new ManualResetEvent(false);
-
-            var isNotifiedCount = 0;
-            _applicationService.OnIsBusy += () =>
+            using (var readyEvent = new ManualResetEvent(false))
             {
-                isNotifiedCount++;
-                if (isNotifiedCount == 2) readyEvent.Set();
-            };
-            _viewModel.PathToFile = mockFilePath;
+                var isNotifiedCount = 0;
+                _applicationService.OnIsBusy += () =>
+                {
+                    isNotifiedCount++;
+                    if (isNotifiedCount == 2) readyEvent.Set();
+                };
+                _viewModel.PathToFile = mockFilePath;
 
-            var isNotified = readyEvent.WaitOne(Constants.WaitTimeOut);
-
-            Assert.IsTrue(isNotified);
+                var isNotified = readyEvent.WaitOne(Constants.WaitTimeOut);
+                Assert.IsTrue(isNotified);
+            }
         }
 
         [TestMethod]

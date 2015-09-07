@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xenios.Domain.Enums;
 using Xenios.Domain.Models;
+using Xenios.UI.Utilities;
 
 namespace Xenios.UI.ViewModel
 {
@@ -216,14 +217,58 @@ namespace Xenios.UI.ViewModel
         /// </summary>
         public InsuranceTypes InsuranceType
         {
-            get { return _policy.InsuranceType; }
+            get
+            {
+                return _policy.InsuranceType;
+            }
+
             set
             {
                 if (_policy.InsuranceType == value)
+                {
                     return;
+                }
 
                 _policy.InsuranceType = value;
                 RaisePropertyChanged(InsuranceTypePropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="SelectedInsuranceTypes" /> property's name.
+        /// </summary>
+        public const string SelectedInsuranceTypesPropertyName = "SelectedInsuranceTypes";
+
+        /// <summary>
+        /// Sets and gets the SelectedInsuranceTypes property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public List<InsuranceTypes> SelectedInsuranceTypes
+        {
+            get {
+                var split = new List<InsuranceTypes>();
+                foreach(var item in EnumHelper.GetAllAsCollection<List<InsuranceTypes>, InsuranceTypes>())
+                {
+                    if (item == InsuranceTypes.Unspecified)
+                        continue;
+
+                    if ((InsuranceType & item) == item)
+                        split.Add(item);
+                }
+
+                return split; 
+            }
+            set
+            {
+                InsuranceTypes temp = InsuranceTypes.Unspecified;
+                foreach(var type in value)
+                    temp |= type;
+
+                if (InsuranceType == temp)
+                    return;
+
+                InsuranceType = temp;
+                RaisePropertyChanged(SelectedInsuranceTypesPropertyName);
             }
         }
 
@@ -245,7 +290,7 @@ namespace Xenios.UI.ViewModel
                     return;
 
                 _policy.PaymentInformation.CreditCardNumber = value;
-                //RaisePropertyChanged(PaymentInformationCreditCardNumber);
+                RaisePropertyChanged(PaymentInformationCreditCardNumber);
             }
         }
 

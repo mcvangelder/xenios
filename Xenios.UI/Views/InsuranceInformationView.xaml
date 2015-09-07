@@ -8,7 +8,8 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
         xmlns:System="clr-namespace:System;assembly=mscorlib"
         xmlns:vldtns="clr-namespace:Xenios.UI.Validations"
-        xmlns:ViewModel="clr-namespace:Xenios.UI.ViewModel" 
+        xmlns:ViewModel="clr-namespace:Xenios.UI.ViewModel"
+        xmlns:xenCtrls="clr-namespace:Xenios.UI.Controls"
         x:Class="Xenios.UI.Views.InsuranceInformationView"
         mc:Ignorable="d ignore"
         DataContext="{Binding InsurancePolicy, Source={StaticResource Locator}}" 
@@ -68,11 +69,9 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Image Grid.Column="0" HorizontalAlignment="Left" Source="../Resources/Swords_And_Shield_clip_art_medium.png"/>
-            <TextBlock Grid.Column="1" Margin="5,15" FontSize="30"><Run Text="Xenios Insurance Input Form"/></TextBlock>
+            <TextBlock Grid.Column="1" Margin="5,15" FontSize="30" Text="Xenios Insurance Input Form"/>
             <StackPanel Grid.Column="2" Orientation="Horizontal" Background="White" HorizontalAlignment="Right" Height="25" VerticalAlignment="Bottom">
-
                 <Button Content="Button" Style="{DynamicResource SaveButton}" ToolTip="Save" Command="{Binding SavePoliciesCommand}"/>
-
                 <Button Margin="2" IsEnabled="{Binding IsEnabled}" Command="{Binding RefreshPolicyListCommand}" Content="Button" Style="{DynamicResource RefreshButton}" ToolTip="Refresh"/>
                 <Image Source="../Resources/search.png" Margin="5,0,0,0" ToolTip="Search"/>
                 <TextBox Height="22" TextWrapping="NoWrap" IsEnabled="{Binding IsEnabled}" Text="{Binding SearchText, Mode=OneWayToSource}"  Width="200" HorizontalAlignment="Right"/>
@@ -106,7 +105,9 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding InsuranceType}"/>
+                            <xenCtrls:MultiSelectComboBox
+                                SelectedItems="{Binding SelectedInsuranceTypes, Mode=TwoWay}"
+                                ItemsSource="{Binding ElementName=policiesView, Path=DataContext.InsuranceTypesList}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
@@ -130,7 +131,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-
+                            <TextBox Text="{Binding PaymentInformationCreditCardType}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>

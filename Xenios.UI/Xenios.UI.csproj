@@ -77,6 +77,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\MultiSelectComboBox.xaml.cs">
+      <DependentUpon>MultiSelectComboBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Validations\ExactLengthValidationRule.cs" />
     <Compile Include="Infrastructure\RelayCommandKeyBinding.cs" />
     <Compile Include="Services\PolicyDataServiceWrapper.cs" />
@@ -89,6 +92,7 @@
     <Compile Include="ViewModel\InsurancePolicyViewModel-Commands.cs" />
     <Compile Include="ViewModel\InsurancePolicyViewModel-Operations.cs" />
     <Compile Include="ViewModel\InsurancePolicyViewModel.cs" />
+    <Compile Include="ViewModel\MultiSelectComboBoxItem.cs" />
     <Compile Include="ViewModel\PolicyDataGridViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs">
       <SubType>Code</SubType>
@@ -96,6 +100,10 @@
     <Compile Include="Views\InsuranceInformationView.xaml.cs">
       <DependentUpon>InsuranceInformationView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\MultiSelectComboBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
