@@ -318,37 +318,12 @@ namespace Xenios.UI.ViewModel
         }
 
         /// <summary>
-        /// The <see cref="InsuranceTypesList" /> property's name.
-        /// </summary>
-        public const string InsuranceTypesListPropertyName = "InsuranceTypesList";
-
-        private ICollection<Domain.Enums.InsuranceTypes> _insuranceTypes = null;
-
-        /// <summary>
-        /// Sets and gets the InsuranceTypesList property.
+        /// Gets the InsuranceTypesList property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
         public ICollection<Domain.Enums.InsuranceTypes> InsuranceTypesList
         {
-            get
-            {
-                if (_insuranceTypes == null)
-                    _insuranceTypes = EnumHelper.
-                                    GetAllAsCollection<ObservableCollection<Domain.Enums.InsuranceTypes>,Domain.Enums.InsuranceTypes>();
-
-                return _insuranceTypes;
-            }
-
-            set
-            {
-                if (_insuranceTypes == value)
-                {
-                    return;
-                }
-
-                _insuranceTypes = value;
-                RaisePropertyChanged(InsuranceTypesListPropertyName);
-            }
+            get; private set;
         }
 
         /// <summary>

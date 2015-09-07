@@ -246,23 +246,11 @@ namespace Xenios.UI.ViewModel
         public List<InsuranceTypes> SelectedInsuranceTypes
         {
             get {
-                var split = new List<InsuranceTypes>();
-                foreach(var item in EnumHelper.GetAllAsCollection<List<InsuranceTypes>, InsuranceTypes>())
-                {
-                    if (item == InsuranceTypes.Unspecified)
-                        continue;
-
-                    if ((InsuranceType & item) == item)
-                        split.Add(item);
-                }
-
-                return split; 
+                return SplitIntoList();
             }
             set
             {
-                InsuranceTypes temp = InsuranceTypes.Unspecified;
-                foreach(var type in value)
-                    temp |= type;
+                InsuranceTypes temp = CombineIntoSingle(value);
 
                 if (InsuranceType == temp)
                     return;
@@ -270,6 +258,29 @@ namespace Xenios.UI.ViewModel
                 InsuranceType = temp;
                 RaisePropertyChanged(SelectedInsuranceTypesPropertyName);
             }
+        }
+
+        private static InsuranceTypes CombineIntoSingle(List<InsuranceTypes> value)
+        {
+            InsuranceTypes temp = InsuranceTypes.Unspecified;
+            foreach (var type in value)
+                temp |= type;
+            return temp;
+        }
+
+        private List<InsuranceTypes> SplitIntoList()
+        {
+            var split = new List<InsuranceTypes>();
+            foreach (var item in EnumHelper.GetAllAsCollection<List<InsuranceTypes>, InsuranceTypes>())
+            {
+                if (item == InsuranceTypes.Unspecified)
+                    continue;
+
+                if ((InsuranceType & item) == item)
+                    split.Add(item);
+            }
+
+            return split;
         }
 
         /// <summary>

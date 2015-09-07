@@ -106,6 +106,7 @@
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
                             <xenCtrls:MultiSelectComboBox
+                                DefaultText="Unspecified"
                                 SelectedItems="{Binding SelectedInsuranceTypes, Mode=TwoWay}"
                                 ItemsSource="{Binding ElementName=policiesView, Path=DataContext.InsuranceTypesList}"/>
                         </DataTemplate>
@@ -181,7 +182,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <DatePicker HorizontalAlignment="Center" DisplayDateStart="{Binding PaymentInformationExpirationDate, Mode=OneWay}" SelectedDate="{Binding PaymentInformation.ExpirationDate, Mode=TwoWay}"/>
+                            <DatePicker HorizontalAlignment="Center" DisplayDateStart="{Binding PaymentInformationExpirationDate, Mode=OneWay}" SelectedDate="{Binding PaymentInformationExpirationDate, Mode=TwoWay}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>

@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 using Xenios.Business;
 using Xenios.Domain.Models;
 using Xenios.UI.Services;
+using Xenios.UI.Utilities;
 
 namespace Xenios.UI.ViewModel
 {
@@ -19,6 +20,8 @@ namespace Xenios.UI.ViewModel
         {
             PolicyDataService = policyDataService;
             CountriesService = countriesService;
+
+            SetInsuranceTypesList();
 
             RefreshPolicyListCommand = new RelayCommand(LoadInsurancePolicies, () => IsPathToFileSpecified);
             SavePoliciesCommand = new RelayCommand(SavePolicies, () => IsPathToFileSpecified);
@@ -38,6 +41,13 @@ namespace Xenios.UI.ViewModel
                 OutOfDateStatusImage = LoadBitmapImage(outOfDateStatusImagePath);
             }
             catch (UriFormatException) { }
+        }
+
+        private void SetInsuranceTypesList()
+        {
+           var allTypes = EnumHelper.GetAllAsCollection<List<Domain.Enums.InsuranceTypes>,Domain.Enums.InsuranceTypes>();
+           allTypes.Remove(Domain.Enums.InsuranceTypes.Unspecified);
+           InsuranceTypesList = allTypes;
         }
 
         void InsurancePolicyViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
