@@ -16,8 +16,11 @@
         x:Name="policiesView"
      >
     <UserControl.Resources>
-        <ControlTemplate x:Key="SimpleCountry">
+        <ControlTemplate x:Key="SimpleWithNameBinding">
             <TextBlock Text="{Binding Name}"/>
+        </ControlTemplate>
+        <ControlTemplate x:Key="SimpleWithBinding">
+            <TextBlock Text="{Binding}"/>
         </ControlTemplate>
         <ControlTemplate x:Key="ExtendedCountry">
             <StackPanel Orientation="Horizontal">
@@ -25,16 +28,27 @@
                 <TextBlock Text="{Binding Name}" Padding="5,0,0,0" />
             </StackPanel>
         </ControlTemplate>
+        <ControlTemplate x:Key="RadioComboBoxItemTemplate">
+            <RadioButton GroupName="radioGroup" Content="{Binding}" IsChecked="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ComboBoxItem}}, Mode=TwoWay}"/>
+        </ControlTemplate>
         <DataTemplate x:Key="CountryTemplate">
             <Control x:Name="theControl" Template="{StaticResource ExtendedCountry}"/>
             <DataTemplate.Triggers>
                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, 
                     AncestorType={x:Type ComboBoxItem}}, Path=IsSelected}" Value="{x:Null}">
-                    <Setter TargetName="theControl" Property="Template" Value="{StaticResource SimpleCountry}" />
+                    <Setter TargetName="theControl" Property="Template" Value="{StaticResource SimpleWithNameBinding}" />
                 </DataTrigger>
             </DataTemplate.Triggers>
         </DataTemplate>
- 
+        <DataTemplate x:Key="RadioComboBoxTemplate">
+            <Control x:Name="theControl" Template="{StaticResource RadioComboBoxItemTemplate}"/>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, 
+                    AncestorType={x:Type ComboBoxItem}}, Path=IsSelected}" Value="{x:Null}">
+                    <Setter Property="Template" TargetName="theControl" Value="{StaticResource SimpleWithBinding}"/>
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
         <Style TargetType="{x:Type TextBox}">
             <Style.Triggers>
                 <Trigger Property="Validation.HasError" Value="True">
@@ -80,7 +94,7 @@
         <DataGrid FrozenColumnCount="2" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" MinWidth="800" MinHeight="100" Grid.Row="2" VerticalAlignment="Top" IsEnabled="{Binding IsEnabled}" ItemsSource="{Binding InsurancePolicies}" ColumnWidth="*" AutoGenerateColumns="False" AlternatingRowBackground="#FFFABBBB">
             <DataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}">
-                        <Setter Property="Visibility" Value="{Binding Path=IsIncludedInFilter, Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}"/>
+                    <Setter Property="Visibility" Value="{Binding Path=IsIncludedInFilter, Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}"/>
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
@@ -137,7 +151,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding PaymentInformationCreditCardType}"/>
+                            <ComboBox ItemTemplate="{StaticResource RadioComboBoxTemplate}" ItemsSource="{Binding ElementName=policiesView, Path=DataContext.CreditCardTypesList}" SelectedItem="{Binding PaymentInformationCreditCardType}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
@@ -212,7 +226,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <ComboBox SelectedItem="{Binding TermUnit, Mode=TwoWay}" ItemsSource="{Binding ElementName=policiesView, Path=DataContext.TermTypesList}"/>
+                            <ComboBox ItemTemplate="{StaticResource RadioComboBoxTemplate}" SelectedItem="{Binding TermUnit, Mode=TwoWay}" ItemsSource="{Binding ElementName=policiesView, Path=DataContext.TermTypesList}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>

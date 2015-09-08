@@ -11,7 +11,7 @@ namespace Xenios.Domain.Enums
         Unspecified = 0,
         MasterCard = 1,
         Visa = 2,
-        DiscoverCard = 3,
+        Discover = 3,
         Amex = 4,
     }
 }

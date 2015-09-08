@@ -319,11 +319,19 @@ namespace Xenios.UI.ViewModel
 
         /// <summary>
         /// Gets the InsuranceTypesList property.
-        /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
         public ICollection<Domain.Enums.InsuranceTypes> InsuranceTypesList
         {
             get; private set;
+        }
+
+        /// <summary>
+        /// Gets the CreditCardTypesList property.
+        /// </summary>
+        public ICollection<Domain.Enums.CreditCardTypes> CreditCardTypesList
+        {
+            get;
+            private set;
         }
 
         /// <summary>

@@ -22,6 +22,7 @@ namespace Xenios.UI.ViewModel
             CountriesService = countriesService;
 
             SetInsuranceTypesList();
+            SetCreditCardTypesList();
 
             RefreshPolicyListCommand = new RelayCommand(LoadInsurancePolicies, () => IsPathToFileSpecified);
             SavePoliciesCommand = new RelayCommand(SavePolicies, () => IsPathToFileSpecified);
@@ -48,6 +49,13 @@ namespace Xenios.UI.ViewModel
             var allTypes = EnumHelper.GetAllAsCollection<List<Domain.Enums.InsuranceTypes>, Domain.Enums.InsuranceTypes>();
             allTypes.Remove(Domain.Enums.InsuranceTypes.Unspecified);
             InsuranceTypesList = allTypes;
+        }
+
+        private void SetCreditCardTypesList()
+        {
+            var allTypes = EnumHelper.GetAllAsCollection<List<Domain.Enums.CreditCardTypes>, Domain.Enums.CreditCardTypes>();
+            allTypes.Remove(Domain.Enums.CreditCardTypes.Unspecified);
+            CreditCardTypesList = allTypes;
         }
 
         void InsurancePolicyViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

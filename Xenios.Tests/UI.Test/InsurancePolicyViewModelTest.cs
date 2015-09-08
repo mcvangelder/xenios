@@ -330,7 +330,17 @@ namespace Xenios.UI.Test
             var knownTypes = EnumHelper.GetAllAsCollection<List<Domain.Enums.InsuranceTypes>, Domain.Enums.InsuranceTypes>();
             knownTypes.Remove(Domain.Enums.InsuranceTypes.Unspecified);
 
-            Assert.IsTrue(insuranceTypes.Count == insuranceTypes.Count);
+            Assert.IsTrue(insuranceTypes.Count == knownTypes.Count);
+        }
+
+        [TestMethod]
+        public void Should_create_list_of_CreditCardTypes_excluding_unspecified()
+        {
+            var creditCardTypes = _viewModel.CreditCardTypesList;
+            var knownTypes = EnumHelper.GetAllAsCollection<List<Domain.Enums.CreditCardTypes>, Domain.Enums.CreditCardTypes>();
+            knownTypes.Remove(Domain.Enums.CreditCardTypes.Unspecified);
+
+            Assert.IsTrue(creditCardTypes.Count == knownTypes.Count);
         }
 
         [TestMethod]
