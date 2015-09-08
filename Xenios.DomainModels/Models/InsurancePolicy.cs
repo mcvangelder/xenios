@@ -25,6 +25,9 @@ namespace Xenios.Domain.Models
 
         public PaymentInformation PaymentInformation { get; set; }
 
+        public DateTime LastUpdateDate { get; set; }
+
+
         public static InsurancePolicy NewInsurancePolicy()
         {
            return new Domain.Models.InsurancePolicy
@@ -52,7 +55,9 @@ namespace Xenios.Domain.Models
                 Price = 0,
                 TermLength = 0,
                 TermUnit = TermUnits.Months,
+                LastUpdateDate = DateTime.Now
             };
         }
+
     }
 }

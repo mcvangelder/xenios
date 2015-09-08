@@ -100,5 +100,32 @@ namespace Xenios.Business.Test
                 Assert.AreEqual(recordCount * 2, mergedRecords.Count);
             }
         }
+
+        [TestMethod]
+        public void Should_resolve_edit_conflict_by_taking_record_with_most_recent_update_date()
+        {
+            int recordCount = 5;
+            CreateRepository(initialRecordCount: recordCount);
+            
+            using(var service = new InsurancePolicyDataService(defaultFileName))
+            {
+                var originalLoadedRecords = service.GetAllInsurancePolicies();
+                var editedRecordKeep = originalLoadedRecords[0];
+                var editedRecordDrop = originalLoadedRecords[1];
+
+                DateTime lastEditedDateTime = DateTime.Now;
+                editedRecordKeep.LastUpdateDate = lastEditedDateTime.AddMinutes(1);
+                editedRecordDrop.LastUpdateDate = lastEditedDateTime.AddMinutes(-1);
+
+                var reloadedRecords = service.GetAllInsurancePolicies();
+
+                var conflictResolvedRecords = service.RefreshPolicies(originalLoadedRecords);
+                var conflictResolvedRecordKeep = conflictResolvedRecords.FirstOrDefault(cr => cr.Id == editedRecordKeep.Id);
+                var conflictResolvedRecordDrop = conflictResolvedRecords.FirstOrDefault(cr => cr.Id == editedRecordDrop.Id);
+
+                Assert.AreEqual(editedRecordKeep.LastUpdateDate, conflictResolvedRecordKeep.LastUpdateDate);
+                Assert.AreNotEqual(editedRecordDrop.LastUpdateDate, conflictResolvedRecordDrop.LastUpdateDate);
+            }
+        }
     }
 }

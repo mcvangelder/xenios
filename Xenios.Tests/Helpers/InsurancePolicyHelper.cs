@@ -51,7 +51,8 @@ namespace Xenios.Test.Helpers
                 CoverageBeginDateTime = DateTime.Now,
                 Price = (decimal)274.00,
                 TermLength = 6,
-                TermUnit = Domain.Enums.TermUnits.Months
+                TermUnit = Domain.Enums.TermUnits.Months,
+                LastUpdateDate = DateTime.Now
             };
             return insuranceInformation;
         }
@@ -64,6 +65,7 @@ namespace Xenios.Test.Helpers
             Assert.AreEqual(expected.TermLength, actual.TermLength);
             Assert.AreEqual(expected.TermUnit, expected.TermUnit);
             Assert.AreEqual(expected.CoverageBeginDateTime, actual.CoverageBeginDateTime);
+            Assert.AreEqual(expected.LastUpdateDate, actual.LastUpdateDate);
 
             Assert.AreEqual(expected.Customer.Id, actual.Customer.Id);
             Assert.AreEqual(expected.Customer.AddressLine1, actual.Customer.AddressLine1);

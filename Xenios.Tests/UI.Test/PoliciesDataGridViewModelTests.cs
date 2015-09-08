@@ -76,5 +76,189 @@ namespace Xenios.UI.Test
 
             AssertAllInsuranceTypesArePresent(_policy.InsuranceType, selectedInsuranceTypes);
         }
+
+        [TestMethod]
+        public void Should_update_last_update_date_when_modifying_customer_first_name()
+        {
+            var previousLastUpdateDate = GetLastUpdateDate();
+
+            _dataGridViewModel.CustomerFirstName = "Updated";
+            var newLastUpdateDate = _policy.LastUpdateDate;
+
+            Assert.AreNotEqual(previousLastUpdateDate, newLastUpdateDate);
+        }
+
+        [TestMethod]
+        public void Should_update_last_update_date_when_modifying_customer_last_name()
+        {
+            var previousLastUpdateDate = GetLastUpdateDate();
+
+            _dataGridViewModel.CustomerLastName = "Updated";
+            var newLastUpdateDate = _policy.LastUpdateDate;
+
+            Assert.AreNotEqual(previousLastUpdateDate, newLastUpdateDate);
+        }
+
+        [TestMethod]
+        public void Should_update_last_update_date_when_modifying_coverage_date()
+        {
+            var previousLastUpdateDate = GetLastUpdateDate();
+
+            _dataGridViewModel.CoverageBeginDateTime = DateTime.Now;
+            var newLastUpdateDate = _policy.LastUpdateDate;
+
+            Assert.AreNotEqual(previousLastUpdateDate, newLastUpdateDate);
+        }
+
+        [TestMethod]
+        public void Should_update_last_update_date_when_modifying_customer_address1()
+        {
+            var previousLastUpdateDate = GetLastUpdateDate();
+
+            _dataGridViewModel.CustomerAddressLine1 = "updated";
+            var newLastUpdateDate = _policy.LastUpdateDate;
+
+            Assert.AreNotEqual(previousLastUpdateDate, newLastUpdateDate);
+        }
+
+        [TestMethod]
+        public void Should_update_last_update_date_when_modifying_customer_city()
+        {
+            var previousLastUpdateDate = GetLastUpdateDate();
+
+            _dataGridViewModel.CustomerCity = "updated";
+            var newLastUpdateDate = _policy.LastUpdateDate;
+
+            Assert.AreNotEqual(previousLastUpdateDate, newLastUpdateDate);
+        }
+
+        [TestMethod]
+        public void Should_update_last_update_date_when_modifying_customer_country()
+        {
+            var previousLastUpdateDate = GetLastUpdateDate();
+
+            _dataGridViewModel.CustomerCountry = "updated";
+            var newLastUpdateDate = _policy.LastUpdateDate;
+
+            Assert.AreNotEqual(previousLastUpdateDate, newLastUpdateDate);
+        }
+
+        [TestMethod]
+        public void Should_update_last_update_date_when_modifying_customer_postalcode()
+        {
+            var previousLastUpdateDate = GetLastUpdateDate();
+
+            _dataGridViewModel.CustomerPostalCode = "updated";
+            var newLastUpdateDate = _policy.LastUpdateDate;
+
+            Assert.AreNotEqual(previousLastUpdateDate, newLastUpdateDate);
+        }
+
+        [TestMethod]
+        public void Should_update_last_update_date_when_modifying_customer_state()
+        {
+            var previousLastUpdateDate = GetLastUpdateDate();
+
+            _dataGridViewModel.CustomerState = "updated";
+            var newLastUpdateDate = _policy.LastUpdateDate;
+
+            Assert.AreNotEqual(previousLastUpdateDate, newLastUpdateDate);
+        }
+
+        [TestMethod]
+        public void Should_update_last_update_date_when_modifying_insurance_type()
+        {
+            var previousLastUpdateDate = GetLastUpdateDate();
+
+            _dataGridViewModel.InsuranceType = Domain.Enums.InsuranceTypes.Collision | Domain.Enums.InsuranceTypes.Comprehensive;
+            var newLastUpdateDate = _policy.LastUpdateDate;
+
+            Assert.AreNotEqual(previousLastUpdateDate, newLastUpdateDate);
+        }
+
+        [TestMethod]
+        public void Should_update_last_update_date_when_modifying_credit_card_number()
+        {
+            var previousLastUpdateDate = GetLastUpdateDate();
+
+            _dataGridViewModel.PaymentInformationCreditCardNumber = "updated";
+            var newLastUpdateDate = _policy.LastUpdateDate;
+
+            Assert.AreNotEqual(previousLastUpdateDate, newLastUpdateDate);
+        }
+
+        [TestMethod]
+        public void Should_update_last_update_date_when_modifying_credit_card_type()
+        {
+            var previousLastUpdateDate = GetLastUpdateDate();
+
+            _dataGridViewModel.PaymentInformationCreditCardType = Domain.Enums.CreditCardTypes.Discover;
+            var newLastUpdateDate = _policy.LastUpdateDate;
+
+            Assert.AreNotEqual(previousLastUpdateDate, newLastUpdateDate);
+        }
+
+        [TestMethod]
+        public void Should_update_last_update_date_when_modifying_credit_card_verification_number()
+        {
+            var previousLastUpdateDate = GetLastUpdateDate();
+
+            _dataGridViewModel.PaymentInformationCreditCardVerificationNumber = "updated";
+            var newLastUpdateDate = _policy.LastUpdateDate;
+
+            Assert.AreNotEqual(previousLastUpdateDate, newLastUpdateDate);
+        }
+
+        [TestMethod]
+        public void Should_update_last_update_date_when_modifying_credit_card_expiration_date()
+        {
+            var previousLastUpdateDate = GetLastUpdateDate();
+
+            _dataGridViewModel.PaymentInformationExpirationDate = DateTime.Now;
+            var newLastUpdateDate = _policy.LastUpdateDate;
+
+            Assert.AreNotEqual(previousLastUpdateDate, newLastUpdateDate);
+        }
+
+        [TestMethod]
+        public void Should_update_last_update_date_when_modifying_price()
+        {
+            var previousLastUpdateDate = GetLastUpdateDate();
+
+            _dataGridViewModel.Price = decimal.MaxValue;
+            var newLastUpdateDate = _policy.LastUpdateDate;
+
+            Assert.AreNotEqual(previousLastUpdateDate, newLastUpdateDate);
+        }
+
+        [TestMethod]
+        public void Should_update_last_update_date_when_modifying_term_length()
+        {
+            var previousLastUpdateDate = GetLastUpdateDate();
+
+            _dataGridViewModel.TermLength = int.MaxValue;
+            var newLastUpdateDate = _policy.LastUpdateDate;
+
+            Assert.AreNotEqual(previousLastUpdateDate, newLastUpdateDate);
+        }
+
+        [TestMethod]
+        public void Should_update_last_update_date_when_modifying_term_unit()
+        {
+            var previousLastUpdateDate = GetLastUpdateDate();
+
+            _dataGridViewModel.TermUnit = Domain.Enums.TermUnits.Days;
+
+            var newLastUpdateDate = _policy.LastUpdateDate;
+
+            Assert.AreNotEqual(previousLastUpdateDate, newLastUpdateDate);
+        }
+
+        private DateTime GetLastUpdateDate()
+        {
+            var previousLastUpdateDate = _policy.LastUpdateDate;
+            System.Threading.Thread.Sleep(50); // build in delay to better detect last update date change
+            return previousLastUpdateDate;
+        }
     }
 }

@@ -24,11 +24,18 @@ namespace Xenios.Business.Test
         }
 
         [TestMethod]
-        public void Should_resolve_conflicts_during_merge_as_store_wins_entire_record()
+        public void Should_resolve_conflicts_during_merge_as_most_recently_updated_wins()
         {
             var policyCount = 5;
+            var now = DateTime.Now;
+
             var currentPolicies = Xenios.Test.Helpers.InsurancePolicyHelper.CreateInsurancePolicies(policyCount);
+            // simulate all loaded policies have been modified 1 min in the future
+            currentPolicies.ForEach(p => p.LastUpdateDate = now.AddMinutes(1));
+
             var storePolicies = Xenios.Test.Helpers.InsurancePolicyHelper.CreateInsurancePolicies(policyCount);
+            // simulate all store policies were lst updated 1 min in the past
+            storePolicies.ForEach(p => p.LastUpdateDate = now.AddMinutes(-1));
 
             for (int i = 0; i < policyCount; i++)
             {
@@ -37,7 +44,7 @@ namespace Xenios.Business.Test
             }
 
             var mergedPolicies = Util.CollectionHelper.Merge(currentPolicies, storePolicies);
-            Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(storePolicies, mergedPolicies);
+            Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(currentPolicies, mergedPolicies);
         }
     }
 }

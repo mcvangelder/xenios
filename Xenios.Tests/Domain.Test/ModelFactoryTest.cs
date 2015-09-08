@@ -23,6 +23,7 @@ namespace Xenios.Domain.Test
             Assert.AreEqual(0, policy.Price);
             Assert.AreEqual(0, policy.TermLength);
             Assert.AreEqual(TermUnits.Months, policy.TermUnit);
+            Assert.AreNotEqual(DateTime.MinValue, policy.LastUpdateDate);
             #endregion Policy
 
             #region Customer

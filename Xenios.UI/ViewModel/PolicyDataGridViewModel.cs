@@ -17,12 +17,18 @@ namespace Xenios.UI.ViewModel
 
         public PolicyDataGridViewModel(Domain.Models.InsurancePolicy policy)
         {
-            _policy = policy;
+            InitializeModel(policy);
         }
 
         public PolicyDataGridViewModel()
         {
-            _policy = InsurancePolicy.NewInsurancePolicy();
+            InitializeModel(InsurancePolicy.NewInsurancePolicy());
+        }
+
+        public void InitializeModel(InsurancePolicy policy)
+        {
+            _policy = policy;
+            PropertyChanged += (sender, arg) => { _policy.LastUpdateDate = DateTime.Now; };
         }
 
         /// <summary>
