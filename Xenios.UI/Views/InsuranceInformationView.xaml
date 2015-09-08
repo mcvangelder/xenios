@@ -49,16 +49,16 @@
                 </DataTrigger>
             </DataTemplate.Triggers>
         </DataTemplate>
-        <Style TargetType="{x:Type TextBox}">
+        <Style x:Key="ErrorStyle">
             <Style.Triggers>
                 <Trigger Property="Validation.HasError" Value="True">
-                    <Setter Property="TextBox.ToolTip" 
+                    <Setter Property="TextBlock.ToolTip" 
                             Value="{Binding RelativeSource={RelativeSource Self},
                                    Path=(Validation.Errors)[0].ErrorContent}"/>
-                    
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource ErrorStyle}" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -101,8 +101,24 @@
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding CustomerFirstName}" ClipboardContentBinding="{x:Null}" Header="First Name" SortDirection="Ascending" Width="Auto"/>
-                <DataGridTextColumn Binding="{Binding CustomerLastName}" ClipboardContentBinding="{x:Null}" Header="Last Name" SortDirection="Ascending" Width="Auto"/>
+                <DataGridTextColumn EditingElementStyle="{StaticResource ErrorStyle}" ClipboardContentBinding="{x:Null}" Header="First Name" SortDirection="Ascending" Width="Auto">
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="CustomerFirstName">
+                            <Binding.ValidationRules>
+                                <vldtns:AsciiInputOnlyValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn EditingElementStyle="{StaticResource ErrorStyle}" ClipboardContentBinding="{x:Null}" Header="Last Name" SortDirection="Ascending" Width="Auto">
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="CustomerLastName">
+                            <Binding.ValidationRules>
+                                <vldtns:AsciiInputOnlyValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding CustomerAddressLine1}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Address" Width="Auto"/>
                 <DataGridTextColumn Binding="{Binding CustomerCity}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="City" Width="Auto" />
                 <DataGridTextColumn Binding="{Binding CustomerState}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="State" Width="Auto"/>

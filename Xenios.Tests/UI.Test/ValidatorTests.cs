@@ -69,5 +69,28 @@ namespace Xenios.UI.Test
             Assert.IsFalse(result.IsValid);
             Assert.IsNotNull(result.ErrorContent);
         }
+
+        [TestMethod]
+        public void Should_validate_when_input_only_has_ascii_characters()
+        {
+            var value = "1234MaE*";
+
+            var validationRule = new AsciiInputOnlyValidationRule();
+            var result = validationRule.Validate(value, null);
+
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void Should_not_validate_when_input_contains_non_ascii_characters()
+        {
+            var value = "\u03a0 = Pi";
+
+            var validationRule = new AsciiInputOnlyValidationRule();
+            var result = validationRule.Validate(value, null);
+
+            Assert.IsFalse(result.IsValid);
+            Assert.IsNotNull(result.ErrorContent);
+        }
     }
 }
