@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Xenios.UI.Utilities;
 using System.Collections.Generic;
 using System.Windows;
+using System.Collections;
 
 namespace Xenios.UI.Test
 {
@@ -52,5 +53,47 @@ namespace Xenios.UI.Test
             Assert.AreEqual(true, boolean);
         }
 
+        [TestMethod]
+        public void Should_split_InsuranceTypes_into_list_InsuranceType_enums()
+        {
+            var insuranceType = Domain.Enums.InsuranceTypes.Collision |
+                                    Domain.Enums.InsuranceTypes.Comprehensive |
+                                    Domain.Enums.InsuranceTypes.Glass |
+                                    Domain.Enums.InsuranceTypes.Liability |
+                                    Domain.Enums.InsuranceTypes.Umbrella;
+
+            var insuranceTypesList = (List<Domain.Enums.InsuranceTypes>)
+                                            new InsuranceTypesListConverter()
+                                                .ConvertBack(insuranceType, null, null, null);
+
+            AssertAllInsuranceTypesArePresent(insuranceType, insuranceTypesList);
+        }
+
+        private static void AssertAllInsuranceTypesArePresent(Domain.Enums.InsuranceTypes expected, List<Domain.Enums.InsuranceTypes> selectedInsuranceTypes)
+        {
+            foreach (var val in selectedInsuranceTypes)
+            {
+                Assert.IsTrue((expected & val) != 0);
+            }
+        }
+
+        [TestMethod]
+        public void Should_combine_SelectedInsuranceTypes_into_single_enum()
+        {
+            var insuranceTypesList = new List<Domain.Enums.InsuranceTypes>
+            {
+                Domain.Enums.InsuranceTypes.Collision, 
+                Domain.Enums.InsuranceTypes.Comprehensive,
+                Domain.Enums.InsuranceTypes.Glass,
+                Domain.Enums.InsuranceTypes.Liability,
+                Domain.Enums.InsuranceTypes.Umbrella
+            };
+
+            var insuranceTypesFlags = (Domain.Enums.InsuranceTypes)
+                                         new InsuranceTypesListConverter()
+                                             .Convert(insuranceTypesList, null, null, null);
+
+            AssertAllInsuranceTypesArePresent(insuranceTypesFlags, insuranceTypesList);
+        }
     }
 }

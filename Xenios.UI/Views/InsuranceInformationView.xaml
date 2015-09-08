@@ -122,7 +122,7 @@
                 <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="Insurance Type" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding InsuranceType}"/>
+                            <TextBlock Text="{Binding SelectedInsuranceTypes, Converter={StaticResource InsuranceTypesConverter}}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
