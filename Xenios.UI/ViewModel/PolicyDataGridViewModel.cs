@@ -242,7 +242,7 @@ namespace Xenios.UI.ViewModel
         {
             get
             {
-                return SplitIntoList(InsuranceType);
+                return (List<InsuranceTypes>)SplitIntoList(InsuranceType);
             }
             set
             {
@@ -258,17 +258,12 @@ namespace Xenios.UI.ViewModel
 
         private static InsuranceTypes CombineIntoSingle(List<InsuranceTypes> values)
         {
-            InsuranceTypes value =
-                (Domain.Enums.InsuranceTypes)new InsuranceTypesListConverter()
-                    .Convert(values, null, null, null);
-
-            return value;
+            return  InsuranceTypesListToFlagsConverter.CombineIntoSingle(values);
         }
 
-        private static List<InsuranceTypes> SplitIntoList(Domain.Enums.InsuranceTypes insuranceTypesFlags)
+        private static ICollection<InsuranceTypes> SplitIntoList(Domain.Enums.InsuranceTypes insuranceTypesFlags)
         {
-            var split = (List<Domain.Enums.InsuranceTypes>)
-                new InsuranceTypesListConverter().ConvertBack(insuranceTypesFlags, null, null, null);
+            var split = InsuranceTypesListToFlagsConverter.SplitIntoList(insuranceTypesFlags);
             split.Remove(Domain.Enums.InsuranceTypes.Unspecified);
 
             return split;

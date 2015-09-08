@@ -54,7 +54,7 @@ namespace Xenios.UI.Test
         }
 
         [TestMethod]
-        public void Should_split_InsuranceTypes_into_list_InsuranceType_enums()
+        public void Should_split_InsuranceTypes_into_list_InsuranceType_enums_via_convert()
         {
             var insuranceType = Domain.Enums.InsuranceTypes.Collision |
                                     Domain.Enums.InsuranceTypes.Comprehensive |
@@ -63,13 +63,14 @@ namespace Xenios.UI.Test
                                     Domain.Enums.InsuranceTypes.Umbrella;
 
             var insuranceTypesList = (List<Domain.Enums.InsuranceTypes>)
-                                            new InsuranceTypesListConverter()
+                                            new InsuranceTypesListToFlagsConverter()
                                                 .ConvertBack(insuranceType, null, null, null);
 
             AssertAllInsuranceTypesArePresent(insuranceType, insuranceTypesList);
         }
 
-        private static void AssertAllInsuranceTypesArePresent(Domain.Enums.InsuranceTypes expected, List<Domain.Enums.InsuranceTypes> selectedInsuranceTypes)
+        private static void AssertAllInsuranceTypesArePresent(Domain.Enums.InsuranceTypes expected, 
+                ICollection<Domain.Enums.InsuranceTypes> selectedInsuranceTypes)
         {
             foreach (var val in selectedInsuranceTypes)
             {
@@ -78,7 +79,7 @@ namespace Xenios.UI.Test
         }
 
         [TestMethod]
-        public void Should_combine_SelectedInsuranceTypes_into_single_enum()
+        public void Should_combine_SelectedInsuranceTypes_into_single_enum_via_convert()
         {
             var insuranceTypesList = new List<Domain.Enums.InsuranceTypes>
             {
@@ -90,10 +91,42 @@ namespace Xenios.UI.Test
             };
 
             var insuranceTypesFlags = (Domain.Enums.InsuranceTypes)
-                                         new InsuranceTypesListConverter()
+                                         new InsuranceTypesListToFlagsConverter()
                                              .Convert(insuranceTypesList, null, null, null);
 
             AssertAllInsuranceTypesArePresent(insuranceTypesFlags, insuranceTypesList);
+        }
+
+        [TestMethod]
+        public void Should_combine_SelectedInsuranceTypes_into_single_enum_via_combine()
+        {
+            var insuranceTypesList = new List<Domain.Enums.InsuranceTypes>
+            {
+                Domain.Enums.InsuranceTypes.Collision, 
+                Domain.Enums.InsuranceTypes.Comprehensive,
+                Domain.Enums.InsuranceTypes.Glass,
+                Domain.Enums.InsuranceTypes.Liability,
+                Domain.Enums.InsuranceTypes.Umbrella
+            };
+
+            var insuranceTypesFlags = InsuranceTypesListToFlagsConverter.CombineIntoSingle(insuranceTypesList);
+                                             
+
+            AssertAllInsuranceTypesArePresent(insuranceTypesFlags, insuranceTypesList);
+        }
+
+        [TestMethod]
+        public void Should_split_InsuranceTypes_into_list_InsuranceType_enums_via_split()
+        {
+            var insuranceType = Domain.Enums.InsuranceTypes.Collision |
+                                    Domain.Enums.InsuranceTypes.Comprehensive |
+                                    Domain.Enums.InsuranceTypes.Glass |
+                                    Domain.Enums.InsuranceTypes.Liability |
+                                    Domain.Enums.InsuranceTypes.Umbrella;
+
+            var insuranceTypesList = InsuranceTypesListToFlagsConverter.SplitIntoList(insuranceType);
+
+            AssertAllInsuranceTypesArePresent(insuranceType, insuranceTypesList);
         }
     }
 }

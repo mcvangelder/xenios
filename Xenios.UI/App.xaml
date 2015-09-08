@@ -9,7 +9,7 @@
     <Application.Resources>
         <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:Xenios.UI.ViewModel" />
         <xenUtil:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        <xenUtil:InsuranceTypesListConverter x:Key="InsuranceTypesConverter"/>
+        <xenUtil:InsuranceTypesListToFlagsConverter x:Key="InsuranceTypesConverter"/>
         <BitmapImage x:Key="refreshIcon" UriSource="./Resources/refresh_Icon_32.png"/>
         <Style x:Key="RefreshButton" TargetType="{x:Type Button}">
         	<Setter Property="Template">

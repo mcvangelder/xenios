@@ -8,7 +8,7 @@ using Xenios.Domain.Enums;
 
 namespace Xenios.UI.Utilities
 {
-    public class InsuranceTypesListConverter : IValueConverter
+    public class InsuranceTypesListToFlagsConverter : IValueConverter
     {
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
@@ -21,7 +21,7 @@ namespace Xenios.UI.Utilities
             return SplitIntoList((Domain.Enums.InsuranceTypes)value);
         }
 
-        private static InsuranceTypes CombineIntoSingle(ICollection<InsuranceTypes> value)
+        public static InsuranceTypes CombineIntoSingle(ICollection<InsuranceTypes> value)
         {
             InsuranceTypes temp = InsuranceTypes.Unspecified;
             foreach (var type in value)
@@ -29,7 +29,7 @@ namespace Xenios.UI.Utilities
             return temp;
         }
 
-        private ICollection<InsuranceTypes> SplitIntoList(Domain.Enums.InsuranceTypes value)
+        public static ICollection<InsuranceTypes> SplitIntoList(Domain.Enums.InsuranceTypes value)
         {
             var split = new List<InsuranceTypes>();
             foreach (var item in EnumHelper.GetAllAsCollection<List<InsuranceTypes>, InsuranceTypes>())
