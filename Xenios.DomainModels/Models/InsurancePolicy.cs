@@ -24,5 +24,35 @@ namespace Xenios.Domain.Models
         public CustomerInformation Customer { get; set; }
 
         public PaymentInformation PaymentInformation { get; set; }
+
+        public static InsurancePolicy NewInsurancePolicy()
+        {
+           return new Domain.Models.InsurancePolicy
+            {
+                Id = Guid.NewGuid(),
+                CoverageBeginDateTime = DateTime.Now,
+                Customer = new CustomerInformation
+                {
+                    AddressLine1 = String.Empty,
+                    City = String.Empty,
+                    Country = String.Empty,
+                    FirstName = String.Empty,
+                    LastName = String.Empty,
+                    PostalCode = String.Empty,
+                    State = String.Empty
+                },
+                InsuranceType = InsuranceTypes.Unspecified,
+                PaymentInformation = new PaymentInformation
+                {
+                    CreditCardNumber = String.Empty,
+                    CreditCardType = CreditCardTypes.Unspecified,
+                    ExpirationDate = DateTime.Now,
+                    CreditCardVerificationNumber = String.Empty
+                },
+                Price = 0,
+                TermLength = 0,
+                TermUnit = TermUnits.Months,
+            };
+        }
     }
 }

@@ -22,12 +22,7 @@ namespace Xenios.UI.ViewModel
 
         public PolicyDataGridViewModel()
         {
-            _policy = new Domain.Models.InsurancePolicy();
-            _policy.Id = Guid.NewGuid();
-            _policy.CoverageBeginDateTime = DateTime.Now;
-            _policy.TermUnit = TermUnits.Months;
-            _policy.Customer = new CustomerInformation();
-            _policy.PaymentInformation = new PaymentInformation();
+            _policy = InsurancePolicy.NewInsurancePolicy();
         }
 
         /// <summary>
@@ -245,7 +240,8 @@ namespace Xenios.UI.ViewModel
         /// </summary>
         public List<InsuranceTypes> SelectedInsuranceTypes
         {
-            get {
+            get
+            {
                 return SplitIntoList();
             }
             set
