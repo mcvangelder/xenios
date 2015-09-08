@@ -47,7 +47,10 @@ namespace Xenios.DataAccess
             if (dispose)
             {
                 if (_fileSystemWatcher != null)
+                {
+                    _fileSystemWatcher.Changed -= fileSystemWatcher_Changed;
                     _fileSystemWatcher.Dispose();
+                }
             }
         }
 
