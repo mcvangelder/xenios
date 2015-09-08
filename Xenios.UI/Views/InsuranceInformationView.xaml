@@ -106,6 +106,7 @@
                         <Binding Path="CustomerFirstName">
                             <Binding.ValidationRules>
                                 <vldtns:AsciiInputOnlyValidationRule/>
+                                <vldtns:RequiredValidationRule />
                             </Binding.ValidationRules>
                         </Binding>
                     </DataGridTextColumn.Binding>
@@ -115,6 +116,7 @@
                         <Binding Path="CustomerLastName">
                             <Binding.ValidationRules>
                                 <vldtns:AsciiInputOnlyValidationRule/>
+                                <vldtns:RequiredValidationRule/>
                             </Binding.ValidationRules>
                         </Binding>
                     </DataGridTextColumn.Binding>

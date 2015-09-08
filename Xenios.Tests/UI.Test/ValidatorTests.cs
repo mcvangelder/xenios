@@ -92,5 +92,40 @@ namespace Xenios.UI.Test
             Assert.IsFalse(result.IsValid);
             Assert.IsNotNull(result.ErrorContent);
         }
+
+        [TestMethod]
+        public void Should_validate_only_when_input_has_been_specified()
+        {
+            var value = "entered input";
+
+            var validationRule = new RequiredValidationRule();
+            var result = validationRule.Validate(value, null);
+
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void Should_not_validate_when_input_is_empty()
+        {
+            var value = "";
+
+            var validationRule = new RequiredValidationRule();
+            var result = validationRule.Validate(value, null);
+
+            Assert.IsFalse(result.IsValid);
+            Assert.IsNotNull(result.ErrorContent);
+
+        }
+
+        [TestMethod]
+        public void Should_not_validate_when_input_is_null()
+        {
+            String value = null;
+            var validationRule = new RequiredValidationRule();
+            var result = validationRule.Validate(value, null);
+
+            Assert.IsFalse(result.IsValid);
+            Assert.IsNotNull(result.ErrorContent);
+        }
     }
 }
