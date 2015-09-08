@@ -28,8 +28,6 @@ namespace Xenios.UI.ViewModel
     /// </summary>
     public partial class InsurancePolicyViewModel : ViewModelBase
     {
-        private bool _isSaving;
-
         public ICountriesService CountriesService { get; private set; }
         public IApplicationService ApplicationService { get; set; }
         public IPolicyDataService PolicyDataService { get; private set; }

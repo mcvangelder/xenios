@@ -102,13 +102,7 @@ namespace Xenios.UI.ViewModel
 
         private void ProcessIsDataUpToDateChange()
         {
-            if (_isSaving)
-            {
-                _isSaving = false;
-                _isDataUpToDate = true;
-            }
-            else
-                SetStatusImage();
+            SetStatusImage();
         }
 
         private void SetStatusImage()
@@ -207,7 +201,6 @@ namespace Xenios.UI.ViewModel
 
         private void SavePolicies()
         {
-            _isSaving = true;
             TrySavePolicies();
         }
 

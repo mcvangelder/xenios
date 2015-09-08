@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xenios.DataAccess;
 using Xenios.Domain.Models;
 
 namespace Xenios.Business
@@ -23,7 +24,12 @@ namespace Xenios.Business
         private void CreateinsurancePolicyNotificationService()
         {
             _repositoryUpdatedNotificationService = new DataAccess.RepositoryUpdatedNotificationService(_policiesRepository);
-            _repositoryUpdatedNotificationService.NotifyRepositoryUpdated += (repository) => { RaiseNotifyInsurancePoliciesUpdated(); };
+            _repositoryUpdatedNotificationService.NotifyRepositoryUpdated += RaiseNotifyInsurancePoliciesUpdated; 
+        }
+
+        private void RaiseNotifyInsurancePoliciesUpdated(InsurancePolicyRepository repository)
+        {
+            RaiseNotifyInsurancePoliciesUpdated();
         }
 
         public override List<InsurancePolicy> GetAllInsurancePolicies()
@@ -41,8 +47,11 @@ namespace Xenios.Business
         {
             if (disposing)
             {
-                if(_repositoryUpdatedNotificationService != null)
+                if (_repositoryUpdatedNotificationService != null)
+                {
+                    _repositoryUpdatedNotificationService.NotifyRepositoryUpdated -= RaiseNotifyInsurancePoliciesUpdated;
                     _repositoryUpdatedNotificationService.Dispose();
+                }
             }
         }
         public override void Save(List<InsurancePolicy> insurancePolicies)
