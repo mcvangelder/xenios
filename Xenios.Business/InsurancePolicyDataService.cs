@@ -32,9 +32,6 @@ namespace Xenios.Business
 
         private void RaiseNotifyInsurancePoliciesUpdated(InsurancePolicyRepository repository)
         {
-            if (_isSaving)
-                return;
-
             RaiseNotifyInsurancePoliciesUpdated();
         }
 
@@ -55,7 +52,7 @@ namespace Xenios.Business
             {
                 if (_repositoryUpdatedNotificationService != null)
                 {
-                    _repositoryUpdatedNotificationService.NotifyRepositoryUpdated -= RaiseNotifyInsurancePoliciesUpdated;
+                    
                     _repositoryUpdatedNotificationService.Dispose();
                 }
             }
@@ -64,9 +61,9 @@ namespace Xenios.Business
         {
             lock (_saveLocker)
             {
-                _isSaving = true;
+                _repositoryUpdatedNotificationService.NotifyRepositoryUpdated -= RaiseNotifyInsurancePoliciesUpdated;
                 var lastWriteDate = _policiesRepository.SaveAll(insurancePolicies);
-                _isSaving = false;
+                _repositoryUpdatedNotificationService.NotifyRepositoryUpdated += RaiseNotifyInsurancePoliciesUpdated;
 
                 if (lastWriteDate != _policiesRepository.GetLastWriteTime())
                     RaiseNotifyInsurancePoliciesUpdated();
