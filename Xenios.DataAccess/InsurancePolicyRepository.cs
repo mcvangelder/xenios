@@ -19,9 +19,14 @@ namespace Xenios.DataAccess
             _fileName = fileName;
         }
 
-        public void SaveAll(List<InsurancePolicy> insurancePolicies)
+        public DateTime GetLastWriteTime()
         {
-            Task t = Task.Factory.StartNew(() =>
+            return new FileInfo(_fileName).LastWriteTime;
+        }
+
+        public DateTime SaveAll(List<InsurancePolicy> insurancePolicies)
+        {
+            Task<DateTime> t = Task.Factory.StartNew(() =>
             {
                 using (var fileStream = new FileStream(_fileName, FileMode.Create, FileAccess.Write))
                 {
@@ -33,11 +38,13 @@ namespace Xenios.DataAccess
                             streamWriter.WriteLine(json);
                         }
                     }
-                }
+
+                    return GetLastWriteTime();
+                  }
             });
             try
             {
-                t.Wait();
+                return t.Result;
             } catch (AggregateException ae)
             {
                 throw ae.InnerException;

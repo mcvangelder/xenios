@@ -127,5 +127,22 @@ namespace Xenios.Business.Test
                 Assert.AreNotEqual(editedRecordDrop.LastUpdateDate, conflictResolvedRecordDrop.LastUpdateDate);
             }
         }
+
+        [TestMethod]
+        public void Should_not_notify_repository_updated_when_local_save()
+        {
+            int recordCount = 5;
+            CreateRepository(initialRecordCount: recordCount);
+
+            using(var service = new InsurancePolicyDataService(defaultFileName))
+            {
+                service.NotifyInsurancePoliciesUpdated += () =>
+                {
+                    Assert.Fail("Notified Repository Updated");
+                };
+                var list = Xenios.Test.Helpers.InsurancePolicyHelper.CreateInsurancePolicies(5);
+                service.Save(list);
+            }
+        }
     }
 }

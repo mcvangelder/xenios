@@ -10,8 +10,15 @@ namespace Xenios.DataAccess.Tests
     public class DataPersistenceTest
     {
         private const String fileName = @"c:\temp\insurance_information_storage.txt";
+        private DataAccess.InsurancePolicyRepository _repository;
 
         [TestInitialize]
+        public void CreateRepository()
+        {
+            DeleteRepositoryFile();
+            _repository = new InsurancePolicyRepository(fileName);
+        }
+
         [TestCleanup]
         public void DeleteRepositoryFile()
         {
@@ -21,11 +28,10 @@ namespace Xenios.DataAccess.Tests
         [TestMethod]
         public void Should_persist_insurance_info()
         {
-            var infoRepo = new DataAccess.InsurancePolicyRepository(fileName);
             var insuranceInformation = Xenios.Test.Helpers.InsurancePolicyHelper.CreateInsurancePolicies(1);
 
-            infoRepo.SaveAll(insuranceInformation);
-            var savedInformation = infoRepo.GetAll();
+            _repository.SaveAll(insuranceInformation);
+            var savedInformation = _repository.GetAll();
 
             Xenios.Test.Helpers.InsurancePolicyHelper.AssertAreEqual(insuranceInformation, savedInformation);
         }
@@ -36,10 +42,22 @@ namespace Xenios.DataAccess.Tests
         {
             using (var fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
             {
-                var informationService = new InsurancePolicyRepository(fileName);
+                _repository = new InsurancePolicyRepository(fileName);
                 var insuranceInformation = Xenios.Test.Helpers.InsurancePolicyHelper.CreateInsurancePolicies(1);
-                informationService.SaveAll(insuranceInformation);
+                _repository.SaveAll(insuranceInformation);
             }
+        }
+
+        [TestMethod]
+        public void Should_return_last_write_time_on_repository()
+        {
+            var list = Xenios.Test.Helpers.InsurancePolicyHelper.CreateInsurancePolicies(1);
+            var firstWriteTime = _repository.SaveAll(list);
+            // ignore this save all last write time, it simulates another source updating the file
+            _repository.SaveAll(list);
+            var lastWriteTime = _repository.GetLastWriteTime();
+
+            Assert.AreNotEqual(firstWriteTime, lastWriteTime);
         }
     }
 }

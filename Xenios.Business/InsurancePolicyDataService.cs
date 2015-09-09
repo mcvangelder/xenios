@@ -15,6 +15,9 @@ namespace Xenios.Business
         private DataAccess.InsurancePolicyRepository _policiesRepository;
         private DataAccess.RepositoryUpdatedNotificationService _repositoryUpdatedNotificationService;
 
+        private object _saveLocker = new Object();
+        private bool _isSaving = false;
+
         public InsurancePolicyDataService(String sourceFile) : base(sourceFile)
         {
             _policiesRepository = new DataAccess.InsurancePolicyRepository(sourceFile);
@@ -29,6 +32,9 @@ namespace Xenios.Business
 
         private void RaiseNotifyInsurancePoliciesUpdated(InsurancePolicyRepository repository)
         {
+            if (_isSaving)
+                return;
+
             RaiseNotifyInsurancePoliciesUpdated();
         }
 
@@ -56,7 +62,15 @@ namespace Xenios.Business
         }
         public override void Save(List<InsurancePolicy> insurancePolicies)
         {
-            _policiesRepository.SaveAll(insurancePolicies);
+            lock (_saveLocker)
+            {
+                _isSaving = true;
+                var lastWriteDate = _policiesRepository.SaveAll(insurancePolicies);
+                _isSaving = false;
+
+                if (lastWriteDate != _policiesRepository.GetLastWriteTime())
+                    RaiseNotifyInsurancePoliciesUpdated();
+            }
         }
 
         ~InsurancePolicyDataService()
